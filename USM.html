@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KPI Guide — УСМ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ============================================================
+     СТИЛИ ДЛЯ СТРАНИЦЫ СТАТЕЙ
+     ============================================================ */
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 24px 80px;
+  }
+  
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .page-header h1 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .page-header .role-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--orange-tint);
+    color: var(--orange-deep);
+  }
+  
+  .search-wrap {
+    margin-bottom: 24px;
+  }
+  
+  .search-wrap input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--line);
+    font-size: 15px;
+    font-family: var(--font-body);
+    background: var(--surface);
+    transition: border-color 0.15s ease;
+  }
+  
+  .search-wrap input:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+  
+  .articles-grid {
+    display: grid;
+    gap: 16px;
+  }
+  
+  .article-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+  
+  .article-card:hover {
+    border-color: var(--orange);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  
+  .article-card h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    margin: 0 0 6px;
+  }
+  
+  .article-card p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+  
+  .article-card .meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex-wrap: wrap;
+  }
+  
+  .article-card .meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-soft);
+  }
+  
+  .empty-state .icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  
+  .empty-state p {
+    margin: 4px 0;
+  }
+  
+  /* Кнопка добавления (только для админа) */
+  .admin-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .btn-add {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--orange);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .btn-add:hover {
+    background: var(--orange-deep);
+    transform: translateY(-1px);
+  }
+  
+  .btn-add.hidden {
+    display: none;
+  }
+  
+  .btn-back {
+    padding: 10px 18px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+  }
+  
+  .btn-back:hover {
+    background: var(--bg);
+    border-color: var(--ink-soft);
+  }
+  
+  /* ============================================================
+     МОДАЛКА ДОБАВЛЕНИЯ СТАТЬИ
+     ============================================================ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  
+  .modal-overlay.active {
+    display: flex;
+  }
+  
+  .modal-content {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal-content h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    margin: 0 0 6px;
+  }
+  
+  .modal-content .sub {
+    color: var(--ink-soft);
+    margin: 0 0 20px;
+  }
+  
+  .modal-content .field {
+    margin-bottom: 16px;
+  }
+  
+  .modal-content .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  
+  .modal-content .field input,
+  .modal-content .field textarea,
+  .modal-content .field select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--line);
+    font-size: 14px;
+    font-family: var(--font-body);
+    background: #FBFBFC;
+    transition: border-color 0.15s ease;
+  }
+  
+  .modal-content .field textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .modal-content .field input:focus,
+  .modal-content .field textarea:focus,
+  .modal-content .field select:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+  
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .modal-actions .btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  
+  .modal-actions .btn-primary {
+    background: var(--orange);
+    color: #fff;
+  }
+  
+  .modal-actions .btn-primary:hover {
+    background: var(--orange-deep);
+  }
+  
+  .modal-actions .btn-cancel {
+    background: var(--bg);
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+  }
+  
+  .modal-actions .btn-cancel:hover {
+    background: var(--line);
+  }
+  
+  /* ============================================================
+     МОДАЛКА ПРОСМОТРА СТАТЬИ
+     ============================================================ */
+  .article-view-content {
+    max-width: 640px;
+  }
+  
+  .article-view-content .article-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin: 0 0 8px;
+  }
+  
+  .article-view-content .article-meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+  
+  .article-view-content .article-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+  
+  .article-view-content .article-body p {
+    margin: 0 0 12px;
+  }
+  
+  /* ============================================================
+     АДАПТИВНОСТЬ
+     ============================================================ */
+  @media (max-width: 600px) {
+    .page-header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .admin-actions {
+      flex-wrap: wrap;
+    }
+    .btn-add {
+      width: 100%;
+      justify-content: center;
+    }
+    .modal-content {
+      padding: 24px 20px;
+    }
+    .modal-actions {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  
+  <!-- Шапка страницы -->
+  <div class="page-header">
+    <div>
+      <h1>📚 Материалы для УСМ</h1>
+      <span class="role-badge">УСМ</span>
+    </div>
+    <div class="admin-actions">
+      <a href="index.html" class="btn-back">← Назад</a>
+      <button class="btn-add hidden" id="addArticleBtn">➕ Добавить статью</button>
+    </div>
+  </div>
+  
+  <!-- Поиск -->
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="🔍 Поиск по статьям..." />
+  </div>
+  
+  <!-- Список статей -->
+  <div id="articlesContainer" class="articles-grid">
+    <div class="empty-state">
+      <div class="icon">⏳</div>
+      <p>Загрузка статей...</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     МОДАЛКА ДОБАВЛЕНИЯ СТАТЬИ
+     ============================================================ -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal-content">
+    <h2>➕ Новая статья</h2>
+    <p class="sub">Заполните поля для создания новой статьи</p>
+    
+    <form id="addArticleForm">
+      <div class="field">
+        <label for="articleTitle">Название статьи *</label>
+        <input type="text" id="articleTitle" required placeholder="Введите название">
+      </div>
+      
+      <div class="field">
+        <label for="articleDescription">Краткое описание</label>
+        <textarea id="articleDescription" placeholder="Кратко о чем статья..."></textarea>
+      </div>
+      
+      <div class="field">
+        <label for="articleContent">Содержание *</label>
+        <textarea id="articleContent" required placeholder="Полный текст статьи..."></textarea>
+      </div>
+      
+      <div class="field">
+        <label for="articleCategory">Категория</label>
+        <select id="articleCategory">
+          <option value="general">Общее</option>
+          <option value="kpi">KPI</option>
+          <option value="processes">Процессы</option>
+          <option value="skills">Навыки</option>
+        </select>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn btn-cancel" id="cancelModalBtn">Отмена</button>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================
+     МОДАЛКА ПРОСМОТРА СТАТЬИ
+     ============================================================ -->
+<div class="modal-overlay" id="viewModal">
+  <div class="modal-content article-view-content">
+    <h2 class="article-title" id="viewTitle">Заголовок</h2>
+    <div class="article-meta" id="viewMeta">Автор: — | Дата: —</div>
+    <div class="article-body" id="viewBody">Содержание...</div>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" id="closeViewBtn">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     СКРИПТ
+     ============================================================ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { 
+  getFirestore, 
+  collection, 
+  query, 
+  where, 
+  getDocs, 
+  addDoc, 
+  orderBy,
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, ADMIN_EMAIL } from "./firebase-config.js";
+
+// ============================================================
+// ИНИЦИАЛИЗАЦИЯ
+// ============================================================
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Текущая роль (должность)
+const ROLE = 'usm';
+let currentUser = null;
+let isAdmin = false;
+let allArticles = [];
+
+// DOM элементы
+const articlesContainer = document.getElementById('articlesContainer');
+const searchInput = document.getElementById('searchInput');
+const addArticleBtn = document.getElementById('addArticleBtn');
+
+// Модалка добавления
+const addModal = document.getElementById('addModal');
+const cancelModalBtn = document.getElementById('cancelModalBtn');
+const addArticleForm = document.getElementById('addArticleForm');
+
+// Модалка просмотра
+const viewModal = document.getElementById('viewModal');
+const viewTitle = document.getElementById('viewTitle');
+const viewMeta = document.getElementById('viewMeta');
+const viewBody = document.getElementById('viewBody');
+const closeViewBtn = document.getElementById('closeViewBtn');
+
+// ============================================================
+// ЗАГРУЗКА СТАТЕЙ
+// ============================================================
+async function loadArticles() {
+  try {
+    const q = query(
+      collection(db, "articles"),
+      where("role", "==", ROLE),
+      orderBy("createdAt", "desc")
+    );
+    
+    const snapshot = await getDocs(q);
+    allArticles = [];
+    
+    snapshot.forEach(doc => {
+      allArticles.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    renderArticles(allArticles);
+  } catch (error) {
+    console.error("Ошибка загрузки статей:", error);
+    articlesContainer.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">⚠️</div>
+        <p>Не удалось загрузить статьи</p>
+        <p style="font-size:13px; color: var(--red);">${error.message}</p>
+      </div>
+    `;
+  }
+}
+
+// ============================================================
+// ОТОБРАЖЕНИЕ СТАТЕЙ
+// ============================================================
+function renderArticles(articles) {
+  if (!articles || articles.length === 0) {
+    articlesContainer.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📖</div>
+        <p>Пока нет статей для этой должности</p>
+        ${isAdmin ? '<p style="font-size:13px;">Нажмите "Добавить статью" чтобы создать первую</p>' : ''}
+      </div>
+    `;
+    return;
+  }
+  
+  articlesContainer.innerHTML = articles.map(article => `
+    <div class="article-card" data-id="${article.id}">
+      <h3>${article.title || 'Без названия'}</h3>
+      ${article.description ? `<p>${article.description}</p>` : ''}
+      <div class="meta">
+        <span>📅 ${formatDate(article.createdAt)}</span>
+        ${article.category ? `<span>🏷️ ${article.category}</span>` : ''}
+        ${article.authorEmail ? `<span>✍️ ${article.authorEmail}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+  
+  // Клик по статье для открытия
+  document.querySelectorAll('.article-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.id;
+      const article = allArticles.find(a => a.id === id);
+      if (article) {
+        openArticle(article);
+      }
+    });
+  });
+}
+
+// ============================================================
+// ОТКРЫТИЕ СТАТЬИ (МОДАЛКА)
+// ============================================================
+function openArticle(article) {
+  viewTitle.textContent = article.title || 'Без названия';
+  viewMeta.textContent = `Автор: ${article.authorEmail || 'Неизвестен'} | Дата: ${formatDate(article.createdAt)}`;
+  viewBody.textContent = article.content || 'Содержание не добавлено';
+  viewModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+closeViewBtn.addEventListener('click', () => {
+  viewModal.classList.remove('active');
+  document.body.style.overflow = '';
+});
+
+viewModal.addEventListener('click', (e) => {
+  if (e.target === viewModal) {
+    viewModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+// ============================================================
+// ФОРМАТИРОВАНИЕ ДАТЫ
+// ============================================================
+function formatDate(timestamp) {
+  if (!timestamp) return 'Неизвестно';
+  try {
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    return date.toLocaleDateString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  } catch {
+    return 'Неизвестно';
+  }
+}
+
+// ============================================================
+// ПОИСК
+// ============================================================
+searchInput.addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase().trim();
+  if (!query) {
+    renderArticles(allArticles);
+    return;
+  }
+  
+  const filtered = allArticles.filter(article => {
+    const title = (article.title || '').toLowerCase();
+    const desc = (article.description || '').toLowerCase();
+    const content = (article.content || '').toLowerCase();
+    return title.includes(query) || desc.includes(query) || content.includes(query);
+  });
+  
+  renderArticles(filtered);
+});
+
+// ============================================================
+// ДОБАВЛЕНИЕ СТАТЬИ
+// ============================================================
+addArticleBtn.addEventListener('click', () => {
+  addModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+});
+
+cancelModalBtn.addEventListener('click', () => {
+  addModal.classList.remove('active');
+  document.body.style.overflow = '';
+  addArticleForm.reset();
+});
+
+addModal.addEventListener('click', (e) => {
+  if (e.target === addModal) {
+    addModal.classList.remove('active');
+    document.body.style.overflow = '';
+    addArticleForm.reset();
+  }
+});
+
+addArticleForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const title = document.getElementById('articleTitle').value.trim();
+  const description = document.getElementById('articleDescription').value.trim();
+  const content = document.getElementById('articleContent').value.trim();
+  const category = document.getElementById('articleCategory').value;
+  
+  if (!title || !content) {
+    alert('Заполните название и содержание статьи');
+    return;
+  }
+  
+  try {
+    await addDoc(collection(db, 'articles'), {
+      title,
+      description,
+      content,
+      category,
+      role: ROLE,
+      authorUid: currentUser?.uid || null,
+      authorEmail: currentUser?.email || null,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+    
+    addModal.classList.remove('active');
+    document.body.style.overflow = '';
+    addArticleForm.reset();
+    await loadArticles();
+  } catch (error) {
+    console.error('Ошибка добавления статьи:', error);
+    alert('Не удалось добавить статью. Попробуйте еще раз.');
+  }
+});
+
+// ============================================================
+// ПРОВЕРКА АВТОРИЗАЦИИ
+// ============================================================
+onAuthStateChanged(auth, (user) => {
+  currentUser = user;
+  if (user) {
+    isAdmin = user.email === ADMIN_EMAIL;
+    if (isAdmin) {
+      addArticleBtn.classList.remove('hidden');
+    }
+    loadArticles();
+  } else {
+    window.location.href = 'index.html';
+  }
+});
+
+// Закрытие модалок по Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (addModal.classList.contains('active')) {
+      addModal.classList.remove('active');
+      document.body.style.overflow = '';
+      addArticleForm.reset();
+    }
+    if (viewModal.classList.contains('active')) {
+      viewModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+});
+</script>
+
+</body>
+</html>
