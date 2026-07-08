@@ -12,7 +12,7 @@
 
 <style>
   /* ============================================================
-     ГЛОБАЛЬНЫЙ СБРОС — НОЛЬ ОТСТУПОВ
+     ГЛОБАЛЬНЫЙ СБРОС
      ============================================================ */
   * {
     -webkit-tap-highlight-color: transparent;
@@ -32,10 +32,11 @@
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden;
+    font-size: 16px;
   }
 
   /* ============================================================
-     ОБЕРТКА — ПОЛНАЯ ШИРИНА
+     ОБЕРТКА
      ============================================================ */
   .page-wrap {
     width: 100% !important;
@@ -44,9 +45,6 @@
     padding: 0 !important;
   }
 
-  /* ============================================================
-     КАРТОЧКА — ВО ВСЮ ШИРИНУ
-     ============================================================ */
   .card {
     width: 100% !important;
     max-width: 100% !important;
@@ -59,36 +57,35 @@
   }
 
   /* ============================================================
-     ШАПКА — ВПЛОТНУЮ К КРАЯМ
+     ШАПКА
      ============================================================ */
   .header {
-    padding: 6px 6px !important;
+    padding: 12px 12px !important;
     background: #FFFFFF;
     border-bottom: 1px solid #E8ECF0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 4px;
+    gap: 8px;
     flex-wrap: nowrap;
-    width: 100%;
   }
 
   .header-left {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     flex-shrink: 1;
     min-width: 0;
   }
 
   .header-icon {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     flex-shrink: 0;
   }
 
   .header h1 {
     font-family: "Unbounded", sans-serif;
-    font-size: clamp(0.7rem, 3.2vw, 0.9rem);
+    font-size: clamp(1rem, 4vw, 1.2rem);
     font-weight: 600;
     margin: 0 !important;
     color: #1A1A2E;
@@ -100,7 +97,7 @@
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 6px;
     flex-shrink: 0;
   }
 
@@ -115,37 +112,32 @@
   .dropdown-btn {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
-    padding: 4px 6px !important;
+    gap: 4px;
+    padding: 8px 12px !important;
     border: 1.5px solid #E8ECF0;
-    border-radius: 4px;
+    border-radius: 8px;
     background: #F5F7FA;
     color: #5A5A6E;
     font-family: "Inter", sans-serif;
     font-weight: 600;
-    font-size: 10px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 24px;
+    min-height: 40px;
   }
 
   .dropdown-btn .arrow {
-    font-size: 7px;
-    transition: transform 0.2s ease;
-  }
-
-  .dropdown-btn.open .arrow {
-    transform: rotate(180deg);
+    font-size: 10px;
   }
 
   .dropdown-menu {
     position: absolute;
-    top: calc(100% + 2px);
+    top: calc(100% + 4px);
     right: 0;
-    min-width: 130px;
+    min-width: 170px;
     background: #FFFFFF;
     border: 1px solid #E8ECF0;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
     overflow: hidden;
     display: none;
@@ -159,22 +151,17 @@
   .dropdown-menu a {
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 6px 10px !important;
+    gap: 8px;
+    padding: 12px 14px !important;
     text-decoration: none;
     color: #1A1A2E;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 500;
     border-bottom: 1px solid #E8ECF0;
-    transition: background 0.15s ease;
   }
 
   .dropdown-menu a:last-child {
     border-bottom: none;
-  }
-
-  .dropdown-menu a:hover {
-    background: #FFF0E6;
   }
 
   .dropdown-menu a .check {
@@ -192,15 +179,15 @@
      ПОИСК
      ============================================================ */
   .search-wrap {
-    padding: 4px 6px 0 !important;
+    padding: 10px 12px 0 !important;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 6px 8px !important;
-    border-radius: 4px;
+    padding: 12px 14px !important;
+    border-radius: 8px;
     border: 1.5px solid #E8ECF0;
-    font-size: 12px;
+    font-size: 16px;
     font-family: "Inter", sans-serif;
     background: #F5F7FA;
     color: #1A1A2E;
@@ -211,14 +198,14 @@
     outline: none;
     border-color: #FF6A00;
     background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(255,106,0,0.12);
+    box-shadow: 0 0 0 4px rgba(255,106,0,0.12);
   }
 
   /* ============================================================
      КОНТЕНТ
      ============================================================ */
   .content {
-    padding: 4px 6px 70px !important;
+    padding: 10px 12px 80px !important;
   }
 
   /* ============================================================
@@ -226,17 +213,16 @@
      ============================================================ */
   .articles-grid {
     display: grid;
-    gap: 6px;
+    gap: 10px;
   }
 
   .article-card {
     background: #FFFFFF;
     border: 1.5px solid #E8ECF0;
-    border-radius: 6px;
-    padding: 6px 6px !important;
+    border-radius: 10px;
+    padding: 14px 14px !important;
     cursor: pointer;
     transition: all 0.2s ease;
-    width: 100%;
   }
 
   .article-card:active {
@@ -247,14 +233,14 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 4px;
-    width: 100%;
+    gap: 8px;
+    margin-bottom: 4px !important;
   }
 
   .article-head h3 {
     font-family: "Unbounded", sans-serif;
     font-weight: 600;
-    font-size: clamp(0.7rem, 2.8vw, 0.85rem);
+    font-size: clamp(1rem, 3.5vw, 1.15rem);
     margin: 0 !important;
     color: #1A1A2E;
     word-break: break-word;
@@ -263,23 +249,24 @@
 
   .article-actions {
     display: flex;
-    gap: 2px;
+    gap: 6px;
     flex-shrink: 0;
   }
 
   .btn-sm {
-    padding: 1px 4px !important;
+    padding: 4px 10px !important;
     border: 1.5px solid #E8ECF0;
-    border-radius: 4px;
+    border-radius: 6px;
     background: transparent;
-    font-size: 9px;
+    font-size: 13px;
     font-weight: 500;
     color: #5A5A6E;
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: "Inter", sans-serif;
-    min-height: 18px;
-    line-height: 1;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
   }
 
   .btn-sm.edit:hover {
@@ -300,23 +287,23 @@
 
   .article-desc {
     color: #5A5A6E;
-    font-size: clamp(0.7rem, 2vw, 0.8rem);
-    margin: 2px 0 !important;
-    line-height: 1.4;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    margin: 4px 0 6px !important;
+    line-height: 1.5;
   }
 
   .article-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
-    font-size: 9px;
+    gap: 10px;
+    font-size: 13px;
     color: #9A9AAE;
   }
 
   .article-meta span {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
   }
 
   /* ============================================================
@@ -327,9 +314,9 @@
     border: none;
     color: #FF6A00;
     font-weight: 600;
-    font-size: 10px;
+    font-size: 14px;
     cursor: pointer;
-    padding: 4px 2px 0 !important;
+    padding: 10px 4px 2px !important;
     width: 100%;
     text-align: left;
     font-family: "Inter", sans-serif;
@@ -343,14 +330,13 @@
      ТЕЛО СТАТЬИ
      ============================================================ */
   .article-body {
-    margin-top: 6px !important;
-    padding-top: 6px !important;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
     border-top: 1px solid #E8ECF0;
     display: none;
-    font-size: 11px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.7;
     color: #5A5A6E;
-    width: 100%;
   }
 
   .article-body.open {
@@ -364,10 +350,10 @@
   }
 
   .article-body ul li {
-    padding-left: 16px !important;
+    padding-left: 22px !important;
     position: relative;
-    margin-bottom: 2px !important;
-    line-height: 1.5;
+    margin-bottom: 6px !important;
+    line-height: 1.6;
   }
 
   .article-body ul li::before {
@@ -376,34 +362,35 @@
     position: absolute;
     left: 2px;
     top: 0;
+    font-size: 18px;
   }
 
   .article-body .script {
     background: #FFF0E6;
-    padding: 4px 8px !important;
-    border-radius: 4px;
-    margin: 3px 0 !important;
-    border-left: 3px solid #FF6A00;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    margin: 6px 0 !important;
+    border-left: 4px solid #FF6A00;
     color: #1A1A2E;
-    font-size: 11px;
+    font-size: 14px;
   }
 
   .article-body .note {
     background: #F0F7FF;
-    padding: 4px 8px !important;
-    border-radius: 4px;
-    margin: 3px 0 !important;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    margin: 6px 0 !important;
     border: 1px solid #E0EDF5;
-    font-size: 11px;
+    font-size: 14px;
   }
 
   .article-body .danger {
     background: #FDEDEB;
-    padding: 4px 8px !important;
-    border-radius: 4px;
-    margin: 3px 0 !important;
-    border-left: 3px solid #DC3545;
-    font-size: 11px;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    margin: 6px 0 !important;
+    border-left: 4px solid #DC3545;
+    font-size: 14px;
   }
 
   .article-body .danger .lbl {
@@ -413,19 +400,19 @@
 
   .article-body .table-wrap {
     overflow-x: auto;
-    margin: 3px 0 !important;
+    margin: 6px 0 !important;
   }
 
   .article-body table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 10px;
-    min-width: 180px;
+    font-size: 13px;
+    min-width: 220px;
   }
 
   .article-body table th {
     border-bottom: 2px solid #FF6A00;
-    padding: 3px 3px !important;
+    padding: 8px 6px !important;
     text-align: left;
     color: #E85D00;
     font-weight: 600;
@@ -433,7 +420,7 @@
 
   .article-body table td {
     border-bottom: 1px solid #E8ECF0;
-    padding: 3px 3px !important;
+    padding: 8px 6px !important;
     vertical-align: top;
   }
 
@@ -441,48 +428,49 @@
     display: inline-block;
     background: #FF6A00;
     color: #fff;
-    padding: 1px 8px !important;
+    padding: 4px 14px !important;
     border-radius: 30px;
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 600;
-    margin-bottom: 2px !important;
+    margin-bottom: 6px !important;
   }
 
   .article-body .flex-grid {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin: 3px 0 !important;
+    gap: 8px;
+    margin: 6px 0 !important;
   }
 
   .article-body .flex-grid .item {
     background: #F5F7FA;
-    padding: 6px 8px !important;
-    border-radius: 4px;
+    padding: 12px 14px !important;
+    border-radius: 8px;
     border: 1px solid #E8ECF0;
   }
 
   .article-body .flex-grid .item .ttl {
     font-weight: 700;
     color: #E85D00;
-    margin-bottom: 1px !important;
+    margin-bottom: 4px !important;
+    font-size: 15px;
   }
 
   .article-body .flex-grid .item p {
     margin: 0 !important;
-    font-size: 11px;
+    font-size: 14px;
     color: #5A5A6E;
   }
 
   .article-body .footer {
-    margin-top: 6px !important;
-    padding: 6px 10px !important;
+    margin-top: 10px !important;
+    padding: 12px 16px !important;
     background: #FFF0E6;
-    border-radius: 4px;
+    border-radius: 8px;
     text-align: center;
     font-weight: 700;
     color: #E85D00;
-    font-size: 11px;
+    font-size: 15px;
   }
 
   /* ============================================================
@@ -490,32 +478,37 @@
      ============================================================ */
   .empty {
     text-align: center;
-    padding: 20px 6px !important;
+    padding: 40px 12px !important;
     color: #9A9AAE;
   }
 
   .empty .icon {
-    font-size: 24px;
+    font-size: 40px;
     opacity: 0.4;
   }
 
+  .empty p {
+    font-size: 16px;
+    margin-top: 6px !important;
+  }
+
   /* ============================================================
-     FLOATING ACTION BUTTON
+     FAB
      ============================================================ */
   .fab {
     position: fixed;
-    bottom: 12px;
-    right: 10px;
-    width: 44px;
-    height: 44px;
+    bottom: 20px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     border: none;
     background: #FF6A00;
     color: #fff;
-    font-size: 22px;
+    font-size: 30px;
     font-weight: 300;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(255,106,0,0.35);
+    box-shadow: 0 4px 24px rgba(255,106,0,0.4);
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 100;
     display: flex;
@@ -553,7 +546,7 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    padding: 12px !important;
+    padding: 16px !important;
   }
 
   .modal-overlay.active {
@@ -562,8 +555,8 @@
 
   .modal-box {
     background: #FFFFFF;
-    border-radius: 12px;
-    padding: 16px 14px !important;
+    border-radius: 14px;
+    padding: 24px 20px !important;
     max-width: 680px;
     width: 100%;
     max-height: 92vh;
@@ -574,38 +567,38 @@
 
   .modal-box h2 {
     font-family: "Unbounded", sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
-    margin: 0 0 2px !important;
+    margin: 0 0 4px !important;
     color: #1A1A2E;
   }
 
   .modal-box .sub {
     color: #5A5A6E;
-    font-size: 11px;
-    margin: 0 0 10px !important;
+    font-size: 14px;
+    margin: 0 0 14px !important;
   }
 
   .modal-box .field {
-    margin-bottom: 6px !important;
+    margin-bottom: 12px !important;
   }
 
   .modal-box .field label {
     display: block;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 600;
     color: #5A5A6E;
-    margin-bottom: 2px !important;
+    margin-bottom: 4px !important;
   }
 
   .modal-box .field input,
   .modal-box .field textarea,
   .modal-box .field select {
     width: 100%;
-    padding: 6px 8px !important;
-    border-radius: 4px;
+    padding: 12px 14px !important;
+    border-radius: 8px;
     border: 1.5px solid #E8ECF0;
-    font-size: 12px;
+    font-size: 16px;
     font-family: "Inter", sans-serif;
     background: #F5F7FA;
     transition: all 0.2s ease;
@@ -613,10 +606,10 @@
   }
 
   .modal-box .field textarea {
-    min-height: 60px;
+    min-height: 100px;
     resize: vertical;
     font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
+    font-size: 14px;
   }
 
   .modal-box .field input:focus,
@@ -625,22 +618,22 @@
     outline: none;
     border-color: #FF6A00;
     background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(255,106,0,0.12);
+    box-shadow: 0 0 0 4px rgba(255,106,0,0.12);
   }
 
   .modal-actions {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-top: 10px !important;
+    gap: 8px;
+    margin-top: 14px !important;
   }
 
   .modal-actions .btn {
     width: 100%;
-    padding: 6px !important;
-    font-size: 12px;
+    padding: 12px !important;
+    font-size: 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     font-family: "Inter", sans-serif;
     font-weight: 600;
     cursor: pointer;
@@ -664,20 +657,20 @@
   }
 
   .hint {
-    font-size: 9px;
+    font-size: 12px;
     color: #9A9AAE;
-    margin-top: 2px !important;
+    margin-top: 4px !important;
     background: #F5F7FA;
-    padding: 3px 6px !important;
-    border-radius: 4px;
+    padding: 6px 10px !important;
+    border-radius: 6px;
     border: 1px solid #E8ECF0;
   }
 
   .hint code {
     background: #FFFFFF;
-    padding: 1px 4px !important;
-    border-radius: 3px;
-    font-size: 8px;
+    padding: 2px 6px !important;
+    border-radius: 4px;
+    font-size: 11px;
     color: #E85D00;
     font-family: "JetBrains Mono", monospace;
     border: 1px solid #E8ECF0;
@@ -687,7 +680,6 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
-  /* ДЕСКТОП — ОГРАНИЧЕНИЕ */
   @media (min-width: 600px) {
     .page-wrap {
       max-width: 600px !important;
@@ -695,65 +687,63 @@
     }
 
     .card {
-      border-radius: 12px !important;
+      border-radius: 14px !important;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
       border: 1px solid #E8ECF0 !important;
-      margin: 12px auto !important;
+      margin: 16px auto !important;
     }
 
     .header {
-      padding: 10px 14px !important;
+      padding: 16px 20px !important;
     }
 
     .content {
-      padding: 10px 14px 80px !important;
+      padding: 16px 20px 80px !important;
     }
 
     .search-wrap {
-      padding: 10px 14px 0 !important;
+      padding: 16px 20px 0 !important;
     }
 
     .article-card {
-      padding: 12px 14px !important;
+      padding: 18px 20px !important;
     }
 
     .fab {
-      width: 52px;
-      height: 52px;
-      font-size: 26px;
-      bottom: 24px;
-      right: 24px;
+      width: 60px;
+      height: 60px;
+      font-size: 32px;
+      bottom: 28px;
+      right: 28px;
     }
   }
 
-  /* SAFE AREA */
   @supports (padding: max(0px)) {
     .fab {
-      bottom: max(12px, env(safe-area-inset-bottom));
-      right: max(10px, env(safe-area-inset-right));
+      bottom: max(20px, env(safe-area-inset-bottom));
+      right: max(16px, env(safe-area-inset-right));
     }
   }
 
   @media (min-width: 600px) {
     @supports (padding: max(0px)) {
       .fab {
-        bottom: max(24px, env(safe-area-inset-bottom));
-        right: max(24px, env(safe-area-inset-right));
+        bottom: max(28px, env(safe-area-inset-bottom));
+        right: max(28px, env(safe-area-inset-right));
       }
     }
   }
 
-  /* СКРОЛЛ */
   ::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
+    width: 4px;
+    height: 4px;
   }
   ::-webkit-scrollbar-track {
     background: #F5F7FA;
   }
   ::-webkit-scrollbar-thumb {
     background: #E8ECF0;
-    border-radius: 3px;
+    border-radius: 4px;
   }
 </style>
 </head>
@@ -812,7 +802,7 @@
 <div class="modal-overlay" id="editModal">
   <div class="modal-box">
     <h2 id="editModalTitle">➕ Новая статья</h2>
-    <p class="sub">Используйте HTML-теги</p>
+    <p class="sub">Используйте HTML-теги для форматирования</p>
     <form id="editArticleForm">
       <input type="hidden" id="editArticleId" value="">
       <div class="field">
@@ -944,7 +934,7 @@ async function loadArticles() {
 // ОТОБРАЖЕНИЕ
 function render(articles) {
   if (!articles || !articles.length) {
-    container.innerHTML = `<div class="empty"><div class="icon">📖</div><p>Пока нет статей</p>${isAdmin ? '<p style="font-size:10px;">Нажмите ➕</p>' : ''}</div>`;
+    container.innerHTML = `<div class="empty"><div class="icon">📖</div><p>Пока нет статей</p>${isAdmin ? '<p style="font-size:14px;">Нажмите ➕</p>' : ''}</div>`;
     return;
   }
 
