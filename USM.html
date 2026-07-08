@@ -12,36 +12,43 @@
 
 <style>
   /* ============================================================
-     ЕДИНЫЙ СТИЛЬ С АВТОРИЗАЦИЕЙ
+     ПЕРЕМЕННЫЕ
      ============================================================ */
-  
-  /* Глобальные переменные — такие же как на странице входа */
   :root {
-    --ink: #1B1E27;
-    --ink-soft: #5B6170;
-    --bg: #F1F2F5;
+    --bg: #F5F7FA;
     --surface: #FFFFFF;
+    --surface-hover: #FAFBFC;
+    --ink: #1A1A2E;
+    --ink-soft: #5A5A6E;
+    --ink-muted: #9A9AAE;
     --orange: #FF6A00;
     --orange-deep: #E85D00;
-    --orange-tint: #FFE9D6;
-    --line: #E4E6EB;
-    --green: #1E9E5A;
-    --red: #D8382B;
+    --orange-light: #FFF0E6;
+    --orange-glow: rgba(255, 106, 0, 0.12);
+    --line: #E8ECF0;
+    --red: #DC3545;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.08);
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
     --font-display: "Unbounded", sans-serif;
     --font-body: "Inter", sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-lg: 20px;
-    --radius-md: 14px;
-    --radius-sm: 8px;
-    --shadow-card: 0 1px 2px rgba(20,22,30,0.04);
   }
 
   /* ============================================================
-     ОСНОВНОЙ ФОН — КАК НА СТРАНИЦЕ ВХОДА
+     ГЛОБАЛЬНЫЕ СТИЛИ
      ============================================================ */
-  html, body {
+  * {
+    -webkit-tap-highlight-color: transparent;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
     min-height: 100vh;
     min-height: 100dvh;
     background: var(--bg);
@@ -51,248 +58,280 @@
   }
 
   /* ============================================================
-     ГРАДИЕНТНЫЙ ФОН КАК НА МОБИЛЬНОЙ ВЕРСИИ ВХОДА
+     ГРАДИЕНТНЫЙ ФОН
      ============================================================ */
-  @media (max-width: 900px) {
-    html, body {
-      min-height: 100dvh;
-      background: linear-gradient(165deg, #20242F 0%, #1B1E27 55%, #23180F 100%);
-    }
+  body {
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(255,106,0,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(255,106,0,0.03) 0%, transparent 50%),
+      var(--bg);
   }
 
   /* ============================================================
-     ОБЕРТКА — КАК НА СТРАНИЦЕ ВХОДА
+     ОБЕРТКА
      ============================================================ */
   .page-wrap {
-    max-width: 1300px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 30px 24px 80px;
+    padding: 20px 16px 60px;
     position: relative;
     z-index: 1;
   }
 
   /* ============================================================
-     ГЛАВНАЯ КАРТОЧКА — КАК .card НА СТРАНИЦЕ ВХОДА
+     ГЛАВНАЯ КАРТОЧКА
      ============================================================ */
-  .glass-card {
+  .card {
     background: var(--surface);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-sm);
     border: 1px solid var(--line);
     overflow: hidden;
     transition: box-shadow 0.3s ease;
-    position: relative;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
   }
 
   /* ============================================================
-     ШАПКА — КАК .brand НА СТРАНИЦЕ ВХОДА
+     ШАПКА — СВЕТЛАЯ
      ============================================================ */
   .header {
-    background: var(--ink);
-    padding: 20px 28px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     flex-wrap: wrap;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 2px solid var(--orange);
   }
 
-  /* Декоративный элемент как на странице входа */
-  .header::before {
-    content: "";
-    position: absolute;
-    right: -80px;
-    bottom: -80px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,106,0,0.2), transparent 70%);
-    pointer-events: none;
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 160px;
   }
 
   .header-icon {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     line-height: 1;
     flex-shrink: 0;
-    position: relative;
-    z-index: 1;
   }
 
   .header h1 {
     font-family: var(--font-display);
-    font-size: clamp(1rem, 3.5vw, 1.4rem);
+    font-size: clamp(1rem, 3vw, 1.3rem);
     font-weight: 600;
     margin: 0;
-    flex: 1;
-    min-width: 100px;
-    color: #fff;
-    position: relative;
-    z-index: 1;
+    color: var(--ink);
     letter-spacing: -0.3px;
   }
 
   .header-actions {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
   }
 
   /* ============================================================
-     КНОПКИ — СТИЛЬ .btn ИЗ СТРАНИЦЫ ВХОДА
+     КНОПКИ
      ============================================================ */
   .btn {
-    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 18px;
     border: none;
     border-radius: var(--radius-sm);
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: background 0.15s ease, transform 0.1s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    transition: all 0.2s ease;
     text-decoration: none;
+    white-space: nowrap;
   }
 
-  .btn-orange {
-    background: var(--orange);
-    color: #fff;
+  .btn:active {
+    transform: scale(0.96);
   }
 
-  .btn-orange:hover {
-    background: var(--orange-deep);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    color: #fff;
-    border: 1.5px solid rgba(255,255,255,0.25);
-  }
-
-  .btn-ghost:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.4);
-  }
-
-  .btn-ghost-light {
-    background: transparent;
+  .btn-back {
+    background: var(--bg);
     color: var(--ink-soft);
     border: 1.5px solid var(--line);
   }
 
-  .btn-ghost-light:hover {
-    background: #F5F6F8;
-    border-color: var(--ink-soft);
+  .btn-back:hover {
+    background: var(--line);
+    color: var(--ink);
   }
 
-  .btn:active {
-    transform: scale(0.98);
+  .btn-add {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(255,106,0,0.25);
   }
 
-  .btn.hidden {
+  .btn-add:hover {
+    background: var(--orange-deep);
+    box-shadow: 0 4px 20px rgba(255,106,0,0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-add.hidden {
+    display: none;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--orange-deep);
+  }
+
+  .btn-secondary {
+    background: var(--bg);
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+  }
+
+  .btn-secondary:hover {
+    background: var(--line);
+  }
+
+  .btn-danger {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .btn-danger:hover {
+    background: #c0392b;
+  }
+
+  .btn-icon-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+  }
+
+  .btn-icon-sm:hover {
+    background: var(--bg);
+  }
+
+  .btn-icon-sm.edit:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: var(--orange-light);
+  }
+
+  .btn-icon-sm.delete:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: #FDEDEB;
+  }
+
+  .btn-icon-sm.hidden {
     display: none;
   }
 
   /* ============================================================
-     ПОИСК — КАК НА СТРАНИЦЕ ВХОДА
+     ПОИСК
      ============================================================ */
   .search-wrap {
-    margin-bottom: 24px;
+    padding: 16px 20px 0;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 14px 18px;
+    padding: 12px 16px;
     border-radius: var(--radius-sm);
     border: 1.5px solid var(--line);
     font-size: 15px;
     font-family: var(--font-body);
-    background: #FBFBFC;
-    transition: border-color 0.15s ease;
+    background: var(--bg);
+    color: var(--ink);
+    transition: all 0.2s ease;
+  }
+
+  .search-wrap input::placeholder {
+    color: var(--ink-muted);
   }
 
   .search-wrap input:focus {
     outline: none;
     border-color: var(--orange);
-    background: #fff;
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--orange-glow);
   }
 
   /* ============================================================
      КОНТЕНТ
      ============================================================ */
   .content {
-    padding: 24px 28px 32px;
+    padding: 16px 20px 24px;
   }
 
   /* ============================================================
-     СТАТЬИ — КАРТОЧКИ В СТИЛЕ .badge-card
+     СТАТЬИ — КАРТОЧКИ
      ============================================================ */
   .articles-grid {
     display: grid;
-    gap: 16px;
+    gap: 12px;
   }
 
   .article-card {
-    position: relative;
+    background: var(--surface);
     border: 1.5px solid var(--line);
     border-radius: var(--radius-md);
-    padding: 20px 22px;
+    padding: 16px 18px;
     cursor: pointer;
-    background: var(--surface);
-    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-    text-align: left;
-  }
-
-  /* Полоска сверху как у .badge-card */
-  .article-card::before {
-    content: "";
-    position: absolute;
-    top: -7px;
-    left: 24px;
-    width: 26px;
-    height: 10px;
-    border-radius: 5px;
-    background: var(--line);
-    transition: background 0.15s ease;
+    transition: all 0.25s ease;
   }
 
   .article-card:hover {
     border-color: var(--orange);
+    box-shadow: 0 4px 16px rgba(255,106,0,0.08);
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(255,106,0,0.12);
   }
 
-  .article-card:hover::before {
-    background: var(--orange);
+  .article-card:active {
+    transform: scale(0.98);
   }
 
   .article-card-header {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 6px;
+    gap: 6px;
+    margin-bottom: 4px;
   }
 
   .article-card h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(0.95rem, 3vw, 1.1rem);
+    font-size: clamp(0.95rem, 2.8vw, 1.1rem);
     margin: 0;
     color: var(--ink);
     word-break: break-word;
   }
 
-  .article-card .article-description {
+  .article-card .desc {
     color: var(--ink-soft);
-    font-size: clamp(0.82rem, 2.3vw, 0.92rem);
-    margin: 4px 0 8px;
+    font-size: clamp(0.82rem, 2.2vw, 0.9rem);
+    margin: 2px 0 6px;
     line-height: 1.5;
     word-break: break-word;
   }
@@ -300,9 +339,9 @@
   .article-card .meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     font-size: 12px;
-    color: var(--ink-soft);
+    color: var(--ink-muted);
   }
 
   .article-card .meta span {
@@ -311,69 +350,37 @@
     gap: 4px;
   }
 
-  /* Админ-кнопки */
-  .admin-actions-on-card {
+  .article-card .admin-actions {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
   }
 
-  .btn-icon {
-    padding: 4px 12px;
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--ink-soft);
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    font-family: var(--font-body);
-  }
-
-  .btn-icon:hover {
-    background: #F5F6F8;
-  }
-
-  .btn-icon-edit:hover {
-    border-color: var(--orange);
-    color: var(--orange);
-  }
-
-  .btn-icon-delete:hover {
-    border-color: var(--red);
-    color: var(--red);
-  }
-
-  .btn-icon.hidden {
-    display: none;
-  }
-
   /* Кнопка разворачивания */
-  .btn-toggle-content {
+  .btn-expand {
     background: none;
     border: none;
-    color: var(--orange-deep);
+    color: var(--orange);
     font-weight: 600;
-    cursor: pointer;
     font-size: 13px;
-    padding: 8px 4px;
+    cursor: pointer;
+    padding: 8px 4px 4px;
     width: 100%;
     text-align: left;
-    transition: color 0.15s ease;
     font-family: var(--font-body);
+    transition: color 0.2s ease;
   }
 
-  .btn-toggle-content:hover {
-    color: var(--orange);
+  .btn-expand:hover {
+    color: var(--orange-deep);
   }
 
   /* ============================================================
      СОДЕРЖИМОЕ СТАТЬИ
      ============================================================ */
-  .article-content {
-    margin-top: 14px;
-    padding-top: 14px;
+  .article-body {
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid var(--line);
     display: none;
     font-size: 14px;
@@ -383,146 +390,142 @@
     overflow-wrap: break-word;
   }
 
-  .article-content.expanded {
+  .article-body.open {
     display: block;
-    animation: fadeSlideIn 0.3s ease;
+    animation: fadeSlide 0.25s ease;
   }
 
-  @keyframes fadeSlideIn {
-    from { opacity: 0; transform: translateY(-6px); }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Стили для контента внутри статьи */
-  .article-content ul {
+  /* Стили для содержимого */
+  .article-body ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 10px 0;
+    margin: 0 0 8px;
   }
 
-  .article-content ul li {
+  .article-body ul li {
     padding-left: 22px;
     position: relative;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     line-height: 1.6;
   }
 
-  .article-content ul li::before {
-    content: "●";
+  .article-body ul li::before {
+    content: "•";
     color: var(--orange);
     position: absolute;
     left: 2px;
     top: 0;
+    font-weight: 700;
   }
 
-  .article-content .script-block {
-    background: var(--orange-tint);
+  .article-body .script-box {
+    background: var(--orange-light);
     padding: 10px 14px;
     border-radius: var(--radius-sm);
-    margin: 8px 0;
+    margin: 6px 0;
     border-left: 3px solid var(--orange);
+    color: var(--ink);
   }
 
-  .article-content .note-block {
+  .article-body .note-box {
     background: #F0F7FF;
     padding: 10px 14px;
     border-radius: var(--radius-sm);
-    margin: 8px 0;
+    margin: 6px 0;
     border: 1px solid #E0EDF5;
   }
 
-  .article-content .forbidden-block {
+  .article-body .danger-box {
     background: #FDEDEB;
     padding: 10px 14px;
     border-radius: var(--radius-sm);
-    margin: 8px 0;
+    margin: 6px 0;
     border-left: 3px solid var(--red);
   }
 
-  .article-content .forbidden-block .title {
+  .article-body .danger-box .label {
     font-weight: 700;
     color: var(--red);
-    margin-bottom: 4px;
   }
 
-  .article-content .table-wrap {
+  .article-body .table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin: 10px 0;
+    margin: 8px 0;
   }
 
-  .article-content table {
+  .article-body table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
-    min-width: 280px;
+    min-width: 260px;
   }
 
-  .article-content table th {
+  .article-body table th {
     border-bottom: 2px solid var(--orange);
-    padding: 8px 6px;
+    padding: 6px 6px;
     text-align: left;
     color: var(--orange-deep);
     font-weight: 600;
   }
 
-  .article-content table td {
+  .article-body table td {
     border-bottom: 1px solid var(--line);
-    padding: 8px 6px;
+    padding: 6px 6px;
     vertical-align: top;
   }
 
-  .article-content table td:last-child {
-    color: var(--red);
-  }
-
-  .article-content .badge-kpi {
+  .article-body .badge-kpi {
+    display: inline-block;
     background: var(--orange);
     color: #fff;
-    padding: 3px 14px;
+    padding: 2px 14px;
     border-radius: 30px;
     font-size: 11px;
     font-weight: 600;
-    display: inline-block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
-  .article-content .flex-cards {
+  .article-body .flex-grid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin: 10px 0;
+    gap: 10px;
+    margin: 8px 0;
   }
 
-  .article-content .flex-card {
-    background: #F8F9FA;
+  .article-body .flex-grid .item {
+    background: var(--bg);
+    padding: 12px 14px;
     border-radius: var(--radius-sm);
-    padding: 14px 16px;
     border: 1px solid var(--line);
   }
 
-  .article-content .flex-card .card-title {
+  .article-body .flex-grid .item .title {
     font-weight: 700;
     color: var(--orange-deep);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
-  .article-content .flex-card p {
+  .article-body .flex-grid .item p {
     margin: 0;
     font-size: 14px;
-    line-height: 1.5;
     color: var(--ink-soft);
   }
 
-  .article-content .footer-note {
-    margin-top: 16px;
-    padding: 14px 18px;
-    background: var(--orange-tint);
+  .article-body .footer-note {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--orange-light);
     border-radius: var(--radius-sm);
-    border: 1px solid rgba(255,106,0,0.1);
     text-align: center;
     font-weight: 700;
     color: var(--orange-deep);
+    border: 1px solid rgba(255,106,0,0.08);
   }
 
   /* ============================================================
@@ -530,29 +533,29 @@
      ============================================================ */
   .empty-state {
     text-align: center;
-    padding: 50px 20px;
-    color: var(--ink-soft);
+    padding: 40px 16px;
+    color: var(--ink-muted);
   }
 
   .empty-state .icon {
-    font-size: 40px;
-    margin-bottom: 10px;
+    font-size: 36px;
+    margin-bottom: 8px;
     opacity: 0.4;
   }
 
   .empty-state p {
-    margin: 4px 0;
+    margin: 2px 0;
   }
 
   /* ============================================================
-     МОДАЛКИ — КАК .card НА СТРАНИЦЕ ВХОДА
+     МОДАЛКИ
      ============================================================ */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -564,26 +567,25 @@
     display: flex;
   }
 
-  .modal-content {
+  .modal-box {
     background: var(--surface);
     border-radius: var(--radius-lg);
-    padding: 28px 24px;
-    max-width: 700px;
+    padding: 24px 20px;
+    max-width: 680px;
     width: 100%;
     max-height: 92vh;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    box-shadow: var(--shadow-lg);
     border: 1px solid var(--line);
-    box-shadow: var(--shadow-card);
-    animation: slideUp 0.3s ease;
+    animation: modalIn 0.3s ease;
   }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
   }
 
-  .modal-content h2 {
+  .modal-box h2 {
     font-family: var(--font-display);
     font-size: 20px;
     font-weight: 600;
@@ -591,17 +593,17 @@
     color: var(--ink);
   }
 
-  .modal-content .sub {
+  .modal-box .sub {
     color: var(--ink-soft);
-    margin: 0 0 16px;
     font-size: 14px;
+    margin: 0 0 16px;
   }
 
-  .modal-content .field {
-    margin-bottom: 14px;
+  .modal-box .field {
+    margin-bottom: 12px;
   }
 
-  .modal-content .field label {
+  .modal-box .field label {
     display: block;
     font-size: 13px;
     font-weight: 600;
@@ -609,99 +611,62 @@
     margin-bottom: 4px;
   }
 
-  .modal-content .field input,
-  .modal-content .field textarea,
-  .modal-content .field select {
+  .modal-box .field input,
+  .modal-box .field textarea,
+  .modal-box .field select {
     width: 100%;
     padding: 10px 14px;
     border-radius: var(--radius-sm);
     border: 1.5px solid var(--line);
     font-size: 14px;
     font-family: var(--font-body);
-    background: #FBFBFC;
-    transition: border-color 0.15s ease;
+    background: var(--bg);
+    transition: all 0.2s ease;
+    color: var(--ink);
   }
 
-  .modal-content .field textarea {
-    min-height: 120px;
+  .modal-box .field textarea {
+    min-height: 100px;
     resize: vertical;
     font-family: var(--font-mono);
     font-size: 13px;
     line-height: 1.5;
   }
 
-  .modal-content .field input:focus,
-  .modal-content .field textarea:focus,
-  .modal-content .field select:focus {
+  .modal-box .field input:focus,
+  .modal-box .field textarea:focus,
+  .modal-box .field select:focus {
     outline: none;
     border-color: var(--orange);
-    background: #fff;
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--orange-glow);
   }
 
   .modal-actions {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     margin-top: 16px;
   }
 
   .modal-actions .btn {
     width: 100%;
-    padding: 12px 16px;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: var(--font-body);
-    font-weight: 600;
+    padding: 12px;
     font-size: 14px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    text-align: center;
   }
 
-  .modal-actions .btn-primary {
-    background: var(--orange);
-    color: #fff;
-  }
-
-  .modal-actions .btn-primary:hover {
-    background: var(--orange-deep);
-  }
-
-  .modal-actions .btn-cancel {
-    background: #F5F6F8;
-    color: var(--ink-soft);
-    border: 1.5px solid var(--line);
-  }
-
-  .modal-actions .btn-cancel:hover {
-    background: var(--line);
-  }
-
-  .modal-actions .btn-danger {
-    background: var(--red);
-    color: #fff;
-  }
-
-  .modal-actions .btn-danger:hover {
-    background: #C0392B;
-  }
-
-  .modal-actions .btn:active {
-    transform: scale(0.98);
-  }
-
-  .formatting-hint {
+  .hint {
     font-size: 12px;
-    color: var(--ink-soft);
+    color: var(--ink-muted);
     margin-top: 4px;
-    background: #F5F6F8;
+    background: var(--bg);
     padding: 6px 10px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--line);
   }
 
-  .formatting-hint code {
-    background: #fff;
+  .hint code {
+    background: var(--surface);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 11px;
@@ -714,92 +679,114 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
-  /* Телефоны */
-  @media (max-width: 767px) {
+  @media (max-width: 480px) {
     .page-wrap {
-      padding: 12px 12px 60px;
+      padding: 10px 8px 40px;
     }
 
     .header {
-      padding: 14px 16px;
-      border-bottom: 2px solid var(--orange);
+      padding: 12px 14px;
+      gap: 8px;
+    }
+
+    .header-left {
+      gap: 8px;
+      min-width: 120px;
     }
 
     .header-icon {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
     }
 
     .header h1 {
-      font-size: clamp(0.85rem, 4vw, 1.1rem);
-    }
-
-    .content {
-      padding: 14px 14px 20px;
-    }
-
-    .article-card {
-      padding: 14px 14px;
-    }
-
-    .article-card h3 {
-      font-size: clamp(0.85rem, 3.5vw, 1rem);
-    }
-
-    .article-content {
-      font-size: 13px;
-    }
-
-    .modal-content {
-      padding: 18px 14px;
-    }
-
-    .modal-actions .btn {
-      font-size: 13px;
-      padding: 10px 14px;
+      font-size: clamp(0.85rem, 4vw, 1rem);
     }
 
     .btn {
       font-size: 12px;
       padding: 8px 14px;
     }
-  }
 
-  /* Телефоны с очень маленьким экраном */
-  @media (max-width: 360px) {
-    .page-wrap {
-      padding: 6px 6px 40px;
+    .search-wrap {
+      padding: 12px 14px 0;
     }
 
-    .header {
-      padding: 10px 12px;
-    }
-
-    .header-icon {
-      font-size: 1.3rem;
+    .search-wrap input {
+      padding: 10px 14px;
+      font-size: 14px;
     }
 
     .content {
-      padding: 10px 10px 16px;
+      padding: 12px 14px 16px;
     }
 
     .article-card {
-      padding: 10px 10px;
+      padding: 12px 14px;
     }
 
-    .btn {
-      font-size: 10px;
-      padding: 6px 10px;
+    .article-card h3 {
+      font-size: clamp(0.82rem, 3.5vw, 0.95rem);
+    }
+
+    .article-body {
+      font-size: 13px;
+    }
+
+    .modal-box {
+      padding: 16px 14px;
+    }
+
+    .modal-actions .btn {
+      font-size: 13px;
+      padding: 10px;
     }
   }
 
-  /* Планшеты и десктоп */
-  @media (min-width: 768px) {
+  @media (min-width: 481px) and (max-width: 768px) {
     .page-wrap {
-      padding: 40px 24px 80px;
+      padding: 16px 16px 50px;
+    }
+
+    .header {
+      padding: 14px 18px;
     }
 
     .content {
-      padding: 28px 32px 36px;
+      padding: 14px 18px 20px;
+    }
+
+    .search-wrap {
+      padding: 14px 18px 0;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .page-wrap {
+      padding: 32px 24px 80px;
+    }
+
+    .header {
+      padding: 18px 28px;
+    }
+
+    .header-actions {
+      gap: 12px;
+    }
+
+    .content {
+      padding: 18px 28px 28px;
+    }
+
+    .search-wrap {
+      padding: 18px 28px 0;
+    }
+
+    .articles-grid {
+      gap: 14px;
+    }
+
+    .article-card {
+      padding: 20px 24px;
     }
 
     .article-card-header {
@@ -807,7 +794,7 @@
       align-items: flex-start;
     }
 
-    .admin-actions-on-card {
+    .article-card .admin-actions {
       flex: none;
     }
 
@@ -819,29 +806,37 @@
       flex: 1;
     }
 
-    .modal-content {
+    .modal-box {
       padding: 32px 36px;
+    }
+
+    .article-body .flex-grid {
+      flex-direction: row;
+    }
+
+    .article-body .flex-grid .item {
+      flex: 1;
     }
   }
 
   /* ============================================================
-     БЕЗОПАСНАЯ ЗОНА ДЛЯ IPHONE
+     SAFE AREA
      ============================================================ */
   @supports (padding: max(0px)) {
     .page-wrap {
-      padding-left: max(12px, env(safe-area-inset-left));
-      padding-right: max(12px, env(safe-area-inset-right));
-      padding-top: max(12px, env(safe-area-inset-top));
-      padding-bottom: max(60px, env(safe-area-inset-bottom));
+      padding-left: max(8px, env(safe-area-inset-left));
+      padding-right: max(8px, env(safe-area-inset-right));
+      padding-top: max(8px, env(safe-area-inset-top));
+      padding-bottom: max(40px, env(safe-area-inset-bottom));
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 769px) {
     @supports (padding: max(0px)) {
       .page-wrap {
         padding-left: max(24px, env(safe-area-inset-left));
         padding-right: max(24px, env(safe-area-inset-right));
-        padding-top: max(40px, env(safe-area-inset-top));
+        padding-top: max(32px, env(safe-area-inset-top));
         padding-bottom: max(80px, env(safe-area-inset-bottom));
       }
     }
@@ -851,52 +846,55 @@
      СКРОЛЛ
      ============================================================ */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
 
   ::-webkit-scrollbar-track {
     background: var(--bg);
-    border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb {
     background: var(--line);
-    border-radius: 3px;
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--ink-soft);
+    background: var(--ink-muted);
   }
 </style>
 </head>
 <body>
 
 <div class="page-wrap">
-  <div class="glass-card">
+
+  <div class="card">
 
     <!-- ============================================================
-         ШАПКА — СТИЛЬ .brand ИЗ СТРАНИЦЫ ВХОДА
+         ШАПКА
          ============================================================ -->
     <div class="header">
-      <div class="header-icon">📚</div>
-      <h1>Материалы для УСМ</h1>
-      <div class="header-actions">
-        <a href="index.html" class="btn btn-ghost">← Назад</a>
-        <button class="btn btn-orange hidden" id="addArticleBtn">➕ Добавить</button>
+      <div class="header-left">
+        <span class="header-icon">📚</span>
+        <h1>Материалы для УСМ</h1>
       </div>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-back">← Назад</a>
+        <button class="btn btn-add hidden" id="addArticleBtn">➕ Добавить</button>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         ПОИСК
+         ============================================================ -->
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="🔍 Поиск по статьям..." />
     </div>
 
     <!-- ============================================================
          КОНТЕНТ
          ============================================================ -->
     <div class="content">
-      <!-- Поиск -->
-      <div class="search-wrap">
-        <input type="text" id="searchInput" placeholder="🔍 Поиск по статьям..." />
-      </div>
-
-      <!-- Список статей -->
       <div id="articlesContainer" class="articles-grid">
         <div class="empty-state">
           <div class="icon">⏳</div>
@@ -909,10 +907,10 @@
 </div>
 
 <!-- ============================================================
-     МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ
+     МОДАЛКА СОЗДАНИЯ / РЕДАКТИРОВАНИЯ
      ============================================================ -->
 <div class="modal-overlay" id="editModal">
-  <div class="modal-content">
+  <div class="modal-box">
     <h2 id="editModalTitle">➕ Новая статья</h2>
     <p class="sub">Используйте HTML-теги для форматирования</p>
 
@@ -920,7 +918,7 @@
       <input type="hidden" id="editArticleId" value="">
 
       <div class="field">
-        <label for="editArticleTitle">Название статьи *</label>
+        <label for="editArticleTitle">Название *</label>
         <input type="text" id="editArticleTitle" required placeholder="Введите название">
       </div>
 
@@ -931,8 +929,8 @@
 
       <div class="field">
         <label for="editArticleContent">Содержание *</label>
-        <textarea id="editArticleContent" required placeholder="Полный текст статьи с HTML-форматированием..."></textarea>
-        <div class="formatting-hint">
+        <textarea id="editArticleContent" required placeholder="Полный текст с HTML-форматированием..."></textarea>
+        <div class="hint">
           💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;div class="..."&gt;</code>
         </div>
       </div>
@@ -949,7 +947,7 @@
       </div>
 
       <div class="modal-actions">
-        <button type="button" class="btn btn-cancel" id="cancelEditBtn">Отмена</button>
+        <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
         <button type="submit" class="btn btn-primary" id="saveArticleBtn">Сохранить</button>
       </div>
     </form>
@@ -960,12 +958,12 @@
      МОДАЛКА УДАЛЕНИЯ
      ============================================================ -->
 <div class="modal-overlay" id="deleteModal">
-  <div class="modal-content">
+  <div class="modal-box">
     <h2>🗑️ Удалить статью?</h2>
     <p class="sub">Это действие нельзя отменить.</p>
     <p id="deleteArticleTitle" style="font-weight:600; color: var(--orange-deep); word-break:break-word;"></p>
     <div class="modal-actions">
-      <button type="button" class="btn btn-cancel" id="cancelDeleteBtn">Отмена</button>
+      <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Отмена</button>
       <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
     </div>
   </div>
@@ -994,42 +992,41 @@ let allArticles = [];
 let editingId = null;
 let deletingId = null;
 
-const articlesContainer = document.getElementById('articlesContainer');
+const container = document.getElementById('articlesContainer');
 const searchInput = document.getElementById('searchInput');
-const addArticleBtn = document.getElementById('addArticleBtn');
+const addBtn = document.getElementById('addArticleBtn');
 
 const editModal = document.getElementById('editModal');
-const editModalTitle = document.getElementById('editModalTitle');
-const editArticleForm = document.getElementById('editArticleForm');
-const editArticleId = document.getElementById('editArticleId');
-const editArticleTitle = document.getElementById('editArticleTitle');
-const editArticleDescription = document.getElementById('editArticleDescription');
-const editArticleContent = document.getElementById('editArticleContent');
-const editArticleCategory = document.getElementById('editArticleCategory');
-const cancelEditBtn = document.getElementById('cancelEditBtn');
-const saveArticleBtn = document.getElementById('saveArticleBtn');
+const editTitle = document.getElementById('editModalTitle');
+const editForm = document.getElementById('editArticleForm');
+const editId = document.getElementById('editArticleId');
+const editName = document.getElementById('editArticleTitle');
+const editDesc = document.getElementById('editArticleDescription');
+const editContent = document.getElementById('editArticleContent');
+const editCat = document.getElementById('editArticleCategory');
+const cancelEdit = document.getElementById('cancelEditBtn');
+const saveBtn = document.getElementById('saveArticleBtn');
 
 const deleteModal = document.getElementById('deleteModal');
-const deleteArticleTitle = document.getElementById('deleteArticleTitle');
-const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+const deleteTitle = document.getElementById('deleteArticleTitle');
+const cancelDelete = document.getElementById('cancelDeleteBtn');
+const confirmDelete = document.getElementById('confirmDeleteBtn');
 
 async function loadArticles() {
   try {
     const q = query(collection(db, "articles"), where("role", "==", ROLE), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
+    const snap = await getDocs(q);
     allArticles = [];
-    snapshot.forEach(doc => allArticles.push({ id: doc.id, ...doc.data() }));
-    renderArticles(allArticles);
-  } catch (error) {
-    console.error("Ошибка загрузки:", error);
-    articlesContainer.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><p>Не удалось загрузить статьи</p><p style="font-size:13px; color:var(--red);">${error.message}</p></div>`;
+    snap.forEach(d => allArticles.push({ id: d.id, ...d.data() }));
+    render(allArticles);
+  } catch (e) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><p>Ошибка загрузки</p><p style="font-size:13px;color:var(--red);">${e.message}</p></div>`;
   }
 }
 
-function renderArticles(articles) {
-  if (!articles || articles.length === 0) {
-    articlesContainer.innerHTML = `
+function render(articles) {
+  if (!articles || !articles.length) {
+    container.innerHTML = `
       <div class="empty-state">
         <div class="icon">📖</div>
         <p>Пока нет статей</p>
@@ -1038,51 +1035,53 @@ function renderArticles(articles) {
     return;
   }
 
-  articlesContainer.innerHTML = articles.map(article => `
-    <div class="article-card" data-id="${article.id}">
+  container.innerHTML = articles.map(a => `
+    <div class="article-card" data-id="${a.id}">
       <div class="article-card-header">
-        <h3>${article.title || 'Без названия'}</h3>
-        <div class="admin-actions-on-card">
-          <button class="btn-icon btn-icon-edit ${isAdmin ? '' : 'hidden'}" data-id="${article.id}">✏️</button>
-          <button class="btn-icon btn-icon-delete ${isAdmin ? '' : 'hidden'}" data-id="${article.id}">🗑️</button>
+        <div style="flex:1;">
+          <h3>${a.title || 'Без названия'}</h3>
+          ${a.description ? `<div class="desc">${a.description}</div>` : ''}
+        </div>
+        <div class="admin-actions">
+          <button class="btn-icon-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
+          <button class="btn-icon-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
         </div>
       </div>
-      ${article.description ? `<p class="article-description">${article.description}</p>` : ''}
       <div class="meta">
-        <span>📅 ${formatDate(article.createdAt)}</span>
-        ${article.category ? `<span>🏷️ ${article.category}</span>` : ''}
-        ${article.authorEmail ? `<span>✍️ ${article.authorEmail}</span>` : ''}
+        <span>📅 ${formatDate(a.createdAt)}</span>
+        ${a.category ? `<span>🏷️ ${a.category}</span>` : ''}
+        ${a.authorEmail ? `<span>✍️ ${a.authorEmail}</span>` : ''}
       </div>
-      <div class="article-content" id="content-${article.id}">${article.content || '<p>Содержание не добавлено</p>'}</div>
-      <button class="btn-toggle-content" data-id="${article.id}">📖 Читать полностью</button>
+      <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
+      <button class="btn-expand" data-id="${a.id}">📖 Читать полностью</button>
     </div>
   `).join('');
 
-  document.querySelectorAll('.btn-toggle-content').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  document.querySelectorAll('.btn-expand').forEach(b => {
+    b.addEventListener('click', (e) => {
       e.stopPropagation();
-      const id = btn.dataset.id;
-      const content = document.getElementById(`content-${id}`);
-      if (content) {
-        content.classList.toggle('expanded');
-        btn.textContent = content.classList.contains('expanded') ? '📕 Свернуть' : '📖 Читать полностью';
+      const id = b.dataset.id;
+      const body = document.getElementById(`body-${id}`);
+      if (body) {
+        body.classList.toggle('open');
+        b.textContent = body.classList.contains('open') ? '📕 Свернуть' : '📖 Читать полностью';
       }
     });
   });
 
-  document.querySelectorAll('.btn-icon-edit').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  document.querySelectorAll('.edit').forEach(b => {
+    b.addEventListener('click', (e) => {
       e.stopPropagation();
-      const article = allArticles.find(a => a.id === btn.dataset.id);
-      if (article) openEditModal(article);
+      const a = allArticles.find(x => x.id === b.dataset.id);
+      if (a) openEdit(a);
     });
   });
 
-  document.querySelectorAll('.btn-icon-delete').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  document.querySelectorAll('.delete').forEach(b => {
+    b.addEventListener('click', (e) => {
       e.stopPropagation();
-      const article = allArticles.find(a => a.id === btn.dataset.id);
-      if (article) openDeleteModal(article);
+      const a = allArticles.find(x => x.id === b.dataset.id);
+      if (a) openDelete(a);
     });
   });
 }
@@ -1097,102 +1096,102 @@ function formatDate(ts) {
 
 searchInput.addEventListener('input', (e) => {
   const q = e.target.value.toLowerCase().trim();
-  if (!q) { renderArticles(allArticles); return; }
-  renderArticles(allArticles.filter(a =>
+  if (!q) { render(allArticles); return; }
+  render(allArticles.filter(a =>
     (a.title || '').toLowerCase().includes(q) ||
     (a.description || '').toLowerCase().includes(q) ||
     (a.content || '').toLowerCase().includes(q)
   ));
 });
 
-function openEditModal(article = null) {
-  if (article) {
-    editModalTitle.textContent = '✏️ Редактировать';
-    editArticleId.value = article.id;
-    editArticleTitle.value = article.title || '';
-    editArticleDescription.value = article.description || '';
-    editArticleContent.value = article.content || '';
-    editArticleCategory.value = article.category || 'general';
-    saveArticleBtn.textContent = 'Обновить';
-    editingId = article.id;
+function openEdit(a = null) {
+  if (a) {
+    editTitle.textContent = '✏️ Редактировать';
+    editId.value = a.id;
+    editName.value = a.title || '';
+    editDesc.value = a.description || '';
+    editContent.value = a.content || '';
+    editCat.value = a.category || 'general';
+    saveBtn.textContent = 'Обновить';
+    editingId = a.id;
   } else {
-    editModalTitle.textContent = '➕ Новая статья';
-    editArticleId.value = '';
-    editArticleTitle.value = '';
-    editArticleDescription.value = '';
-    editArticleContent.value = '';
-    editArticleCategory.value = 'general';
-    saveArticleBtn.textContent = 'Добавить';
+    editTitle.textContent = '➕ Новая статья';
+    editId.value = '';
+    editName.value = '';
+    editDesc.value = '';
+    editContent.value = '';
+    editCat.value = 'general';
+    saveBtn.textContent = 'Добавить';
     editingId = null;
   }
   editModal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
-function openDeleteModal(article) {
-  deletingId = article.id;
-  deleteArticleTitle.textContent = `"${article.title || 'Без названия'}"`;
+function openDelete(a) {
+  deletingId = a.id;
+  deleteTitle.textContent = `"${a.title || 'Без названия'}"`;
   deleteModal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
-function closeEditModal() {
+function closeEdit() {
   editModal.classList.remove('active');
   document.body.style.overflow = '';
-  editArticleForm.reset();
+  editForm.reset();
 }
 
-function closeDeleteModal() {
+function closeDelete() {
   deleteModal.classList.remove('active');
   document.body.style.overflow = '';
   deletingId = null;
 }
 
-cancelEditBtn.addEventListener('click', closeEditModal);
-cancelDeleteBtn.addEventListener('click', closeDeleteModal);
-editModal.addEventListener('click', (e) => { if (e.target === editModal) closeEditModal(); });
-deleteModal.addEventListener('click', (e) => { if (e.target === deleteModal) closeDeleteModal(); });
+cancelEdit.addEventListener('click', closeEdit);
+cancelDelete.addEventListener('click', closeDelete);
+editModal.addEventListener('click', e => { if (e.target === editModal) closeEdit(); });
+deleteModal.addEventListener('click', e => { if (e.target === deleteModal) closeDelete(); });
 
-editArticleForm.addEventListener('submit', async (e) => {
+editForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const title = editArticleTitle.value.trim();
-  const description = editArticleDescription.value.trim();
-  const content = editArticleContent.value.trim();
-  const category = editArticleCategory.value;
+  const title = editName.value.trim();
+  const desc = editDesc.value.trim();
+  const content = editContent.value.trim();
+  const cat = editCat.value;
   if (!title || !content) { alert('Заполните название и содержание'); return; }
   try {
     if (editingId) {
-      await updateDoc(doc(db, 'articles', editingId), { title, description, content, category, updatedAt: serverTimestamp() });
+      await updateDoc(doc(db, 'articles', editingId), { title, description: desc, content, category: cat, updatedAt: serverTimestamp() });
     } else {
-      await addDoc(collection(db, 'articles'), { title, description, content, category, role: ROLE, authorUid: currentUser?.uid, authorEmail: currentUser?.email, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+      await addDoc(collection(db, 'articles'), { title, description: desc, content, category: cat, role: ROLE, authorUid: currentUser?.uid, authorEmail: currentUser?.email, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
     }
-    closeEditModal();
+    closeEdit();
     await loadArticles();
-  } catch (error) {
-    console.error('Ошибка сохранения:', error);
-    alert('Не удалось сохранить статью');
+  } catch (e) {
+    alert('Ошибка сохранения');
+    console.error(e);
   }
 });
 
-confirmDeleteBtn.addEventListener('click', async () => {
+confirmDelete.addEventListener('click', async () => {
   if (!deletingId) return;
   try {
     await deleteDoc(doc(db, 'articles', deletingId));
-    closeDeleteModal();
+    closeDelete();
     await loadArticles();
-  } catch (error) {
-    console.error('Ошибка удаления:', error);
-    alert('Не удалось удалить статью');
+  } catch (e) {
+    alert('Ошибка удаления');
+    console.error(e);
   }
 });
 
-addArticleBtn.addEventListener('click', () => openEditModal(null));
+addBtn.addEventListener('click', () => openEdit(null));
 
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
   if (user) {
     isAdmin = user.email === ADMIN_EMAIL;
-    if (isAdmin) addArticleBtn.classList.remove('hidden');
+    if (isAdmin) addBtn.classList.remove('hidden');
     loadArticles();
   } else {
     window.location.href = 'index.html';
@@ -1201,8 +1200,8 @@ onAuthStateChanged(auth, (user) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    if (editModal.classList.contains('active')) closeEditModal();
-    if (deleteModal.classList.contains('active')) closeDeleteModal();
+    if (editModal.classList.contains('active')) closeEdit();
+    if (deleteModal.classList.contains('active')) closeDelete();
   }
 });
 </script>
