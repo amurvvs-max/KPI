@@ -1,7 +1,7 @@
 /* =====================================================================
 ТОКЕНЫ
 Тема: "бейдж сотрудника" — карточки должностей выглядят как ID-карты.
-Палитра: холодный нейтральный фон + фирменный оранжевый акцент (DNS).
+Палитра: холодный нейтральный фон + фирменный оранжевый акцент.
 ===================================================================== */
 :root {
   --ink: #1B1E27;
@@ -281,7 +281,7 @@ a { color: inherit; }
 }
 .loading-msg.show { display: block; }
 
-/* ---------- Badge / position cards (signature element) ---------- */
+/* ---------- Badge / position cards ---------- */
 .badge-grid {
   display: grid;
   gap: 14px;
@@ -342,10 +342,18 @@ a { color: inherit; }
   top: 24px;
   right: 24px;
   font-size: 13px;
-  color: var(--ink-soft);
+  color: var(--orange) !important;
   text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
-.top-right-link:hover { color: var(--ink); }
+.top-right-link:hover {
+  color: var(--orange-deep) !important;
+  transform: translateY(-1px);
+}
+.top-right-link:active {
+  transform: scale(0.95);
+}
 
 .user-chip {
   display: flex;
@@ -364,7 +372,6 @@ a { color: inherit; }
 МОДАЛЬНОЕ ОКНО С ПОДСКАЗКОЙ
 ===================================================================== */
 
-/* Кнопка помощи - ТОЛЬКО НА МОБИЛЬНЫХ */
 .help-btn-mobile {
   position: absolute;
   top: 14px;
@@ -378,7 +385,7 @@ a { color: inherit; }
   -webkit-backdrop-filter: blur(8px);
   color: var(--orange);
   cursor: pointer;
-  display: none; /* Скрыто на десктопе */
+  display: none;
   align-items: center;
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -392,17 +399,9 @@ a { color: inherit; }
   border-color: var(--orange);
   box-shadow: 0 0 30px rgba(255, 106, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.08);
 }
+.help-btn-mobile:active { transform: scale(0.92); }
+.help-btn-mobile:focus-visible { outline: 2px solid var(--orange-deep); outline-offset: 3px; }
 
-.help-btn-mobile:active {
-  transform: scale(0.92);
-}
-
-.help-btn-mobile:focus-visible {
-  outline: 2px solid var(--orange-deep);
-  outline-offset: 3px;
-}
-
-/* Анимация мягкого свечения */
 @keyframes glow {
   0%, 100% {
     box-shadow: 0 0 20px rgba(255, 106, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -411,36 +410,24 @@ a { color: inherit; }
     box-shadow: 0 0 30px rgba(255, 106, 0, 0.3), 0 0 60px rgba(255, 106, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
   }
 }
-
-.help-btn-mobile {
-  animation: glow 2.5s ease-in-out infinite;
-}
-
-/* Состояние "уже использовали" - полупрозрачная */
+.help-btn-mobile { animation: glow 2.5s ease-in-out infinite; }
 .help-btn-mobile.was-used {
   opacity: 0.4;
   animation: none;
   border-color: rgba(255, 106, 0, 0.15);
   box-shadow: 0 0 10px rgba(255, 106, 0, 0.05);
 }
-
 .help-btn-mobile.was-used:hover {
   opacity: 0.8;
   border-color: rgba(255, 106, 0, 0.3);
   box-shadow: 0 0 20px rgba(255, 106, 0, 0.1);
 }
 
-/* Показываем только на мобильных */
 @media (max-width: 900px) {
-  .help-btn-mobile {
-    display: flex;
-  }
+  .help-btn-mobile { display: flex; }
 }
-
 @media (min-width: 901px) {
-  .help-btn-mobile {
-    display: none !important;
-  }
+  .help-btn-mobile { display: none !important; }
 }
 
 /* Оверлей модалки */
@@ -459,13 +446,11 @@ a { color: inherit; }
   z-index: 1000;
   padding: 20px;
 }
-
 .modal-overlay.active {
   opacity: 1;
   visibility: visible;
 }
 
-/* Само модальное окно */
 .modal {
   background: var(--surface);
   border-radius: var(--radius-lg);
@@ -478,12 +463,10 @@ a { color: inherit; }
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
 }
-
 .modal-overlay.active .modal {
   transform: scale(1) translateY(0);
 }
 
-/* Кнопка закрытия */
 .modal-close {
   position: absolute;
   top: 16px;
@@ -501,29 +484,15 @@ a { color: inherit; }
   transition: all 0.2s ease;
   padding: 0;
 }
-
 .modal-close:hover {
   background: #F5F6F8;
   color: var(--ink);
   transform: rotate(90deg);
 }
+.modal-close svg { width: 20px; height: 20px; }
 
-.modal-close svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* Контент модалки */
-.modal-content {
-  padding: 40px 36px 36px;
-}
-
-.modal-icon {
-  font-size: 48px;
-  line-height: 1;
-  margin-bottom: 8px;
-  /* Анимация wave удалена, иконка статична */
-}
+.modal-content { padding: 40px 36px 36px; }
+.modal-icon { font-size: 48px; line-height: 1; margin-bottom: 8px; }
 
 .modal-title {
   font-family: var(--font-display);
@@ -548,13 +517,8 @@ a { color: inherit; }
   margin: 20px 0;
 }
 
-.modal-section {
-  margin-bottom: 8px;
-}
-
-.modal-section:last-of-type {
-  margin-bottom: 0;
-}
+.modal-section { margin-bottom: 8px; }
+.modal-section:last-of-type { margin-bottom: 0; }
 
 .modal-section-title {
   font-weight: 600;
@@ -570,15 +534,8 @@ a { color: inherit; }
   line-height: 1.8;
   color: var(--ink-soft);
 }
-
-.modal-list li {
-  margin-bottom: 2px;
-}
-
-.modal-list li::marker {
-  color: var(--orange);
-  font-weight: 600;
-}
+.modal-list li { margin-bottom: 2px; }
+.modal-list li::marker { color: var(--orange); font-weight: 600; }
 
 .modal-text {
   font-size: 14px;
@@ -592,7 +549,6 @@ a { color: inherit; }
   font-weight: 600;
 }
 
-/* Кнопка "Понятно!" */
 .modal-btn {
   width: 100%;
   padding: 13px 16px;
@@ -607,60 +563,29 @@ a { color: inherit; }
   transition: all 0.2s ease;
   margin-top: 24px;
 }
-
 .modal-btn:hover {
   background: var(--orange-deep);
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(255, 106, 0, 0.3);
 }
+.modal-btn:active { transform: scale(0.98); }
 
-.modal-btn:active {
-  transform: scale(0.98);
-}
-
-/* Адаптивность для мобильных */
 @media (max-width: 500px) {
-  .modal-content {
-    padding: 32px 24px 28px;
-  }
-  
-  .modal-title {
-    font-size: 20px;
-  }
-  
-  .modal-icon {
-    font-size: 40px;
-  }
-  
-  .help-btn-mobile {
-    width: 34px;
-    height: 34px;
-    top: 10px;
-    right: 10px;
-  }
-  
-  .help-btn-mobile svg {
-    width: 18px;
-    height: 18px;
-  }
+  .modal-content { padding: 32px 24px 28px; }
+  .modal-title { font-size: 20px; }
+  .modal-icon { font-size: 40px; }
+  .help-btn-mobile { width: 34px; height: 34px; top: 10px; right: 10px; }
+  .help-btn-mobile svg { width: 18px; height: 18px; }
 }
 
-/* Скрываем скролл при открытой модалке */
-body.modal-open {
-  overflow: hidden;
-}
+body.modal-open { overflow: hidden; }
 
-/* =====================================================================
-ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ЛЕВОЙ ПАНЕЛИ (ДЕСКТОП)
-===================================================================== */
-
-/* Контент левой панели с центрированием */
+/* ---------- Левая панель (десктоп) ---------- */
 .side {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-
 .side > div:first-child {
   display: flex;
   flex-direction: column;
@@ -668,10 +593,7 @@ body.modal-open {
   justify-content: center;
   padding-bottom: 20px;
 }
-
-.side-content {
-  margin-top: 12px;
-}
+.side-content { margin-top: 12px; }
 
 .welcome-text {
   font-size: 24px;
@@ -682,17 +604,9 @@ body.modal-open {
   font-family: var(--font-display);
 }
 
-.info-block {
-  max-width: 400px;
-}
-
-.info-section {
-  margin-bottom: 16px;
-}
-
-.info-section:last-child {
-  margin-bottom: 0;
-}
+.info-block { max-width: 400px; }
+.info-section { margin-bottom: 16px; }
+.info-section:last-child { margin-bottom: 0; }
 
 .info-title {
   font-weight: 600;
@@ -708,20 +622,9 @@ body.modal-open {
   line-height: 1.8;
   color: #B7BBC6;
 }
-
-.info-list li {
-  margin-bottom: 2px;
-}
-
-.info-list li::marker {
-  color: var(--orange);
-  font-weight: 600;
-}
-
-.info-list .highlight {
-  color: var(--orange);
-  font-weight: 600;
-}
+.info-list li { margin-bottom: 2px; }
+.info-list li::marker { color: var(--orange); font-weight: 600; }
+.info-list .highlight { color: var(--orange); font-weight: 600; }
 
 .info-text {
   font-size: 14px;
@@ -736,39 +639,134 @@ body.modal-open {
   margin: 16px 0;
 }
 
-/* Адаптация для мобильных - скрываем новый контент */
 @media (max-width: 900px) {
-  .side-content {
-    display: none;
+  .side-content { display: none; }
+}
+
+.badge-stack { flex-shrink: 0; }
+
+/* =====================================================================
+ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ АДМИНКИ
+===================================================================== */
+
+/* Обводка для карточек статистики в админке */
+.stat-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Адаптация таблиц для мобильных */
+@media (max-width: 600px) {
+  .panel-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .panel-head select {
+    width: 100%;
+  }
+  th, td {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .admin-wrap {
+    padding: 16px 12px 40px;
   }
 }
 
-/* Убеждаемся что бейджики остаются внизу */
-.badge-stack {
-  flex-shrink: 0;
+/* Стили для скролла */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-soft);
 }
 
-/* =====================================================================
-КНОПКА "ВЫЙТИ" - ОРАНЖЕВЫЙ ЦВЕТ
-===================================================================== */
+/* ============================================================
+СТИЛИ ДЛЯ СТРАНИЦ СТАТЕЙ
+============================================================ */
 
-/* Стиль для кнопки "Выйти" в правом верхнем углу */
-.top-right-link {
-  position: absolute;
-  top: 24px;
-  right: 24px;
+/* Скрытие скролла при открытой модалке */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Дополнительные стили для страниц статей */
+.articles-grid .article-card {
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Стили для пустого состояния */
+.empty-state .icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.empty-state .sub-text {
   font-size: 13px;
-  color: var(--orange) !important; /* Оранжевый цвет */
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s ease, transform 0.2s ease;
+  color: var(--ink-soft);
+  margin-top: 4px;
 }
 
-.top-right-link:hover {
-  color: var(--orange-deep) !important; /* Более темный оранжевый при наведении */
-  transform: translateY(-1px);
+/* Модалка просмотра статьи */
+.article-view-content .article-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin: 0 0 8px;
 }
 
-.top-right-link:active {
-  transform: scale(0.95);
+.article-view-content .article-meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.article-view-content .article-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink);
+  white-space: pre-wrap;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Стили для поиска */
+.search-wrap input::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.7;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 600px) {
+  .article-view-content .article-title {
+    font-size: 20px;
+  }
+  
+  .article-view-content .article-body {
+    font-size: 14px;
+    max-height: 300px;
+  }
 }
