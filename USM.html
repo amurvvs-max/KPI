@@ -50,23 +50,23 @@
   }
 
   /* ============================================================
-     ОБЕРТКА
+     ОБЕРТКА — МИНИМАЛЬНЫЕ ОТСТУПЫ
      ============================================================ */
   .page-wrap {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 8px 6px 80px; /* нижний отступ для FAB */
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     position: relative;
   }
 
   /* ============================================================
-     КАРТОЧКА
+     КАРТОЧКА — БЕЗ ОТСТУПОВ
      ============================================================ */
   .card {
     background: var(--surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
     overflow: hidden;
   }
 
@@ -74,32 +74,32 @@
      ШАПКА
      ============================================================ */
   .header {
-    padding: 12px 14px;
+    padding: 10px 12px;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: nowrap;
   }
 
   .header-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     min-width: 0;
     flex-shrink: 1;
   }
 
   .header-icon {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     flex-shrink: 0;
   }
 
   .header h1 {
     font-family: var(--font-display);
-    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+    font-size: clamp(0.8rem, 3.5vw, 1rem);
     font-weight: 600;
     margin: 0;
     color: var(--ink);
@@ -111,7 +111,7 @@
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     flex-shrink: 0;
   }
 
@@ -126,18 +126,18 @@
   .dropdown-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
+    gap: 4px;
+    padding: 6px 10px;
     border: 1.5px solid var(--line);
-    border-radius: 10px;
+    border-radius: 8px;
     background: var(--bg);
     color: var(--ink-soft);
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 40px;
+    min-height: 34px;
   }
 
   .dropdown-btn:hover {
@@ -149,7 +149,7 @@
   }
 
   .dropdown-btn .arrow {
-    font-size: 10px;
+    font-size: 9px;
     transition: transform 0.2s ease;
   }
 
@@ -159,12 +159,12 @@
 
   .dropdown-menu {
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 4px);
     right: 0;
-    min-width: 180px;
+    min-width: 160px;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
     overflow: hidden;
     display: none;
@@ -177,18 +177,18 @@
   }
 
   @keyframes dropIn {
-    from { opacity: 0; transform: translateY(-8px); }
+    from { opacity: 0; transform: translateY(-6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .dropdown-menu a {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
+    gap: 6px;
+    padding: 8px 14px;
     text-decoration: none;
     color: var(--ink);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     transition: background 0.15s ease;
     border-bottom: 1px solid var(--line);
@@ -214,16 +214,16 @@
   }
 
   /* ============================================================
-     ПОИСК
+     ПОИСК — ВО ВСЮ ШИРИНУ
      ============================================================ */
   .search-wrap {
-    padding: 12px 14px 0;
+    padding: 10px 12px 0;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
     border: 1.5px solid var(--line);
     font-size: 14px;
     font-family: var(--font-body);
@@ -240,10 +240,10 @@
   }
 
   /* ============================================================
-     КОНТЕНТ
+     КОНТЕНТ — МИНИМАЛЬНЫЕ ОТСТУПЫ
      ============================================================ */
   .content {
-    padding: 12px 14px 16px;
+    padding: 10px 12px 16px;
   }
 
   /* ============================================================
@@ -251,14 +251,14 @@
      ============================================================ */
   .articles-grid {
     display: grid;
-    gap: 10px;
+    gap: 8px;
   }
 
   .article-card {
     background: var(--surface);
     border: 1.5px solid var(--line);
-    border-radius: 12px;
-    padding: 14px 14px;
+    border-radius: 10px;
+    padding: 12px 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%;
@@ -277,7 +277,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 2px;
     width: 100%;
   }
@@ -285,7 +285,7 @@
   .article-head h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(0.9rem, 3vw, 1.05rem);
+    font-size: clamp(0.85rem, 3vw, 1rem);
     margin: 0;
     color: var(--ink);
     word-break: break-word;
@@ -299,17 +299,17 @@
   }
 
   .btn-sm {
-    padding: 4px 10px;
+    padding: 3px 8px;
     border: 1.5px solid var(--line);
-    border-radius: 8px;
+    border-radius: 6px;
     background: transparent;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     color: var(--ink-soft);
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: var(--font-body);
-    min-height: 30px;
+    min-height: 26px;
   }
 
   .btn-sm:hover {
@@ -334,23 +334,23 @@
 
   .article-desc {
     color: var(--ink-soft);
-    font-size: clamp(0.82rem, 2.2vw, 0.9rem);
-    margin: 4px 0 6px;
-    line-height: 1.5;
+    font-size: clamp(0.8rem, 2.2vw, 0.88rem);
+    margin: 2px 0 4px;
+    line-height: 1.4;
   }
 
   .article-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    font-size: 12px;
+    gap: 8px;
+    font-size: 11px;
     color: var(--ink-muted);
   }
 
   .article-meta span {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
   }
 
   /* ============================================================
@@ -361,9 +361,9 @@
     border: none;
     color: var(--orange);
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
-    padding: 10px 4px 2px;
+    padding: 8px 4px 2px;
     width: 100%;
     text-align: left;
     font-family: var(--font-body);
@@ -378,12 +378,12 @@
      ТЕЛО СТАТЬИ
      ============================================================ */
   .article-body {
-    margin-top: 12px;
-    padding-top: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
     border-top: 1px solid var(--line);
     display: none;
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 13px;
+    line-height: 1.6;
     color: var(--ink-soft);
     width: 100%;
   }
@@ -401,14 +401,14 @@
   .article-body ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 8px;
+    margin: 0 0 6px;
   }
 
   .article-body ul li {
-    padding-left: 22px;
+    padding-left: 20px;
     position: relative;
-    margin-bottom: 6px;
-    line-height: 1.6;
+    margin-bottom: 4px;
+    line-height: 1.5;
   }
 
   .article-body ul li::before {
@@ -421,27 +421,30 @@
 
   .article-body .script {
     background: var(--orange-light);
-    padding: 10px 14px;
-    border-radius: 10px;
-    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 4px 0;
     border-left: 3px solid var(--orange);
     color: var(--ink);
+    font-size: 13px;
   }
 
   .article-body .note {
     background: #F0F7FF;
-    padding: 10px 14px;
-    border-radius: 10px;
-    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 4px 0;
     border: 1px solid #E0EDF5;
+    font-size: 13px;
   }
 
   .article-body .danger {
     background: #FDEDEB;
-    padding: 10px 14px;
-    border-radius: 10px;
-    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 4px 0;
     border-left: 3px solid var(--red);
+    font-size: 13px;
   }
 
   .article-body .danger .lbl {
@@ -451,19 +454,19 @@
 
   .article-body .table-wrap {
     overflow-x: auto;
-    margin: 8px 0;
+    margin: 6px 0;
   }
 
   .article-body table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
-    min-width: 240px;
+    font-size: 12px;
+    min-width: 220px;
   }
 
   .article-body table th {
     border-bottom: 2px solid var(--orange);
-    padding: 6px 6px;
+    padding: 4px 4px;
     text-align: left;
     color: var(--orange-deep);
     font-weight: 600;
@@ -471,7 +474,7 @@
 
   .article-body table td {
     border-bottom: 1px solid var(--line);
-    padding: 6px 6px;
+    padding: 4px 4px;
     vertical-align: top;
   }
 
@@ -479,24 +482,24 @@
     display: inline-block;
     background: var(--orange);
     color: #fff;
-    padding: 2px 14px;
+    padding: 2px 12px;
     border-radius: 30px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .article-body .flex-grid {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 8px 0;
+    gap: 8px;
+    margin: 6px 0;
   }
 
   .article-body .flex-grid .item {
     background: var(--bg);
-    padding: 12px 14px;
-    border-radius: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
     border: 1px solid var(--line);
   }
 
@@ -508,18 +511,19 @@
 
   .article-body .flex-grid .item p {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--ink-soft);
   }
 
   .article-body .footer {
-    margin-top: 12px;
-    padding: 12px 16px;
+    margin-top: 10px;
+    padding: 10px 14px;
     background: var(--orange-light);
-    border-radius: 10px;
+    border-radius: 8px;
     text-align: center;
     font-weight: 700;
     color: var(--orange-deep);
+    font-size: 13px;
   }
 
   /* ============================================================
@@ -527,30 +531,30 @@
      ============================================================ */
   .empty {
     text-align: center;
-    padding: 40px 16px;
+    padding: 30px 12px;
     color: var(--ink-muted);
   }
 
   .empty .icon {
-    font-size: 36px;
-    margin-bottom: 8px;
+    font-size: 32px;
+    margin-bottom: 6px;
     opacity: 0.4;
   }
 
   /* ============================================================
-     FLOATING ACTION BUTTON (FAB)
+     FLOATING ACTION BUTTON
      ============================================================ */
   .fab {
     position: fixed;
-    bottom: 24px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
+    bottom: 20px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     border: none;
     background: var(--orange);
     color: #fff;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 300;
     cursor: pointer;
     box-shadow: var(--shadow-fab);
@@ -577,7 +581,6 @@
     display: none;
   }
 
-  /* Анимация появления */
   .fab.show {
     animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -609,7 +612,7 @@
   .modal-box {
     background: var(--surface);
     border-radius: var(--radius);
-    padding: 24px 20px;
+    padding: 20px 16px;
     max-width: 680px;
     width: 100%;
     max-height: 92vh;
@@ -626,7 +629,7 @@
 
   .modal-box h2 {
     font-family: var(--font-display);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     margin: 0 0 4px;
     color: var(--ink);
@@ -634,28 +637,28 @@
 
   .modal-box .sub {
     color: var(--ink-soft);
-    font-size: 14px;
-    margin: 0 0 16px;
+    font-size: 13px;
+    margin: 0 0 14px;
   }
 
   .modal-box .field {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .modal-box .field label {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--ink-soft);
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
 
   .modal-box .field input,
   .modal-box .field textarea,
   .modal-box .field select {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
     border: 1.5px solid var(--line);
     font-size: 14px;
     font-family: var(--font-body);
@@ -665,10 +668,10 @@
   }
 
   .modal-box .field textarea {
-    min-height: 100px;
+    min-height: 80px;
     resize: vertical;
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .modal-box .field input:focus,
@@ -683,16 +686,16 @@
   .modal-actions {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 16px;
+    gap: 6px;
+    margin-top: 14px;
   }
 
   .modal-actions .btn {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     font-size: 14px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-family: var(--font-body);
     font-weight: 600;
     cursor: pointer;
@@ -728,20 +731,20 @@
   }
 
   .hint {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--ink-muted);
     margin-top: 4px;
     background: var(--bg);
-    padding: 6px 10px;
-    border-radius: 8px;
+    padding: 4px 10px;
+    border-radius: 6px;
     border: 1px solid var(--line);
   }
 
   .hint code {
     background: var(--surface);
-    padding: 2px 6px;
+    padding: 1px 5px;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--orange-deep);
     font-family: var(--font-mono);
     border: 1px solid var(--line);
@@ -751,134 +754,133 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
+  /* ТЕЛЕФОНЫ — НОЛЬ ОТСТУПОВ */
   @media (max-width: 480px) {
-    .page-wrap {
-      padding: 4px 2px 80px;
-    }
-
-    .card {
-      border-radius: 10px;
-    }
-
     .header {
-      padding: 8px 10px;
+      padding: 8px 8px;
     }
 
     .header-icon {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .header h1 {
-      font-size: clamp(0.75rem, 3.5vw, 0.9rem);
+      font-size: clamp(0.7rem, 3.5vw, 0.85rem);
     }
 
     .dropdown-btn {
-      font-size: 11px;
-      padding: 6px 10px;
-      min-height: 34px;
+      font-size: 10px;
+      padding: 4px 8px;
+      min-height: 28px;
     }
 
     .search-wrap {
-      padding: 10px 10px 0;
+      padding: 8px 8px 0;
     }
 
     .search-wrap input {
-      padding: 10px 12px;
+      padding: 8px 10px;
       font-size: 13px;
     }
 
     .content {
-      padding: 10px 10px 14px;
+      padding: 8px 8px 12px;
     }
 
     .article-card {
-      padding: 10px 10px;
-      border-radius: 10px;
+      padding: 8px 8px;
+      border-radius: 8px;
     }
 
     .article-head h3 {
-      font-size: clamp(0.8rem, 3.5vw, 0.9rem);
+      font-size: clamp(0.75rem, 3.5vw, 0.85rem);
     }
 
     .btn-sm {
       font-size: 10px;
-      padding: 3px 8px;
-      min-height: 26px;
+      padding: 2px 6px;
+      min-height: 22px;
     }
 
     .article-body {
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .modal-box {
-      padding: 16px 14px;
+      padding: 14px 10px;
     }
 
     .dropdown-menu {
-      min-width: 150px;
-      right: -10px;
+      min-width: 140px;
+      right: -8px;
     }
 
     .dropdown-menu a {
-      font-size: 13px;
-      padding: 8px 14px;
+      font-size: 12px;
+      padding: 6px 12px;
     }
 
     .fab {
-      width: 54px;
-      height: 54px;
-      font-size: 26px;
-      bottom: 16px;
-      right: 16px;
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+      bottom: 12px;
+      right: 12px;
     }
   }
 
+  /* ПЛАНШЕТЫ */
   @media (min-width: 481px) and (max-width: 768px) {
-    .page-wrap {
-      padding: 10px 10px 80px;
-    }
-
     .header {
-      padding: 12px 16px;
+      padding: 10px 12px;
     }
 
     .content {
-      padding: 12px 16px 18px;
+      padding: 10px 12px 16px;
     }
 
     .search-wrap {
-      padding: 12px 16px 0;
+      padding: 10px 12px 0;
     }
 
     .fab {
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      right: 20px;
     }
   }
 
+  /* ДЕСКТОП — МАКСИМАЛЬНАЯ ШИРИНА 800px */
   @media (min-width: 769px) {
     .page-wrap {
-      padding: 32px 24px 100px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px 0;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
     }
 
     .header {
-      padding: 16px 28px;
+      padding: 14px 20px;
     }
 
     .content {
-      padding: 16px 28px 24px;
+      padding: 14px 20px 20px;
     }
 
     .search-wrap {
-      padding: 16px 28px 0;
+      padding: 14px 20px 0;
     }
 
     .articles-grid {
-      gap: 14px;
+      gap: 12px;
     }
 
     .article-card {
-      padding: 18px 22px;
+      padding: 16px 18px;
     }
 
     .article-body .flex-grid {
@@ -898,13 +900,13 @@
     }
 
     .modal-box {
-      padding: 32px 36px;
+      padding: 28px 32px;
     }
 
     .fab {
-      width: 64px;
-      height: 64px;
-      font-size: 32px;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
       bottom: 32px;
       right: 32px;
     }
@@ -913,22 +915,22 @@
   /* SAFE AREA */
   @supports (padding: max(0px)) {
     .page-wrap {
-      padding-left: max(2px, env(safe-area-inset-left));
-      padding-right: max(2px, env(safe-area-inset-right));
-      padding-top: max(2px, env(safe-area-inset-top));
-      padding-bottom: max(80px, env(safe-area-inset-bottom));
+      padding-left: max(0px, env(safe-area-inset-left));
+      padding-right: max(0px, env(safe-area-inset-right));
+      padding-top: max(0px, env(safe-area-inset-top));
+      padding-bottom: max(0px, env(safe-area-inset-bottom));
     }
     .fab {
-      bottom: max(24px, env(safe-area-inset-bottom));
-      right: max(20px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      right: max(12px, env(safe-area-inset-right));
     }
   }
 
   @media (max-width: 480px) {
     @supports (padding: max(0px)) {
       .fab {
-        bottom: max(16px, env(safe-area-inset-bottom));
-        right: max(16px, env(safe-area-inset-right));
+        bottom: max(12px, env(safe-area-inset-bottom));
+        right: max(12px, env(safe-area-inset-right));
       }
     }
   }
@@ -936,10 +938,10 @@
   @media (min-width: 769px) {
     @supports (padding: max(0px)) {
       .page-wrap {
-        padding-left: max(24px, env(safe-area-inset-left));
-        padding-right: max(24px, env(safe-area-inset-right));
-        padding-top: max(32px, env(safe-area-inset-top));
-        padding-bottom: max(100px, env(safe-area-inset-bottom));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-top: max(16px, env(safe-area-inset-top));
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
       }
       .fab {
         bottom: max(32px, env(safe-area-inset-bottom));
@@ -1021,14 +1023,14 @@
 </div>
 
 <!-- ============================================================
-     FLOATING ACTION BUTTON (FAB)
+     FLOATING ACTION BUTTON
      ============================================================ -->
 <button class="fab hidden" id="addArticleBtn" aria-label="Добавить статью">
   +
 </button>
 
 <!-- ============================================================
-     МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ
+     МОДАЛКИ
      ============================================================ -->
 <div class="modal-overlay" id="editModal">
   <div class="modal-box">
@@ -1186,7 +1188,7 @@ function render(articles) {
       <div class="empty">
         <div class="icon">📖</div>
         <p>Пока нет статей</p>
-        ${isAdmin ? '<p style="font-size:13px;">Нажмите ➕ чтобы создать первую</p>' : ''}
+        ${isAdmin ? '<p style="font-size:12px;">Нажмите ➕ чтобы создать первую</p>' : ''}
       </div>`;
     return;
   }
@@ -1356,11 +1358,9 @@ confirmDelete.addEventListener('click', async () => {
 // ============================================================
 addBtn.addEventListener('click', () => openEdit(null));
 
-// Показываем FAB только для админа
 function updateFab() {
   if (isAdmin) {
     addBtn.classList.remove('hidden');
-    // Добавляем анимацию появления
     setTimeout(() => {
       addBtn.classList.add('show');
     }, 100);
