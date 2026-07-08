@@ -430,31 +430,25 @@
     color: var(--ink-soft);
   }
 
-  /* Списки */
+  /* Списки — обычные маркеры, без смещения */
   .article-body ul,
   .article-body ol {
     margin: 0 0 14px 0 !important;
-    padding: 0 0 0 24px !important;
-    list-style: none !important;
+    padding: 0 0 0 22px !important;
+    list-style: disc !important;
   }
 
   .article-body ul li,
   .article-body ol li {
     margin-bottom: 10px !important;
-    padding-left: 8px !important;
+    padding-left: 0 !important;
     line-height: 1.8 !important;
     font-size: 15px !important;
     color: var(--ink-soft);
-    position: relative !important;
   }
 
   .article-body ul li::before {
-    content: "•" !important;
-    color: var(--orange) !important;
-    font-size: 20px !important;
-    position: absolute !important;
-    left: -18px !important;
-    top: -2px !important;
+    display: none !important;
   }
 
   .article-body ul li b,
