@@ -770,3 +770,55 @@ body.no-scroll {
     max-height: 300px;
   }
 }
+
+/* ============================================================
+ЛОГОТИП
+============================================================ */
+
+/* Логотип в шапке страниц (USM, sklad, pk) */
+.header-logo {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  display: block;
+}
+
+/* Логотип на странице входа (левая панель) */
+.brand-logo {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* Логотип в админке */
+.admin-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 480px) {
+  .header-logo {
+    height: 24px;
+  }
+  .brand-logo {
+    height: 32px;
+  }
+  .admin-logo {
+    height: 26px;
+  }
+}
+
+@media (min-width: 768px) {
+  .header-logo {
+    height: 36px;
+  }
+  .brand-logo {
+    height: 44px;
+  }
+  .admin-logo {
+    height: 36px;
+  }
+}
