@@ -28,7 +28,7 @@
     --red: #DC3545;
     --shadow: 0 2px 12px rgba(0,0,0,0.06);
     --shadow-fab: 0 6px 24px rgba(255,106,0,0.35);
-    --radius: 14px;
+    --radius: 12px;
     --font-display: "Unbounded", sans-serif;
     --font-body: "Inter", sans-serif;
     --font-mono: "JetBrains Mono", monospace;
@@ -47,10 +47,12 @@
     background: var(--bg);
     font-family: var(--font-body);
     color: var(--ink);
+    margin: 0;
+    padding: 0;
   }
 
   /* ============================================================
-     ОБЕРТКА — МИНИМАЛЬНЫЕ ОТСТУПЫ
+     ОБЕРТКА — НОЛЬ ОТСТУПОВ
      ============================================================ */
   .page-wrap {
     max-width: 100%;
@@ -60,7 +62,7 @@
   }
 
   /* ============================================================
-     КАРТОЧКА — БЕЗ ОТСТУПОВ
+     КАРТОЧКА — БЕЗ ОТСТУПОВ И БЕЗ СКРУГЛЕНИЙ
      ============================================================ */
   .card {
     background: var(--surface);
@@ -71,17 +73,18 @@
   }
 
   /* ============================================================
-     ШАПКА
+     ШАПКА — ВПЛОТНУЮ К КРАЯМ
      ============================================================ */
   .header {
-    padding: 10px 12px;
+    padding: 10px 10px;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 6px;
+    gap: 4px;
     flex-wrap: nowrap;
+    width: 100%;
   }
 
   .header-left {
@@ -93,13 +96,13 @@
   }
 
   .header-icon {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     flex-shrink: 0;
   }
 
   .header h1 {
     font-family: var(--font-display);
-    font-size: clamp(0.8rem, 3.5vw, 1rem);
+    font-size: clamp(0.75rem, 3.5vw, 0.95rem);
     font-weight: 600;
     margin: 0;
     color: var(--ink);
@@ -126,18 +129,18 @@
   .dropdown-btn {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 6px 10px;
+    gap: 3px;
+    padding: 5px 8px;
     border: 1.5px solid var(--line);
-    border-radius: 8px;
+    border-radius: 6px;
     background: var(--bg);
     color: var(--ink-soft);
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 34px;
+    min-height: 28px;
   }
 
   .dropdown-btn:hover {
@@ -149,7 +152,7 @@
   }
 
   .dropdown-btn .arrow {
-    font-size: 9px;
+    font-size: 8px;
     transition: transform 0.2s ease;
   }
 
@@ -161,7 +164,7 @@
     position: absolute;
     top: calc(100% + 4px);
     right: 0;
-    min-width: 160px;
+    min-width: 150px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 10px;
@@ -185,10 +188,10 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 14px;
+    padding: 8px 12px;
     text-decoration: none;
     color: var(--ink);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     transition: background 0.15s ease;
     border-bottom: 1px solid var(--line);
@@ -217,15 +220,15 @@
      ПОИСК — ВО ВСЮ ШИРИНУ
      ============================================================ */
   .search-wrap {
-    padding: 10px 12px 0;
+    padding: 8px 10px 0;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
     border: 1.5px solid var(--line);
-    font-size: 14px;
+    font-size: 13px;
     font-family: var(--font-body);
     background: var(--bg);
     color: var(--ink);
@@ -243,7 +246,7 @@
      КОНТЕНТ — МИНИМАЛЬНЫЕ ОТСТУПЫ
      ============================================================ */
   .content {
-    padding: 10px 12px 16px;
+    padding: 8px 10px 70px;
   }
 
   /* ============================================================
@@ -257,8 +260,8 @@
   .article-card {
     background: var(--surface);
     border: 1.5px solid var(--line);
-    border-radius: 10px;
-    padding: 12px 12px;
+    border-radius: 8px;
+    padding: 10px 10px;
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%;
@@ -277,7 +280,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 6px;
+    gap: 4px;
     margin-bottom: 2px;
     width: 100%;
   }
@@ -285,7 +288,7 @@
   .article-head h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(0.85rem, 3vw, 1rem);
+    font-size: clamp(0.8rem, 3vw, 0.95rem);
     margin: 0;
     color: var(--ink);
     word-break: break-word;
@@ -294,22 +297,22 @@
 
   .article-actions {
     display: flex;
-    gap: 4px;
+    gap: 3px;
     flex-shrink: 0;
   }
 
   .btn-sm {
-    padding: 3px 8px;
+    padding: 2px 6px;
     border: 1.5px solid var(--line);
-    border-radius: 6px;
+    border-radius: 5px;
     background: transparent;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
     color: var(--ink-soft);
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: var(--font-body);
-    min-height: 26px;
+    min-height: 22px;
   }
 
   .btn-sm:hover {
@@ -334,7 +337,7 @@
 
   .article-desc {
     color: var(--ink-soft);
-    font-size: clamp(0.8rem, 2.2vw, 0.88rem);
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
     margin: 2px 0 4px;
     line-height: 1.4;
   }
@@ -342,8 +345,8 @@
   .article-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    font-size: 11px;
+    gap: 6px;
+    font-size: 10px;
     color: var(--ink-muted);
   }
 
@@ -361,9 +364,9 @@
     border: none;
     color: var(--orange);
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
-    padding: 8px 4px 2px;
+    padding: 6px 4px 2px;
     width: 100%;
     text-align: left;
     font-family: var(--font-body);
@@ -378,11 +381,11 @@
      ТЕЛО СТАТЬИ
      ============================================================ */
   .article-body {
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
     border-top: 1px solid var(--line);
     display: none;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.6;
     color: var(--ink-soft);
     width: 100%;
@@ -401,13 +404,13 @@
   .article-body ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 6px;
+    margin: 0 0 4px;
   }
 
   .article-body ul li {
-    padding-left: 20px;
+    padding-left: 18px;
     position: relative;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     line-height: 1.5;
   }
 
@@ -421,30 +424,30 @@
 
   .article-body .script {
     background: var(--orange-light);
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
     margin: 4px 0;
     border-left: 3px solid var(--orange);
     color: var(--ink);
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .article-body .note {
     background: #F0F7FF;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
     margin: 4px 0;
     border: 1px solid #E0EDF5;
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .article-body .danger {
     background: #FDEDEB;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
     margin: 4px 0;
     border-left: 3px solid var(--red);
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .article-body .danger .lbl {
@@ -454,14 +457,14 @@
 
   .article-body .table-wrap {
     overflow-x: auto;
-    margin: 6px 0;
+    margin: 4px 0;
   }
 
   .article-body table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 12px;
-    min-width: 220px;
+    font-size: 11px;
+    min-width: 200px;
   }
 
   .article-body table th {
@@ -482,9 +485,9 @@
     display: inline-block;
     background: var(--orange);
     color: #fff;
-    padding: 2px 12px;
+    padding: 2px 10px;
     border-radius: 30px;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
     margin-bottom: 4px;
   }
@@ -492,14 +495,14 @@
   .article-body .flex-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin: 6px 0;
+    gap: 6px;
+    margin: 4px 0;
   }
 
   .article-body .flex-grid .item {
     background: var(--bg);
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
     border: 1px solid var(--line);
   }
 
@@ -511,19 +514,19 @@
 
   .article-body .flex-grid .item p {
     margin: 0;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--ink-soft);
   }
 
   .article-body .footer {
-    margin-top: 10px;
-    padding: 10px 14px;
+    margin-top: 8px;
+    padding: 8px 12px;
     background: var(--orange-light);
-    border-radius: 8px;
+    border-radius: 6px;
     text-align: center;
     font-weight: 700;
     color: var(--orange-deep);
-    font-size: 13px;
+    font-size: 12px;
   }
 
   /* ============================================================
@@ -531,13 +534,13 @@
      ============================================================ */
   .empty {
     text-align: center;
-    padding: 30px 12px;
+    padding: 30px 10px;
     color: var(--ink-muted);
   }
 
   .empty .icon {
-    font-size: 32px;
-    margin-bottom: 6px;
+    font-size: 28px;
+    margin-bottom: 4px;
     opacity: 0.4;
   }
 
@@ -546,15 +549,15 @@
      ============================================================ */
   .fab {
     position: fixed;
-    bottom: 20px;
-    right: 16px;
-    width: 56px;
-    height: 56px;
+    bottom: 16px;
+    right: 12px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: none;
     background: var(--orange);
     color: #fff;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 300;
     cursor: pointer;
     box-shadow: var(--shadow-fab);
@@ -612,7 +615,7 @@
   .modal-box {
     background: var(--surface);
     border-radius: var(--radius);
-    padding: 20px 16px;
+    padding: 18px 14px;
     max-width: 680px;
     width: 100%;
     max-height: 92vh;
@@ -629,7 +632,7 @@
 
   .modal-box h2 {
     font-family: var(--font-display);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
     margin: 0 0 4px;
     color: var(--ink);
@@ -637,30 +640,30 @@
 
   .modal-box .sub {
     color: var(--ink-soft);
-    font-size: 13px;
-    margin: 0 0 14px;
+    font-size: 12px;
+    margin: 0 0 12px;
   }
 
   .modal-box .field {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .modal-box .field label {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--ink-soft);
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
 
   .modal-box .field input,
   .modal-box .field textarea,
   .modal-box .field select {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
     border: 1.5px solid var(--line);
-    font-size: 14px;
+    font-size: 13px;
     font-family: var(--font-body);
     background: var(--bg);
     transition: all 0.2s ease;
@@ -668,10 +671,10 @@
   }
 
   .modal-box .field textarea {
-    min-height: 80px;
+    min-height: 70px;
     resize: vertical;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .modal-box .field input:focus,
@@ -687,15 +690,15 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-top: 14px;
+    margin-top: 12px;
   }
 
   .modal-actions .btn {
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
+    padding: 8px;
+    font-size: 13px;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     font-family: var(--font-body);
     font-weight: 600;
     cursor: pointer;
@@ -731,20 +734,20 @@
   }
 
   .hint {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink-muted);
-    margin-top: 4px;
+    margin-top: 3px;
     background: var(--bg);
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 4px 8px;
+    border-radius: 5px;
     border: 1px solid var(--line);
   }
 
   .hint code {
     background: var(--surface);
-    padding: 1px 5px;
-    border-radius: 4px;
-    font-size: 10px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 9px;
     color: var(--orange-deep);
     font-family: var(--font-mono);
     border: 1px solid var(--line);
@@ -757,104 +760,107 @@
   /* ТЕЛЕФОНЫ — НОЛЬ ОТСТУПОВ */
   @media (max-width: 480px) {
     .header {
-      padding: 8px 8px;
+      padding: 6px 6px;
     }
 
     .header-icon {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     .header h1 {
-      font-size: clamp(0.7rem, 3.5vw, 0.85rem);
+      font-size: clamp(0.65rem, 3.5vw, 0.8rem);
     }
 
     .dropdown-btn {
-      font-size: 10px;
-      padding: 4px 8px;
-      min-height: 28px;
+      font-size: 9px;
+      padding: 3px 6px;
+      min-height: 24px;
+      border-radius: 4px;
     }
 
     .search-wrap {
-      padding: 8px 8px 0;
+      padding: 6px 6px 0;
     }
 
     .search-wrap input {
-      padding: 8px 10px;
-      font-size: 13px;
+      padding: 6px 8px;
+      font-size: 12px;
+      border-radius: 4px;
     }
 
     .content {
-      padding: 8px 8px 12px;
+      padding: 6px 6px 60px;
     }
 
     .article-card {
-      padding: 8px 8px;
-      border-radius: 8px;
+      padding: 6px 6px;
+      border-radius: 6px;
     }
 
     .article-head h3 {
-      font-size: clamp(0.75rem, 3.5vw, 0.85rem);
+      font-size: clamp(0.7rem, 3.5vw, 0.8rem);
     }
 
     .btn-sm {
-      font-size: 10px;
-      padding: 2px 6px;
-      min-height: 22px;
+      font-size: 9px;
+      padding: 1px 4px;
+      min-height: 18px;
+      border-radius: 4px;
     }
 
     .article-body {
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .modal-box {
-      padding: 14px 10px;
+      padding: 12px 10px;
     }
 
     .dropdown-menu {
-      min-width: 140px;
-      right: -8px;
+      min-width: 120px;
+      right: -4px;
     }
 
     .dropdown-menu a {
-      font-size: 12px;
-      padding: 6px 12px;
+      font-size: 11px;
+      padding: 5px 10px;
     }
 
     .fab {
-      width: 48px;
-      height: 48px;
-      font-size: 24px;
-      bottom: 12px;
-      right: 12px;
+      width: 44px;
+      height: 44px;
+      font-size: 20px;
+      bottom: 10px;
+      right: 10px;
     }
   }
 
   /* ПЛАНШЕТЫ */
   @media (min-width: 481px) and (max-width: 768px) {
     .header {
-      padding: 10px 12px;
+      padding: 8px 10px;
     }
 
     .content {
-      padding: 10px 12px 16px;
+      padding: 8px 10px 70px;
     }
 
     .search-wrap {
-      padding: 10px 12px 0;
+      padding: 8px 10px 0;
     }
 
     .fab {
-      bottom: 20px;
-      right: 20px;
+      bottom: 16px;
+      right: 16px;
     }
   }
 
-  /* ДЕСКТОП — МАКСИМАЛЬНАЯ ШИРИНА 800px */
+  /* ДЕСКТОП — ОГРАНИЧЕНИЕ 800px С ЦЕНТРИРОВАНИЕМ */
   @media (min-width: 769px) {
     .page-wrap {
       max-width: 800px;
       margin: 0 auto;
-      padding: 16px 0;
+      padding: 12px 0;
     }
 
     .card {
@@ -864,23 +870,23 @@
     }
 
     .header {
-      padding: 14px 20px;
+      padding: 12px 16px;
     }
 
     .content {
-      padding: 14px 20px 20px;
+      padding: 12px 16px 80px;
     }
 
     .search-wrap {
-      padding: 14px 20px 0;
+      padding: 12px 16px 0;
     }
 
     .articles-grid {
-      gap: 12px;
+      gap: 10px;
     }
 
     .article-card {
-      padding: 16px 18px;
+      padding: 14px 16px;
     }
 
     .article-body .flex-grid {
@@ -900,15 +906,15 @@
     }
 
     .modal-box {
-      padding: 28px 32px;
+      padding: 24px 28px;
     }
 
     .fab {
-      width: 60px;
-      height: 60px;
-      font-size: 30px;
-      bottom: 32px;
-      right: 32px;
+      width: 56px;
+      height: 56px;
+      font-size: 28px;
+      bottom: 28px;
+      right: 28px;
     }
   }
 
@@ -921,16 +927,16 @@
       padding-bottom: max(0px, env(safe-area-inset-bottom));
     }
     .fab {
-      bottom: max(12px, env(safe-area-inset-bottom));
-      right: max(12px, env(safe-area-inset-right));
+      bottom: max(10px, env(safe-area-inset-bottom));
+      right: max(10px, env(safe-area-inset-right));
     }
   }
 
   @media (max-width: 480px) {
     @supports (padding: max(0px)) {
       .fab {
-        bottom: max(12px, env(safe-area-inset-bottom));
-        right: max(12px, env(safe-area-inset-right));
+        bottom: max(10px, env(safe-area-inset-bottom));
+        right: max(10px, env(safe-area-inset-right));
       }
     }
   }
@@ -938,28 +944,28 @@
   @media (min-width: 769px) {
     @supports (padding: max(0px)) {
       .page-wrap {
-        padding-left: max(16px, env(safe-area-inset-left));
-        padding-right: max(16px, env(safe-area-inset-right));
-        padding-top: max(16px, env(safe-area-inset-top));
-        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
       }
       .fab {
-        bottom: max(32px, env(safe-area-inset-bottom));
-        right: max(32px, env(safe-area-inset-right));
+        bottom: max(28px, env(safe-area-inset-bottom));
+        right: max(28px, env(safe-area-inset-right));
       }
     }
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
   }
   ::-webkit-scrollbar-track {
     background: var(--bg);
   }
   ::-webkit-scrollbar-thumb {
     background: var(--line);
-    border-radius: 4px;
+    border-radius: 3px;
   }
 </style>
 </head>
@@ -1188,7 +1194,7 @@ function render(articles) {
       <div class="empty">
         <div class="icon">📖</div>
         <p>Пока нет статей</p>
-        ${isAdmin ? '<p style="font-size:12px;">Нажмите ➕ чтобы создать первую</p>' : ''}
+        ${isAdmin ? '<p style="font-size:11px;">Нажмите ➕ чтобы создать первую</p>' : ''}
       </div>`;
     return;
   }
