@@ -103,7 +103,7 @@
   }
 
   .header-logo {
-    height: 32px;
+    height: 44px;
     width: auto;
     flex-shrink: 0;
     object-fit: contain;
@@ -764,6 +764,101 @@
     box-shadow: 0 0 0 4px var(--orange-glow);
   }
 
+  /* ============================================================
+     БЛОК ЗАГРУЗКИ ФАЙЛОВ (ВНУТРИ МОДАЛКИ)
+     ============================================================ */
+  .upload-zone {
+    margin: 14px 0;
+    padding: 14px 16px;
+    background: #F5F7FA;
+    border-radius: 10px;
+    border: 2px dashed #FF6A00;
+    transition: all 0.3s ease;
+  }
+
+  .upload-zone.dragover {
+    background: #FFF0E6;
+    border-color: #E85D00;
+  }
+
+  .upload-zone-title {
+    font-weight: 600;
+    color: #1A1A2E;
+    margin-bottom: 10px;
+  }
+
+  .upload-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .upload-buttons .btn-upload {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+  }
+
+  .upload-buttons .btn-upload:hover {
+    border-color: var(--role-color);
+    color: var(--role-color);
+    background: var(--role-color-light);
+  }
+
+  .upload-buttons .btn-upload:active {
+    transform: scale(0.97);
+  }
+
+  .upload-status {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #5A5A6E;
+  }
+
+  .upload-status.success {
+    color: #1E9E5A;
+  }
+  .upload-status.error {
+    color: #DC3545;
+  }
+  .upload-status.loading {
+    color: #FF6A00;
+  }
+
+  .uploaded-files {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .uploaded-file-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #E8ECF0;
+    border-radius: 30px;
+    font-size: 12px;
+    color: #1A1A2E;
+  }
+
+  .upload-hint {
+    font-size: 12px;
+    color: #9A9AAE;
+    margin-top: 8px;
+  }
+
+  /* ============================================================
+     МОДАЛКА — ОСТАЛЬНЫЕ СТИЛИ
+     ============================================================ */
   .modal-actions {
     display: flex;
     flex-direction: column;
@@ -841,7 +936,7 @@
     }
 
     .header-logo {
-      height: 24px;
+      height: 32px;
     }
 
     .content {
@@ -878,6 +973,12 @@
       bottom: 14px;
       right: 12px;
     }
+
+    .upload-buttons .btn-upload {
+      font-size: 12px;
+      padding: 6px 10px;
+      min-width: 60px;
+    }
   }
 
   @media (min-width: 768px) {
@@ -898,7 +999,7 @@
     }
 
     .header-logo {
-      height: 32px;
+      height: 48px;
     }
 
     .content {
@@ -932,7 +1033,7 @@
     }
 
     .header-logo {
-      height: 36px;
+      height: 48px;
     }
 
     .content {
@@ -1015,7 +1116,7 @@
     <div class="header">
       <div class="header-left">
         <img src="logo.png" alt="Логотип" class="header-logo" />
-        <h1>Гайды для УСМ</h1>
+        <h1>М для УСМ</h1>
       </div>
       <div class="header-actions">
 
@@ -1056,26 +1157,54 @@
 <!-- FAB -->
 <button class="fab hidden" id="addArticleBtn" aria-label="Добавить статью">+</button>
 
-<!-- МОДАЛКИ -->
+<!-- ============================================================
+     МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ
+     ============================================================ -->
 <div class="modal-overlay" id="editModal">
   <div class="modal-box">
     <h2 id="editModalTitle">➕ Новая статья</h2>
     <p class="sub">Используйте HTML-теги для форматирования</p>
     <form id="editArticleForm">
       <input type="hidden" id="editArticleId" value="">
+
       <div class="field">
         <label for="editArticleTitle">Название *</label>
         <input type="text" id="editArticleTitle" required placeholder="Введите название">
       </div>
+
       <div class="field">
         <label for="editArticleDescription">Описание</label>
         <input type="text" id="editArticleDescription" placeholder="Кратко о чем статья...">
       </div>
+
       <div class="field">
         <label for="editArticleContent">Содержание *</label>
         <textarea id="editArticleContent" required placeholder="Полный текст с HTML-форматированием..."></textarea>
         <div class="hint">💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;hr&gt;</code></div>
       </div>
+
+      <!-- ============================================================
+           БЛОК ЗАГРУЗКИ ФАЙЛОВ
+           ============================================================ -->
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-zone-title">📎 Прикрепить файлы:</div>
+
+        <div class="upload-buttons">
+          <button type="button" id="uploadImageBtn" class="btn-upload">🖼️ Картинка</button>
+          <button type="button" id="uploadVideoBtn" class="btn-upload">🎥 Видео</button>
+          <button type="button" id="uploadFileBtn" class="btn-upload">📎 Файл</button>
+        </div>
+
+        <input type="file" id="fileInput" accept="image/*,video/*,.pdf,.doc,.docx,.zip,.rar,.xls,.xlsx,.txt" style="display:none;" multiple />
+
+        <div id="uploadStatus" class="upload-status"></div>
+        <div id="uploadedFiles" class="uploaded-files"></div>
+
+        <div class="upload-hint">
+          ⚡ Файлы загружаются в Firebase Storage. Ссылки вставляются в текст статьи.
+        </div>
+      </div>
+
       <div class="field">
         <label for="editArticleCategory">Категория</label>
         <select id="editArticleCategory">
@@ -1086,6 +1215,7 @@
           <option value="client">Работа с клиентами</option>
         </select>
       </div>
+
       <div class="modal-actions">
         <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
         <button type="submit" class="btn btn-primary" id="saveArticleBtn">Сохранить</button>
@@ -1094,6 +1224,9 @@
   </div>
 </div>
 
+<!-- ============================================================
+     МОДАЛКА УДАЛЕНИЯ
+     ============================================================ -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal-box">
     <h2>🗑️ Удалить статью?</h2>
@@ -1106,7 +1239,9 @@
   </div>
 </div>
 
-<!-- СКРИПТ -->
+<!-- ============================================================
+     СКРИПТ
+     ============================================================ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1115,10 +1250,12 @@ import {
   updateDoc, deleteDoc, doc, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL, POSITION_PAGES } from "./firebase-config.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 const ROLE = 'usm';
 let currentUser = null;
@@ -1150,7 +1287,115 @@ const deleteTitle = document.getElementById('deleteArticleTitle');
 const cancelDelete = document.getElementById('cancelDeleteBtn');
 const confirmDelete = document.getElementById('confirmDeleteBtn');
 
+// ============================================================
+// ЗАГРУЗКА ФАЙЛОВ
+// ============================================================
+const uploadImageBtn = document.getElementById('uploadImageBtn');
+const uploadVideoBtn = document.getElementById('uploadVideoBtn');
+const uploadFileBtn = document.getElementById('uploadFileBtn');
+const fileInput = document.getElementById('fileInput');
+const uploadStatus = document.getElementById('uploadStatus');
+const uploadedFiles = document.getElementById('uploadedFiles');
+const uploadZone = document.getElementById('uploadZone');
+
+let selectedFileType = 'image';
+
+uploadImageBtn.addEventListener('click', () => {
+  selectedFileType = 'image';
+  fileInput.accept = 'image/*';
+  fileInput.click();
+});
+
+uploadVideoBtn.addEventListener('click', () => {
+  selectedFileType = 'video';
+  fileInput.accept = 'video/*';
+  fileInput.click();
+});
+
+uploadFileBtn.addEventListener('click', () => {
+  selectedFileType = 'file';
+  fileInput.accept = '.pdf,.doc,.docx,.zip,.rar,.xls,.xlsx,.txt,.pptx,.ppt';
+  fileInput.click();
+});
+
+// Drag and Drop
+uploadZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadZone.classList.add('dragover');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+  uploadZone.classList.remove('dragover');
+});
+
+uploadZone.addEventListener('drop', async (e) => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    await handleFiles(files);
+  }
+});
+
+fileInput.addEventListener('change', async (e) => {
+  if (e.target.files.length > 0) {
+    await handleFiles(e.target.files);
+  }
+  fileInput.value = '';
+});
+
+async function handleFiles(files) {
+  for (const file of files) {
+    await uploadFile(file);
+  }
+}
+
+async function uploadFile(file) {
+  uploadStatus.textContent = `⏳ Загрузка: ${file.name}...`;
+  uploadStatus.className = 'upload-status loading';
+
+  try {
+    const path = `articles/${Date.now()}_${file.name}`;
+    const storageRef = ref(storage, path);
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+
+    // Определяем тип и вставляем
+    let insertText = '';
+    const fileType = file.type;
+
+    if (fileType.startsWith('image/')) {
+      insertText = `<img src="${url}" alt="${file.name}" style="max-width:100%; border-radius:8px; margin:10px 0;" />`;
+    } else if (fileType.startsWith('video/')) {
+      insertText = `<video controls style="max-width:100%; border-radius:8px; margin:10px 0;"><source src="${url}" type="${fileType}"></video>`;
+    } else {
+      const ext = file.name.split('.').pop().toUpperCase();
+      insertText = `<a href="${url}" target="_blank" style="display:inline-block; padding:8px 16px; background:#FFF0E6; border-radius:8px; color:#FF6A00; text-decoration:none; margin:4px 0;">📎 ${file.name}</a>`;
+    }
+
+    // Вставляем в конец текста
+    const currentContent = editContent.value;
+    editContent.value = currentContent.trim() + (currentContent.trim() ? '\n\n' : '') + insertText;
+
+    uploadStatus.textContent = `✅ ${file.name} загружен! Ссылка вставлена в текст.`;
+    uploadStatus.className = 'upload-status success';
+
+    // Добавляем тег
+    const tag = document.createElement('span');
+    tag.className = 'uploaded-file-tag';
+    tag.textContent = `📎 ${file.name}`;
+    uploadedFiles.appendChild(tag);
+
+  } catch (error) {
+    console.error('Ошибка загрузки:', error);
+    uploadStatus.textContent = `❌ Ошибка загрузки ${file.name}: ${error.message}`;
+    uploadStatus.className = 'upload-status error';
+  }
+}
+
+// ============================================================
 // ВЫПАДАЮЩИЙ СПИСОК
+// ============================================================
 dropdownBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   dropdownMenu.classList.toggle('open');
@@ -1176,7 +1421,9 @@ dropdownMenu.querySelectorAll('a').forEach(item => {
   });
 });
 
+// ============================================================
 // ЗАГРУЗКА
+// ============================================================
 async function loadArticles() {
   try {
     const q = query(collection(db, "articles"), where("role", "==", ROLE), orderBy("createdAt", "desc"));
@@ -1189,7 +1436,9 @@ async function loadArticles() {
   }
 }
 
+// ============================================================
 // ОТОБРАЖЕНИЕ
+// ============================================================
 function render(articles) {
   if (!articles || !articles.length) {
     container.innerHTML = `<div class="empty"><div class="icon">📖</div><p>Пока нет статей</p>${isAdmin ? '<p style="font-size:14px;">Нажмите ➕</p>' : ''}</div>`;
@@ -1253,7 +1502,9 @@ function formatDate(ts) {
   } catch { return 'Неизвестно'; }
 }
 
+// ============================================================
 // ПОИСК
+// ============================================================
 searchInput.addEventListener('input', (e) => {
   const q = e.target.value.toLowerCase().trim();
   if (!q) { render(allArticles); return; }
@@ -1264,8 +1515,15 @@ searchInput.addEventListener('input', (e) => {
   ));
 });
 
+// ============================================================
 // МОДАЛКИ
+// ============================================================
 function openEdit(a = null) {
+  // Очищаем список загруженных файлов
+  uploadedFiles.innerHTML = '';
+  uploadStatus.textContent = '';
+  uploadStatus.className = 'upload-status';
+
   if (a) {
     editTitle.textContent = '✏️ Редактировать';
     editId.value = a.id;
@@ -1300,6 +1558,9 @@ function closeEdit() {
   editModal.classList.remove('active');
   document.body.style.overflow = '';
   editForm.reset();
+  uploadedFiles.innerHTML = '';
+  uploadStatus.textContent = '';
+  uploadStatus.className = 'upload-status';
 }
 
 function closeDelete() {
@@ -1313,7 +1574,9 @@ cancelDelete.addEventListener('click', closeDelete);
 editModal.addEventListener('click', e => { if (e.target === editModal) closeEdit(); });
 deleteModal.addEventListener('click', e => { if (e.target === deleteModal) closeDelete(); });
 
+// ============================================================
 // СОХРАНЕНИЕ
+// ============================================================
 editForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const title = editName.value.trim();
@@ -1334,7 +1597,9 @@ editForm.addEventListener('submit', async (e) => {
   }
 });
 
+// ============================================================
 // УДАЛЕНИЕ
+// ============================================================
 confirmDelete.addEventListener('click', async () => {
   if (!deletingId) return;
   try {
@@ -1346,7 +1611,9 @@ confirmDelete.addEventListener('click', async () => {
   }
 });
 
+// ============================================================
 // FAB
+// ============================================================
 addBtn.addEventListener('click', () => openEdit(null));
 
 function updateFab() {
@@ -1359,7 +1626,9 @@ function updateFab() {
   }
 }
 
+// ============================================================
 // АВТОРИЗАЦИЯ
+// ============================================================
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
   if (user) {
