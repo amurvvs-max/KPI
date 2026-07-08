@@ -353,9 +353,6 @@
     gap: 4px;
   }
 
-  /* ============================================================
-     РАЗВОРАЧИВАНИЕ
-     ============================================================ */
   .btn-expand {
     background: none;
     border: none;
@@ -375,7 +372,7 @@
   }
 
   /* ============================================================
-     ТЕЛО СТАТЬИ — ГЛАВНЫЙ ФИКС!
+     ⭐ СТИЛИ ДЛЯ СОДЕРЖИМОГО СТАТЬИ
      ============================================================ */
   .article-body {
     margin-top: 14px !important;
@@ -397,22 +394,28 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ============================================================
-     СТИЛИ ДЛЯ СОДЕРЖИМОГО СТАТЬИ (ВАЖНО!)
-     ============================================================ */
+  /* Отступы между блоками */
+  .article-body > * {
+    margin-bottom: 14px !important;
+  }
+  .article-body > *:last-child {
+    margin-bottom: 0 !important;
+  }
 
-  /* Заголовки внутри статьи */
+  /* Заголовки */
   .article-body h1,
   .article-body h2,
   .article-body h3,
-  .article-body h4 {
+  .article-body h4,
+  .article-body h5,
+  .article-body h6 {
     font-family: var(--font-display) !important;
     font-weight: 700 !important;
     color: var(--orange-deep) !important;
-    margin: 0 0 12px 0 !important;
+    margin: 0 0 10px 0 !important;
     padding: 0 !important;
+    line-height: 1.4 !important;
   }
-
   .article-body h1 { font-size: 1.4rem !important; }
   .article-body h2 { font-size: 1.25rem !important; }
   .article-body h3 { font-size: 1.1rem !important; }
@@ -431,19 +434,29 @@
   .article-body ul,
   .article-body ol {
     margin: 0 0 14px 0 !important;
-    padding: 0 0 0 22px !important;
+    padding: 0 0 0 24px !important;
+    list-style: none !important;
   }
 
   .article-body ul li,
   .article-body ol li {
     margin-bottom: 10px !important;
-    padding-left: 4px !important;
+    padding-left: 8px !important;
     line-height: 1.8 !important;
     font-size: 15px !important;
     color: var(--ink-soft);
+    position: relative !important;
   }
 
-  /* Жирный текст в списках */
+  .article-body ul li::before {
+    content: "•" !important;
+    color: var(--orange) !important;
+    font-size: 20px !important;
+    position: absolute !important;
+    left: -18px !important;
+    top: -2px !important;
+  }
+
   .article-body ul li b,
   .article-body ul li strong,
   .article-body ol li b,
@@ -452,10 +465,12 @@
     font-weight: 600 !important;
   }
 
-  /* Оранжевый акцент */
-  .article-body .highlight-orange {
-    color: var(--orange-deep) !important;
-    font-weight: 600 !important;
+  /* Горизонтальная линия */
+  .article-body hr {
+    border: none !important;
+    border-top: 2px solid var(--line) !important;
+    margin: 18px 0 !important;
+    padding: 0 !important;
   }
 
   /* Блок "Скрипт" */
@@ -561,13 +576,6 @@
     margin: 0 0 12px 0 !important;
     letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
-  }
-
-  /* Горизонтальная линия */
-  .article-body hr {
-    border: none !important;
-    border-top: 2px solid var(--line) !important;
-    margin: 20px 0 !important;
   }
 
   /* Финальный блок */
@@ -843,7 +851,6 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
-  /* ТЕЛЕФОН */
   @media (max-width: 767px) {
     .header {
       padding: 10px 12px !important;
@@ -885,7 +892,6 @@
     }
   }
 
-  /* ПЛАНШЕТЫ И ПК */
   @media (min-width: 768px) {
     .page-wrap {
       max-width: var(--max-width) !important;
@@ -924,7 +930,6 @@
     }
   }
 
-  /* БОЛЬШИЕ ЭКРАНЫ */
   @media (min-width: 1200px) {
     :root {
       --max-width: 900px;
@@ -972,7 +977,6 @@
     }
   }
 
-  /* SAFE AREA */
   @supports (padding: max(0px)) {
     .fab {
       bottom: max(14px, env(safe-area-inset-bottom));
@@ -989,7 +993,6 @@
     }
   }
 
-  /* СКРОЛЛ */
   ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
