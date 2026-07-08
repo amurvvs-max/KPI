@@ -18,7 +18,7 @@
     --bg: #F5F7FA;
     --surface: #FFFFFF;
     --ink: #1A1A2E;
-    --ink-soft: #5A5A6E;
+    --ink-soft: #4A4A5A;
     --ink-muted: #9A9AAE;
     --orange: #FF6A00;
     --orange-deep: #E85D00;
@@ -60,7 +60,7 @@
   }
 
   /* ============================================================
-     ОБЕРТКА — НА ТЕЛЕФОНЕ ВО ВСЮ ШИРИНУ, НА ПК С ОГРАНИЧЕНИЕМ
+     ОБЕРТКА
      ============================================================ */
   .page-wrap {
     width: 100% !important;
@@ -84,7 +84,7 @@
      ШАПКА
      ============================================================ */
   .header {
-    padding: 12px 12px !important;
+    padding: 12px 14px !important;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     display: flex;
@@ -175,16 +175,10 @@
     overflow: hidden;
     display: none;
     z-index: 50;
-    animation: dropIn 0.2s ease;
   }
 
   .dropdown-menu.open {
     display: block;
-  }
-
-  @keyframes dropIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   .dropdown-menu a {
@@ -223,12 +217,12 @@
      ПОИСК
      ============================================================ */
   .search-wrap {
-    padding: 10px 12px 0 !important;
+    padding: 10px 14px 0 !important;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 12px 14px !important;
+    padding: 12px 16px !important;
     border-radius: 8px;
     border: 1.5px solid var(--line);
     font-size: 16px;
@@ -249,7 +243,7 @@
      КОНТЕНТ
      ============================================================ */
   .content {
-    padding: 10px 12px 80px !important;
+    padding: 10px 14px 80px !important;
   }
 
   /* ============================================================
@@ -257,14 +251,14 @@
      ============================================================ */
   .articles-grid {
     display: grid;
-    gap: 10px;
+    gap: 12px;
   }
 
   .article-card {
     background: var(--surface);
     border: 1.5px solid var(--line);
     border-radius: 10px;
-    padding: 14px 14px !important;
+    padding: 16px 16px !important;
     cursor: pointer;
     transition: all 0.2s ease;
   }
@@ -341,7 +335,7 @@
   .article-desc {
     color: var(--ink-soft);
     font-size: clamp(0.9rem, 2.5vw, 1rem);
-    margin: 4px 0 6px !important;
+    margin: 4px 0 8px !important;
     line-height: 1.5;
   }
 
@@ -369,7 +363,7 @@
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    padding: 10px 4px 2px !important;
+    padding: 12px 4px 2px !important;
     width: 100%;
     text-align: left;
     font-family: var(--font-body);
@@ -381,15 +375,15 @@
   }
 
   /* ============================================================
-     ТЕЛО СТАТЬИ
+     ТЕЛО СТАТЬИ — ГЛАВНЫЙ ФИКС!
      ============================================================ */
   .article-body {
-    margin-top: 10px !important;
-    padding-top: 10px !important;
+    margin-top: 14px !important;
+    padding-top: 14px !important;
     border-top: 1px solid var(--line);
     display: none;
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: 15px !important;
+    line-height: 1.8 !important;
     color: var(--ink-soft);
   }
 
@@ -403,134 +397,220 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .article-body ul {
-    list-style: none;
-    margin: 0 !important;
+  /* ============================================================
+     СТИЛИ ДЛЯ СОДЕРЖИМОГО СТАТЬИ (ВАЖНО!)
+     ============================================================ */
+
+  /* Заголовки внутри статьи */
+  .article-body h1,
+  .article-body h2,
+  .article-body h3,
+  .article-body h4 {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    color: var(--orange-deep) !important;
+    margin: 0 0 12px 0 !important;
     padding: 0 !important;
   }
 
-  .article-body ul li {
-    padding-left: 22px !important;
-    position: relative;
-    margin-bottom: 6px !important;
-    line-height: 1.6;
+  .article-body h1 { font-size: 1.4rem !important; }
+  .article-body h2 { font-size: 1.25rem !important; }
+  .article-body h3 { font-size: 1.1rem !important; }
+  .article-body h4 { font-size: 1rem !important; }
+
+  /* Параграфы */
+  .article-body p {
+    margin: 0 0 12px 0 !important;
+    padding: 0 !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
+    color: var(--ink-soft);
   }
 
-  .article-body ul li::before {
-    content: "•";
-    color: var(--orange);
-    position: absolute;
-    left: 2px;
-    top: 0;
-    font-size: 18px;
+  /* Списки */
+  .article-body ul,
+  .article-body ol {
+    margin: 0 0 14px 0 !important;
+    padding: 0 0 0 22px !important;
   }
 
-  .article-body .script {
-    background: var(--orange-light);
-    padding: 10px 14px !important;
-    border-radius: 8px;
-    margin: 6px 0 !important;
-    border-left: 4px solid var(--orange);
-    color: var(--ink);
-    font-size: 14px;
+  .article-body ul li,
+  .article-body ol li {
+    margin-bottom: 10px !important;
+    padding-left: 4px !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
+    color: var(--ink-soft);
   }
 
-  .article-body .note {
-    background: #F0F7FF;
-    padding: 10px 14px !important;
-    border-radius: 8px;
-    margin: 6px 0 !important;
-    border: 1px solid #E0EDF5;
-    font-size: 14px;
+  /* Жирный текст в списках */
+  .article-body ul li b,
+  .article-body ul li strong,
+  .article-body ol li b,
+  .article-body ol li strong {
+    color: var(--ink) !important;
+    font-weight: 600 !important;
   }
 
-  .article-body .danger {
-    background: #FDEDEB;
-    padding: 10px 14px !important;
-    border-radius: 8px;
-    margin: 6px 0 !important;
-    border-left: 4px solid var(--red);
-    font-size: 14px;
+  /* Оранжевый акцент */
+  .article-body .highlight-orange {
+    color: var(--orange-deep) !important;
+    font-weight: 600 !important;
   }
 
-  .article-body .danger .lbl {
-    font-weight: 700;
-    color: var(--red);
+  /* Блок "Скрипт" */
+  .article-body .script,
+  .article-body .script-block {
+    background: var(--orange-light) !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border-left: 4px solid var(--orange) !important;
+    color: var(--ink) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
   }
 
+  .article-body .script i,
+  .article-body .script-block i {
+    color: var(--ink-soft) !important;
+    font-style: italic !important;
+  }
+
+  /* Блок "Запрещено" */
+  .article-body .danger,
+  .article-body .forbidden {
+    background: #FDEDEB !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border-left: 4px solid var(--red) !important;
+    color: var(--ink-soft) !important;
+    font-size: 15px !important;
+    line-height: 1.8 !important;
+  }
+
+  .article-body .danger .lbl,
+  .article-body .forbidden .lbl {
+    font-weight: 700 !important;
+    color: var(--red) !important;
+  }
+
+  /* Блок "Важно" */
+  .article-body .note,
+  .article-body .important {
+    background: #F0F7FF !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border: 1px solid #E0EDF5 !important;
+    color: var(--ink-soft) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+  }
+
+  .article-body .note b,
+  .article-body .important b {
+    color: var(--ink) !important;
+  }
+
+  /* Таблицы */
   .article-body .table-wrap {
-    overflow-x: auto;
-    margin: 6px 0 !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 14px 0 !important;
   }
 
   .article-body table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    min-width: 220px;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 14px !important;
+    min-width: 280px !important;
   }
 
   .article-body table th {
-    border-bottom: 2px solid var(--orange);
-    padding: 8px 6px !important;
-    text-align: left;
-    color: var(--orange-deep);
-    font-weight: 600;
+    border-bottom: 2px solid var(--orange) !important;
+    padding: 10px 10px !important;
+    text-align: left !important;
+    color: var(--orange-deep) !important;
+    font-weight: 700 !important;
+    background: #FAFAFB !important;
   }
 
   .article-body table td {
-    border-bottom: 1px solid var(--line);
-    padding: 8px 6px !important;
-    vertical-align: top;
+    border-bottom: 1px solid var(--line) !important;
+    padding: 10px 10px !important;
+    vertical-align: top !important;
+    color: var(--ink-soft) !important;
+    line-height: 1.6 !important;
   }
 
-  .article-body .badge {
-    display: inline-block;
-    background: var(--orange);
-    color: #fff;
-    padding: 4px 14px !important;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 6px !important;
+  .article-body table tr:hover td {
+    background: #FAFAFB !important;
   }
 
+  /* Бейдж KPI */
+  .article-body .badge-kpi {
+    display: inline-block !important;
+    background: var(--orange) !important;
+    color: #fff !important;
+    padding: 6px 20px !important;
+    border-radius: 30px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin: 0 0 12px 0 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Горизонтальная линия */
+  .article-body hr {
+    border: none !important;
+    border-top: 2px solid var(--line) !important;
+    margin: 20px 0 !important;
+  }
+
+  /* Финальный блок */
+  .article-body .footer-note {
+    margin: 16px 0 0 0 !important;
+    padding: 16px 20px !important;
+    background: var(--orange-light) !important;
+    border-radius: 10px !important;
+    border: 2px solid var(--orange) !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    color: var(--orange-deep) !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Карточки внутри статьи */
   .article-body .flex-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 6px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 14px 0 !important;
   }
 
   .article-body .flex-grid .item {
-    background: var(--bg);
-    padding: 12px 14px !important;
-    border-radius: 8px;
-    border: 1px solid var(--line);
+    background: var(--bg) !important;
+    padding: 14px 16px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--line) !important;
   }
 
   .article-body .flex-grid .item .ttl {
-    font-weight: 700;
-    color: var(--orange-deep);
+    font-weight: 700 !important;
+    color: var(--orange-deep) !important;
     margin-bottom: 4px !important;
-    font-size: 15px;
+    font-size: 15px !important;
   }
 
   .article-body .flex-grid .item p {
     margin: 0 !important;
-    font-size: 14px;
-    color: var(--ink-soft);
-  }
-
-  .article-body .footer {
-    margin-top: 10px !important;
-    padding: 12px 16px !important;
-    background: var(--orange-light);
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 700;
-    color: var(--orange-deep);
-    font-size: 15px;
+    font-size: 14px !important;
+    color: var(--ink-soft) !important;
+    line-height: 1.6 !important;
   }
 
   /* ============================================================
@@ -763,34 +843,38 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
-  /* ТЕЛЕФОН — ВО ВСЮ ШИРИНУ */
+  /* ТЕЛЕФОН */
   @media (max-width: 767px) {
-    .page-wrap {
-      padding: 0 !important;
-    }
-
-    .card {
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      border: none !important;
-      margin: 0 !important;
-    }
-
     .header {
-      padding: 10px 10px !important;
+      padding: 10px 12px !important;
     }
 
     .content {
-      padding: 8px 10px 70px !important;
+      padding: 8px 12px 70px !important;
     }
 
     .search-wrap {
-      padding: 8px 10px 0 !important;
+      padding: 8px 12px 0 !important;
     }
 
     .article-card {
-      padding: 10px 10px !important;
+      padding: 12px 12px !important;
     }
+
+    .article-body {
+      font-size: 14px !important;
+      line-height: 1.7 !important;
+    }
+
+    .article-body p,
+    .article-body ul li,
+    .article-body ol li {
+      font-size: 14px !important;
+    }
+
+    .article-body h1 { font-size: 1.2rem !important; }
+    .article-body h2 { font-size: 1.1rem !important; }
+    .article-body h3 { font-size: 1rem !important; }
 
     .fab {
       width: 50px;
@@ -801,7 +885,7 @@
     }
   }
 
-  /* ПЛАНШЕТЫ И ПК — ОГРАНИЧЕНИЕ И ЦЕНТРИРОВАНИЕ */
+  /* ПЛАНШЕТЫ И ПК */
   @media (min-width: 768px) {
     .page-wrap {
       max-width: var(--max-width) !important;
@@ -813,7 +897,6 @@
       border-radius: 14px !important;
       box-shadow: var(--shadow) !important;
       border: 1px solid var(--line) !important;
-      margin: 0 !important;
     }
 
     .header {
@@ -832,21 +915,12 @@
       padding: 16px 20px !important;
     }
 
-    .article-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    }
-
     .fab {
       width: 60px;
       height: 60px;
       font-size: 32px;
       bottom: 28px;
       right: 28px;
-    }
-
-    .fab:hover {
-      transform: scale(1.08);
     }
   }
 
@@ -873,19 +947,19 @@
     }
 
     .article-body .flex-grid {
-      flex-direction: row;
+      flex-direction: row !important;
     }
 
     .article-body .flex-grid .item {
-      flex: 1;
+      flex: 1 !important;
     }
 
     .modal-actions {
-      flex-direction: row;
+      flex-direction: row !important;
     }
 
     .modal-actions .btn {
-      flex: 1;
+      flex: 1 !important;
     }
 
     .modal-box {
@@ -911,15 +985,6 @@
       .fab {
         bottom: max(28px, env(safe-area-inset-bottom));
         right: max(28px, env(safe-area-inset-right));
-      }
-    }
-  }
-
-  @media (min-width: 1200px) {
-    @supports (padding: max(0px)) {
-      .fab {
-        bottom: max(32px, env(safe-area-inset-bottom));
-        right: max(32px, env(safe-area-inset-right));
       }
     }
   }
@@ -1010,7 +1075,7 @@
       <div class="field">
         <label for="editArticleContent">Содержание *</label>
         <textarea id="editArticleContent" required placeholder="Полный текст с HTML-форматированием..."></textarea>
-        <div class="hint">💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code></div>
+        <div class="hint">💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;hr&gt;</code></div>
       </div>
       <div class="field">
         <label for="editArticleCategory">Категория</label>
