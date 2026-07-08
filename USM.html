@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
 <title>KPI Guide — УСМ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -13,12 +13,16 @@
 
 <style>
   /* ============================================================
-     СТИЛИ ДЛЯ СТРАНИЦЫ СТАТЕЙ (КАК В ПРИМЕРЕ)
+     БАЗОВЫЕ СТИЛИ
      ============================================================ */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .page-wrap {
     max-width: 1300px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 12px;
   }
 
   .card-main {
@@ -30,47 +34,67 @@
     overflow: hidden;
   }
 
+  /* ============================================================
+     ШАПКА (АДАПТИВНАЯ)
+     ============================================================ */
   .header {
     background: #d95b00;
-    padding: 20px 28px;
+    padding: 16px 20px;
     color: white;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .header-icon {
-    font-size: 3rem;
+    font-size: 2.2rem;
+    line-height: 1;
+    flex-shrink: 0;
   }
 
   .header h1 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: clamp(1rem, 4vw, 1.6rem);
     font-weight: 700;
     flex: 1;
+    min-width: 120px;
+    word-break: break-word;
   }
 
   .header-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .header-actions .btn-back,
+  .header-actions .btn-add-article {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    min-width: 80px;
   }
 
   .btn-add-article {
-    padding: 10px 20px;
+    padding: 10px 16px;
     border: none;
     border-radius: 12px;
     background: rgba(255,255,255,0.25);
     color: white;
     font-weight: 600;
-    font-size: 14px;
+    font-size: clamp(12px, 2.5vw, 14px);
     cursor: pointer;
     transition: all 0.15s ease;
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
   }
 
   .btn-add-article:hover {
@@ -82,17 +106,21 @@
   }
 
   .btn-back {
-    padding: 10px 18px;
+    padding: 10px 16px;
     border: 1.5px solid rgba(255,255,255,0.3);
     border-radius: 12px;
     background: transparent;
     color: white;
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 14px;
+    font-size: clamp(12px, 2.5vw, 14px);
     cursor: pointer;
     transition: all 0.15s ease;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
   }
 
   .btn-back:hover {
@@ -100,25 +128,31 @@
     border-color: rgba(255,255,255,0.5);
   }
 
-  /* Контент */
+  /* ============================================================
+     КОНТЕНТ
+     ============================================================ */
   .content {
-    padding: 28px 25px;
+    padding: 16px 14px;
   }
 
-  /* Поиск */
+  /* ============================================================
+     ПОИСК
+     ============================================================ */
   .search-wrap {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 14px 18px;
-    border-radius: 16px;
+    padding: 12px 16px;
+    border-radius: 14px;
     border: 1.5px solid #e8e8e8;
-    font-size: 15px;
+    font-size: clamp(14px, 3vw, 16px);
     font-family: var(--font-body);
     background: #f8f8f8;
     transition: border-color 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   .search-wrap input:focus {
@@ -127,39 +161,38 @@
     background: white;
   }
 
-  /* Сетка статей */
+  /* ============================================================
+     СТАТЬИ
+     ============================================================ */
   .articles-grid {
     display: grid;
-    gap: 24px;
+    gap: 16px;
   }
 
   .article-card {
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 16px;
     border: 1px solid #e8e8e8;
-    padding: 24px;
+    padding: 16px;
     transition: all 0.2s ease;
     cursor: pointer;
+    -webkit-touch-callout: none;
   }
 
-  .article-card:hover {
-    border-color: #d95b00;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  .article-card:active {
+    transform: scale(0.99);
   }
 
   .article-card-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
     margin-bottom: 8px;
   }
 
   .article-card h3 {
     font-family: var(--font-display);
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
     font-weight: 700;
     color: #d95b00;
     margin: 0;
@@ -168,21 +201,23 @@
     gap: 8px;
     border-left: 3px solid #d95b00;
     padding-left: 12px;
+    word-break: break-word;
   }
 
   .article-card .article-description {
     color: #4a5568;
-    font-size: 0.95rem;
-    margin: 8px 0 12px;
-    line-height: 1.6;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    margin: 6px 0 10px;
+    line-height: 1.5;
+    word-break: break-word;
   }
 
   .article-card .meta {
     display: flex;
-    gap: 16px;
-    font-size: 0.8rem;
-    color: #a0aec0;
     flex-wrap: wrap;
+    gap: 10px;
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+    color: #a0aec0;
   }
 
   .article-card .meta span {
@@ -191,29 +226,127 @@
     gap: 4px;
   }
 
-  /* Стили для содержимого статьи (как в примере) */
+  /* Админ-кнопки на карточке */
+  .admin-actions-on-card {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: clamp(11px, 2vw, 12px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex: 1;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .btn-edit {
+    background: #eef4fa;
+    color: #2c5a7a;
+  }
+
+  .btn-edit:active {
+    transform: scale(0.95);
+  }
+
+  .btn-delete {
+    background: #fff6f0;
+    color: #b91c1c;
+  }
+
+  .btn-delete:active {
+    transform: scale(0.95);
+  }
+
+  .btn-edit.hidden,
+  .btn-delete.hidden {
+    display: none;
+  }
+
+  /* Кнопка "Читать полностью" */
+  .btn-toggle-content {
+    background: none;
+    border: none;
+    color: #d95b00;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: clamp(0.8rem, 2vw, 0.85rem);
+    padding: 8px 4px;
+    width: 100%;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-toggle-content:active {
+    opacity: 0.6;
+  }
+
+  /* ============================================================
+     СОДЕРЖИМОЕ СТАТЬИ (АДАПТИВНОЕ)
+     ============================================================ */
   .article-content {
-    margin-top: 16px;
-    padding-top: 16px;
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid #e8e8e8;
     display: none;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .article-content.expanded {
     display: block;
   }
 
+  .article-content .two-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 12px 0;
+  }
+
+  .article-content .two-columns > div {
+    flex: 1;
+    background: #fafafa;
+    border-radius: 14px;
+    padding: 14px 16px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .article-content .panel-title {
+    font-weight: 700;
+    color: #d95b00;
+    margin-bottom: 10px;
+    font-size: clamp(0.9rem, 2.8vw, 1rem);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 4px solid #d95b00;
+    padding-left: 12px;
+  }
+
   .article-content .step-list {
     list-style: none;
-    margin-bottom: 16px;
+    padding: 0;
+    margin: 0 0 12px 0;
   }
 
   .article-content .step-list li {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     padding-left: 22px;
     position: relative;
-    line-height: 1.6;
-    font-size: 0.92rem;
+    line-height: 1.5;
+    font-size: clamp(0.82rem, 2.3vw, 0.92rem);
+    word-break: break-word;
   }
 
   .article-content .step-list li::before {
@@ -222,92 +355,53 @@
     font-weight: bold;
     position: absolute;
     left: 4px;
-    font-size: 14px;
+    font-size: clamp(12px, 2.5vw, 14px);
+    top: 2px;
   }
 
   .article-content .script {
     background: #fffaf5;
     border-left: 3px solid #d95b00;
     padding: 10px 14px;
-    margin: 12px 0;
-    border-radius: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
     font-weight: 500;
     color: #1e4663;
-    font-size: 0.85rem;
+    font-size: clamp(0.8rem, 2.2vw, 0.85rem);
+    word-break: break-word;
   }
 
   .article-content .important-note {
     background: #eef4fa;
     padding: 10px 14px;
-    border-radius: 16px;
-    margin-top: 14px;
-    font-size: 0.85rem;
+    border-radius: 14px;
+    margin-top: 10px;
+    font-size: clamp(0.8rem, 2.2vw, 0.85rem);
     border: 1px solid #e2eaf1;
+    word-break: break-word;
   }
 
   .article-content .forbidden {
     background: #fff6f0;
     border-left: 4px solid #dc2626;
-    padding: 12px 16px;
-    border-radius: 16px;
-    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    margin-top: 10px;
+    word-break: break-word;
   }
 
   .article-content .forbidden p {
     font-weight: 700;
     color: #b91c1c;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     display: flex;
     align-items: center;
     gap: 6px;
+    font-size: clamp(0.82rem, 2.3vw, 0.92rem);
   }
 
-  .article-content .two-columns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin: 16px 0;
-  }
-
-  .article-content .two-columns > div {
-    flex: 1;
-    min-width: 200px;
-    background: #fafafa;
-    border-radius: 16px;
-    padding: 16px 20px;
-  }
-
-  .article-content .panel-title {
-    font-weight: 700;
-    color: #d95b00;
-    margin-bottom: 10px;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-left: 4px solid #d95b00;
-    padding-left: 12px;
-  }
-
-  .article-content .table-mini {
-    margin-top: 12px;
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-  }
-
-  .article-content .table-mini td,
-  .article-content .table-mini th {
-    border-bottom: 1px solid #e2e8f0;
-    padding: 10px 6px;
-    vertical-align: top;
-    text-align: left;
-  }
-
-  .article-content .table-mini th {
-    font-weight: 700;
-    color: #d95b00;
-    width: 30%;
+  .article-content .forbidden span {
+    font-size: clamp(0.78rem, 2.2vw, 0.88rem);
   }
 
   .article-content .kpi-badge {
@@ -315,80 +409,117 @@
     color: #d95b00;
     border-radius: 30px;
     padding: 3px 12px;
-    font-size: 0.7rem;
+    font-size: clamp(0.6rem, 1.8vw, 0.7rem);
     font-weight: 600;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
-  /* Админ-кнопки */
-  .admin-actions-on-card {
+  .article-content .table-mini {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(0.72rem, 2vw, 0.82rem);
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .article-content .table-mini td,
+  .article-content .table-mini th {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 8px 6px;
+    vertical-align: top;
+    text-align: left;
+    word-break: break-word;
+    min-width: 60px;
+  }
+
+  .article-content .table-mini th {
+    font-weight: 700;
+    color: #d95b00;
+    min-width: 70px;
+  }
+
+  /* Адаптивные карточки внутри статьи */
+  .article-content .flex-cards {
     display: flex;
-    gap: 8px;
-    flex-shrink: 0;
+    flex-direction: column;
+    gap: 16px;
+    margin: 12px 0;
   }
 
-  .btn-edit,
-  .btn-delete {
-    padding: 6px 14px;
-    border: none;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
+  .article-content .flex-card {
+    flex: 1;
+    background: #fffaf5;
+    border-radius: 16px;
+    padding: 14px 16px;
+    border: 1px solid #f0e0d0;
+    min-width: 0;
   }
 
-  .btn-edit {
-    background: #eef4fa;
-    color: #2c5a7a;
+  .article-content .flex-card .card-title {
+    font-weight: 700;
+    color: #d95b00;
+    margin-bottom: 8px;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   }
 
-  .btn-edit:hover {
-    background: #d0e0f0;
+  .article-content .flex-card p {
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+    line-height: 1.5;
+    margin: 0;
+    word-break: break-word;
   }
 
-  .btn-delete {
-    background: #fff6f0;
-    color: #b91c1c;
+  .article-content .footer-note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #f1f5f9;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
   }
 
-  .btn-delete:hover {
-    background: #fee2e2;
+  .article-content .footer-note .footer-text {
+    font-weight: 700;
+    color: #d95b00;
+    font-size: clamp(0.9rem, 2.8vw, 1.1rem);
   }
 
-  .btn-edit.hidden,
-  .btn-delete.hidden {
-    display: none;
-  }
-
-  /* Пустое состояние */
+  /* ============================================================
+     ПУСТОЕ СОСТОЯНИЕ
+     ============================================================ */
   .empty-state {
     text-align: center;
-    padding: 60px 20px;
+    padding: 40px 20px;
     color: #a0aec0;
   }
 
   .empty-state .icon {
-    font-size: 48px;
-    margin-bottom: 12px;
+    font-size: 40px;
+    margin-bottom: 10px;
   }
 
   .empty-state p {
     margin: 4px 0;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   }
 
-  /* Модалки */
+  /* ============================================================
+     МОДАЛКИ (АДАПТИВНЫЕ)
+     ============================================================ */
   .modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    padding: 20px;
+    padding: 12px;
   }
 
   .modal-overlay.active {
@@ -397,55 +528,59 @@
 
   .modal-content {
     background: var(--surface);
-    border-radius: 24px;
-    padding: 32px;
+    border-radius: 20px;
+    padding: 24px 20px;
     max-width: 700px;
     width: 100%;
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .modal-content h2 {
     font-family: var(--font-display);
-    font-size: 22px;
-    margin: 0 0 6px;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    margin: 0 0 4px;
   }
 
   .modal-content .sub {
     color: var(--ink-soft);
-    margin: 0 0 20px;
+    margin: 0 0 16px;
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
   }
 
   .modal-content .field {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .modal-content .field label {
     display: block;
-    font-size: 13px;
+    font-size: clamp(0.8rem, 2.2vw, 0.85rem);
     font-weight: 600;
     color: #4a5568;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .modal-content .field input,
   .modal-content .field textarea,
   .modal-content .field select {
     width: 100%;
-    padding: 12px 14px;
+    padding: 10px 14px;
     border-radius: 12px;
     border: 1.5px solid #e8e8e8;
-    font-size: 14px;
+    font-size: clamp(14px, 3vw, 16px);
     font-family: var(--font-body);
     background: #fafafa;
     transition: border-color 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   .modal-content .field textarea {
-    min-height: 200px;
+    min-height: 120px;
     resize: vertical;
     font-family: 'Courier New', monospace;
-    font-size: 13px;
+    font-size: clamp(12px, 2.5vw, 13px);
     line-height: 1.6;
   }
 
@@ -459,20 +594,22 @@
 
   .modal-actions {
     display: flex;
-    gap: 12px;
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
   }
 
   .modal-actions .btn {
-    flex: 1;
+    width: 100%;
     padding: 12px 16px;
     border: none;
     border-radius: 12px;
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 14px;
+    font-size: clamp(14px, 3vw, 16px);
     cursor: pointer;
     transition: all 0.15s ease;
+    text-align: center;
   }
 
   .modal-actions .btn-primary {
@@ -480,8 +617,8 @@
     color: #fff;
   }
 
-  .modal-actions .btn-primary:hover {
-    background: #b84d00;
+  .modal-actions .btn-primary:active {
+    transform: scale(0.97);
   }
 
   .modal-actions .btn-cancel {
@@ -490,8 +627,8 @@
     border: 1.5px solid #e8e8e8;
   }
 
-  .modal-actions .btn-cancel:hover {
-    background: #e2e8f0;
+  .modal-actions .btn-cancel:active {
+    transform: scale(0.97);
   }
 
   .modal-actions .btn-danger {
@@ -499,57 +636,194 @@
     color: #fff;
   }
 
-  .modal-actions .btn-danger:hover {
-    background: #b91c1c;
+  .modal-actions .btn-danger:active {
+    transform: scale(0.97);
   }
 
-  /* Подсказка по форматированию */
   .formatting-hint {
-    font-size: 12px;
+    font-size: clamp(11px, 2vw, 12px);
     color: #a0aec0;
     margin-top: 4px;
     background: #f8fafc;
     padding: 8px 12px;
     border-radius: 8px;
+    word-break: break-word;
   }
 
   .formatting-hint code {
     background: #e2e8f0;
     padding: 2px 6px;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: clamp(10px, 1.8vw, 11px);
+    display: inline-block;
+    margin: 2px 0;
   }
 
-  /* Адаптивность */
-  @media (max-width: 700px) {
-    .content {
-      padding: 15px;
-    }
-    .header {
-      padding: 16px 20px;
-    }
-    .header h1 {
-      font-size: 1.2rem;
-    }
-    .article-card {
-      padding: 16px;
-    }
-    .article-card h3 {
-      font-size: 1rem;
-    }
-    .admin-actions-on-card {
-      margin-top: 8px;
-      width: 100%;
-    }
-    .modal-content {
+  /* ============================================================
+     ПЛАНШЕТЫ (768px+)
+     ============================================================ */
+  @media (min-width: 768px) {
+    .page-wrap {
       padding: 20px;
     }
+
+    .content {
+      padding: 24px 28px;
+    }
+
+    .header {
+      padding: 20px 28px;
+    }
+
+    .header-actions {
+      width: auto;
+      margin-top: 0;
+    }
+
+    .header-actions .btn-back,
+    .header-actions .btn-add-article {
+      flex: none;
+    }
+
+    .article-card {
+      padding: 20px 24px;
+    }
+
+    .article-card-header {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .admin-actions-on-card {
+      flex: none;
+    }
+
+    .btn-edit,
+    .btn-delete {
+      flex: none;
+    }
+
+    .article-content .two-columns {
+      flex-direction: row;
+    }
+
+    .article-content .flex-cards {
+      flex-direction: row;
+    }
+
     .modal-actions {
-      flex-direction: column;
+      flex-direction: row;
     }
+
+    .modal-actions .btn {
+      flex: 1;
+    }
+
+    .modal-content {
+      padding: 32px;
+    }
+  }
+
+  /* ============================================================
+     ДЕСКТОП (1024px+)
+     ============================================================ */
+  @media (min-width: 1024px) {
+    .page-wrap {
+      padding: 30px 24px;
+    }
+
+    .content {
+      padding: 28px 32px;
+    }
+
+    .articles-grid {
+      gap: 20px;
+    }
+
+    .article-card {
+      padding: 24px 28px;
+    }
+
+    .article-content .two-columns {
+      gap: 20px;
+    }
+
     .article-content .two-columns > div {
-      min-width: 100%;
+      padding: 18px 22px;
     }
+
+    .article-content .flex-cards {
+      gap: 20px;
+    }
+  }
+
+  /* ============================================================
+     САМЫЕ МАЛЕНЬКИЕ ЭКРАНЫ (320px-)
+     ============================================================ */
+  @media (max-width: 360px) {
+    .header-icon {
+      font-size: 1.8rem;
+    }
+
+    .header h1 {
+      font-size: 0.95rem;
+    }
+
+    .btn-add-article,
+    .btn-back {
+      font-size: 11px;
+      padding: 8px 12px;
+    }
+
+    .article-card {
+      padding: 12px;
+    }
+
+    .article-card h3 {
+      font-size: 0.9rem;
+    }
+
+    .modal-content {
+      padding: 16px;
+    }
+
+    .article-content .two-columns > div {
+      padding: 10px 12px;
+    }
+  }
+
+  /* ============================================================
+     БЕЗОПАСНАЯ ЗОНА ДЛЯ iPhone (notch)
+     ============================================================ */
+  @supports (padding: max(0px)) {
+    .page-wrap {
+      padding-left: max(12px, env(safe-area-inset-left));
+      padding-right: max(12px, env(safe-area-inset-right));
+      padding-top: max(12px, env(safe-area-inset-top));
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+  }
+
+  @media (min-width: 768px) {
+    @supports (padding: max(0px)) {
+      .page-wrap {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+      }
+    }
+  }
+
+  /* ============================================================
+     ЗАПРЕТ УВЕЛИЧЕНИЯ ПРИ ДВОЙНОМ ТАПЕ (iOS)
+     ============================================================ */
+  .article-card,
+  .btn,
+  .btn-add-article,
+  .btn-back,
+  .btn-toggle-content {
+    touch-action: manipulation;
   }
 </style>
 </head>
@@ -563,7 +837,7 @@
       <h1>Материалы для УСМ</h1>
       <div class="header-actions">
         <a href="index.html" class="btn-back">← Назад</a>
-        <button class="btn-add-article hidden" id="addArticleBtn">➕ Добавить статью</button>
+        <button class="btn-add-article hidden" id="addArticleBtn">➕ Добавить</button>
       </div>
     </div>
 
@@ -590,7 +864,7 @@
 <div class="modal-overlay" id="editModal">
   <div class="modal-content">
     <h2 id="editModalTitle">➕ Новая статья</h2>
-    <p class="sub">Используйте HTML-теги для форматирования: <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;table&gt;</code></p>
+    <p class="sub">Используйте HTML-теги для форматирования</p>
 
     <form id="editArticleForm">
       <input type="hidden" id="editArticleId" value="">
@@ -609,7 +883,7 @@
         <label for="editArticleContent">Содержание *</label>
         <textarea id="editArticleContent" required placeholder="Полный текст статьи с HTML-форматированием..."></textarea>
         <div class="formatting-hint">
-          💡 Доступные теги: <code>&lt;b&gt;жирный&lt;/b&gt;</code> · <code>&lt;i&gt;курсив&lt;/i&gt;</code> · <code>&lt;ul&gt;&lt;li&gt;список&lt;/li&gt;&lt;/ul&gt;</code> · <code>&lt;table&gt;&lt;tr&gt;&lt;td&gt;таблица&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</code>
+          💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;div class="..."&gt;</code>
         </div>
       </div>
 
@@ -638,8 +912,8 @@
 <div class="modal-overlay" id="deleteModal">
   <div class="modal-content">
     <h2>🗑️ Удалить статью?</h2>
-    <p class="sub">Вы уверены, что хотите удалить эту статью? Это действие нельзя отменить.</p>
-    <p id="deleteArticleTitle" style="font-weight:600; color:#d95b00;"></p>
+    <p class="sub">Это действие нельзя отменить.</p>
+    <p id="deleteArticleTitle" style="font-weight:600; color:#d95b00; word-break:break-word;"></p>
     <div class="modal-actions">
       <button type="button" class="btn btn-cancel" id="cancelDeleteBtn">Отмена</button>
       <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
@@ -748,7 +1022,7 @@ function renderArticles(articles) {
       <div class="empty-state">
         <div class="icon">📖</div>
         <p>Пока нет статей для этой должности</p>
-        ${isAdmin ? '<p style="font-size:13px;">Нажмите "Добавить статью" чтобы создать первую</p>' : ''}
+        ${isAdmin ? '<p style="font-size:13px;">Нажмите "Добавить" чтобы создать первую</p>' : ''}
       </div>
     `;
     return;
@@ -759,8 +1033,8 @@ function renderArticles(articles) {
       <div class="article-card-header">
         <h3>${article.title || 'Без названия'}</h3>
         <div class="admin-actions-on-card">
-          <button class="btn-edit ${isAdmin ? '' : 'hidden'}" data-id="${article.id}">✏️ Редактировать</button>
-          <button class="btn-delete ${isAdmin ? '' : 'hidden'}" data-id="${article.id}">🗑️ Удалить</button>
+          <button class="btn-edit ${isAdmin ? '' : 'hidden'}" data-id="${article.id}">✏️</button>
+          <button class="btn-delete ${isAdmin ? '' : 'hidden'}" data-id="${article.id}">🗑️</button>
         </div>
       </div>
 
@@ -776,17 +1050,7 @@ function renderArticles(articles) {
         ${article.content || '<p>Содержание не добавлено</p>'}
       </div>
 
-      <div style="margin-top:12px;">
-        <button class="btn-toggle-content" data-id="${article.id}" style="
-          background: none;
-          border: none;
-          color: #d95b00;
-          font-weight: 600;
-          cursor: pointer;
-          font-size: 0.85rem;
-          padding: 4px 8px;
-        ">📖 Читать полностью</button>
-      </div>
+      <button class="btn-toggle-content" data-id="${article.id}">📖 Читать полностью</button>
     </div>
   `).join('');
 
@@ -866,7 +1130,7 @@ searchInput.addEventListener('input', (e) => {
 // ============================================================
 function openEditModal(article = null) {
   if (article) {
-    editModalTitle.textContent = '✏️ Редактировать статью';
+    editModalTitle.textContent = '✏️ Редактировать';
     editArticleId.value = article.id;
     editArticleTitle.value = article.title || '';
     editArticleDescription.value = article.description || '';
@@ -926,7 +1190,7 @@ deleteModal.addEventListener('click', (e) => {
 });
 
 // ============================================================
-// СОХРАНЕНИЕ СТАТЬИ (СОЗДАНИЕ/ОБНОВЛЕНИЕ)
+// СОХРАНЕНИЕ СТАТЬИ
 // ============================================================
 editArticleForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -943,7 +1207,6 @@ editArticleForm.addEventListener('submit', async (e) => {
 
   try {
     if (editingId) {
-      // Обновление существующей статьи
       await updateDoc(doc(db, 'articles', editingId), {
         title,
         description,
@@ -952,7 +1215,6 @@ editArticleForm.addEventListener('submit', async (e) => {
         updatedAt: serverTimestamp()
       });
     } else {
-      // Создание новой статьи
       await addDoc(collection(db, 'articles'), {
         title,
         description,
@@ -991,7 +1253,7 @@ confirmDeleteBtn.addEventListener('click', async () => {
 });
 
 // ============================================================
-// ДОБАВЛЕНИЕ СТАТЬИ (КНОПКА)
+// ДОБАВЛЕНИЕ СТАТЬИ
 // ============================================================
 addArticleBtn.addEventListener('click', () => {
   openEditModal(null);
