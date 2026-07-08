@@ -77,7 +77,7 @@
       <form id="authForm">
         <div class="field">
           <label for="email">Email</label>
-          <input type="email" id="email" required autocomplete="email" placeholder="name@dns-shop.ru">
+          <input type="email" id="email" required autocomplete="email" placeholder="name@your-domain.ru">
         </div>
         <div class="field">
           <label for="password">Пароль</label>
@@ -184,6 +184,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, POSITION_PAGES } from "./firebase-config.js";
 
+// Инициализация
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -191,6 +192,7 @@ const db = getFirestore(app);
 let isRegisterMode = false;
 let selectedRole = null;
 
+// DOM элементы
 const authCard = document.getElementById("authCard");
 const roleCard = document.getElementById("roleCard");
 const authForm = document.getElementById("authForm");
@@ -215,26 +217,20 @@ const helpModal = document.getElementById("helpModal");
 const modalClose = document.getElementById("modalClose");
 const modalConfirm = document.getElementById("modalConfirm");
 
-// Проверяем, использовали ли уже подсказку
 const hasUsedHelp = localStorage.getItem("kpiGuideHelpUsed");
-
-// Если использовали - делаем кнопку полупрозрачной
 if (hasUsedHelp) {
   helpBtn.classList.add("was-used");
 }
 
 function openModal() {
-  // Сначала показываем оверлей (скрытый, без анимации)
   helpModal.style.display = "flex";
   helpModal.style.opacity = "0";
   helpModal.style.visibility = "hidden";
   
-  // Принудительно сбрасываем transform у модального окна
   const modal = helpModal.querySelector('.modal');
   modal.style.transform = "scale(0.92) translateY(20px)";
   modal.style.transition = "none";
   
-  // Запоминаем, что подсказку использовали
   if (!localStorage.getItem("kpiGuideHelpUsed")) {
     localStorage.setItem("kpiGuideHelpUsed", "true");
     setTimeout(() => {
@@ -242,10 +238,8 @@ function openModal() {
     }, 3000);
   }
   
-  // Небольшая задержка для применения стилей, затем запускаем анимацию
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      // Включаем анимацию для открытия
       modal.style.transition = "all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)";
       helpModal.style.transition = "opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
       
@@ -259,7 +253,6 @@ function openModal() {
 }
 
 function closeModal() {
-  // Мгновенно скрываем без анимации
   helpModal.style.transition = "none";
   helpModal.style.opacity = "0";
   helpModal.style.visibility = "hidden";
@@ -270,29 +263,21 @@ function closeModal() {
   
   document.body.style.overflow = "";
   
-  // Скрываем полностью через небольшую задержку (чтобы успеть применить стили)
   setTimeout(() => {
     helpModal.style.display = "none";
   }, 50);
 }
 
-// Открытие по кнопке
 helpBtn.addEventListener("click", openModal);
-
-// Закрытие по крестику
 modalClose.addEventListener("click", closeModal);
-
-// Закрытие по кнопке "Понятно!"
 modalConfirm.addEventListener("click", closeModal);
 
-// Закрытие по клику вне модалки
 helpModal.addEventListener("click", (e) => {
   if (e.target === helpModal) {
     closeModal();
   }
 });
 
-// Закрытие по Escape
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && helpModal.style.visibility === "visible") {
     closeModal();
@@ -309,6 +294,7 @@ function hideError(el) {
   el.classList.remove("show");
 }
 
+// Переключение режима входа/регистрации
 switchBtn.addEventListener("click", () => {
   isRegisterMode = !isRegisterMode;
   if (isRegisterMode) {
@@ -331,6 +317,7 @@ switchBtn.addEventListener("click", () => {
   hideError(authError);
 });
 
+// Отправка формы
 authForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   hideError(authError);
@@ -377,6 +364,7 @@ function translateAuthError(code) {
     "auth/user-not-found": "Пользователь с таким email не найден.",
     "auth/wrong-password": "Неверный пароль.",
     "auth/invalid-credential": "Неверный email или пароль.",
+    "auth/too-many-requests": "Слишком много попыток. Попробуйте позже.",
   };
   return map[code] || "Что-то пошло не так. Попробуй ещё раз.";
 }
@@ -420,6 +408,7 @@ continueBtn.addEventListener("click", async () => {
 
     window.location.href = POSITION_PAGES[selectedRole].page;
   } catch (err) {
+    console.error("Ошибка сохранения:", err);
     continueBtn.disabled = false;
     roleLoading.classList.remove("show");
     showError(roleError, "Не удалось сохранить выбор. Попробуй ещё раз.");
@@ -442,15 +431,19 @@ onAuthStateChanged(auth, async (user) => {
     shell.classList.add("role-mode");
     userEmailLabel.textContent = user.email;
 
-    const snap = await getDoc(doc(db, "users", user.uid));
-    if (snap.exists() && snap.data().position) {
-      const savedRole = snap.data().position;
-      const card = document.querySelector(`.badge-card[data-role="${savedRole}"]`);
-      if (card) {
-        card.classList.add("selected");
-        selectedRole = savedRole;
-        continueBtn.disabled = false;
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (snap.exists() && snap.data().position) {
+        const savedRole = snap.data().position;
+        const card = document.querySelector(`.badge-card[data-role="${savedRole}"]`);
+        if (card) {
+          card.classList.add("selected");
+          selectedRole = savedRole;
+          continueBtn.disabled = false;
+        }
       }
+    } catch (err) {
+      console.error("Ошибка загрузки данных пользователя:", err);
     }
   } else {
     authCard.style.display = "block";
