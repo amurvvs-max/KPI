@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<!-- Подключаем трекер сессий -->
+<script type="module" src="session-tracker.js"></script>
+
 <style>
   /* ============================================================
      СТИЛИ ДЛЯ СТРАНИЦЫ СТАТЕЙ
@@ -292,10 +296,6 @@
   /* ============================================================
      МОДАЛКА ПРОСМОТРА СТАТЬИ
      ============================================================ */
-  .article-view-content {
-    max-width: 640px;
-  }
-  
   .article-view-content .article-title {
     font-family: var(--font-display);
     font-size: 24px;
@@ -306,6 +306,8 @@
     font-size: 13px;
     color: var(--ink-soft);
     margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
   }
   
   .article-view-content .article-body {
@@ -313,10 +315,8 @@
     line-height: 1.8;
     color: var(--ink);
     white-space: pre-wrap;
-  }
-  
-  .article-view-content .article-body p {
-    margin: 0 0 12px;
+    max-height: 400px;
+    overflow-y: auto;
   }
   
   /* ============================================================
@@ -339,6 +339,13 @@
     }
     .modal-actions {
       flex-direction: column;
+    }
+    .article-view-content .article-title {
+      font-size: 20px;
+    }
+    .article-view-content .article-body {
+      font-size: 14px;
+      max-height: 300px;
     }
   }
 </style>
