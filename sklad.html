@@ -97,14 +97,16 @@
   .header-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-shrink: 1;
     min-width: 0;
   }
 
-  .header-icon {
-    font-size: 1.6rem;
+  .header-logo {
+    height: 32px;
+    width: auto;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   .header h1 {
@@ -838,6 +840,10 @@
       padding: 10px 12px !important;
     }
 
+    .header-logo {
+      height: 24px;
+    }
+
     .content {
       padding: 8px 12px 70px !important;
     }
@@ -891,6 +897,10 @@
       padding: 14px 20px !important;
     }
 
+    .header-logo {
+      height: 32px;
+    }
+
     .content {
       padding: 14px 20px 80px !important;
     }
@@ -919,6 +929,10 @@
 
     .header {
       padding: 18px 28px !important;
+    }
+
+    .header-logo {
+      height: 36px;
     }
 
     .content {
@@ -998,10 +1012,11 @@
   <div class="card">
 
     <!-- ШАПКА -->
-    <div class="header-left">
-  <img src="logo.png" alt="Логотип" class="header-logo" />
-  <h1>Материалы для кладовщика</h1>
-</div>
+    <div class="header">
+      <div class="header-left">
+        <img src="logo.png" alt="Логотип" class="header-logo" />
+        <h1>Материалы для кладовщика</h1>
+      </div>
       <div class="header-actions">
 
         <div class="dropdown" id="roleDropdown">
