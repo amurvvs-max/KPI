@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>KPI Guide — УСМ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script type="module" src="session-tracker.js"></script>
+
+<style>
+  /* ============================================================
+     ПЕРЕМЕННЫЕ
+     ============================================================ */
+  :root {
+    --bg: #F5F7FA;
+    --surface: #FFFFFF;
+    --ink: #1A1A2E;
+    --ink-soft: #4A4A5A;
+    --ink-muted: #9A9AAE;
+    --orange: #FF6A00;
+    --orange-deep: #E85D00;
+    --orange-light: #FFF0E6;
+    --orange-glow: rgba(255,106,0,0.12);
+    --line: #E8ECF0;
+    --red: #DC3545;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-fab: 0 4px 24px rgba(255,106,0,0.4);
+    --radius: 12px;
+    --font-display: "Unbounded", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --max-width: 800px;
+    --role-color: #FF6A00;
+    --role-color-deep: #E85D00;
+    --role-color-light: #FFF0E6;
+  }
+
+  /* ============================================================
+     ГЛОБАЛЬНЫЙ СБРОС
+     ============================================================ */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
+    font-family: var(--font-body);
+    color: var(--ink);
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+
+  .page-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    background: var(--surface);
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ============================================================
+     ШАПКА
+     ============================================================ */
+  .header {
+    padding: 12px 14px !important;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .header-logo {
+    height: 32px;
+    width: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    font-weight: 600;
+    margin: 0 !important;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     ВЫПАДАЮЩИЙ СПИСОК
+     ============================================================ */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px !important;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 40px;
+  }
+
+  .dropdown-btn:hover {
+    background: var(--line);
+  }
+
+  .dropdown-btn .arrow {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .dropdown-btn.open .arrow {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 170px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: none;
+    z-index: 50;
+  }
+
+  .dropdown-menu.open {
+    display: block;
+  }
+
+  .dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px !important;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.15s ease;
+  }
+
+  .dropdown-menu a:last-child {
+    border-bottom: none;
+  }
+
+  .dropdown-menu a:hover {
+    background: var(--role-color-light);
+  }
+
+  .dropdown-menu a .check {
+    margin-left: auto;
+    color: var(--role-color);
+    font-weight: 700;
+  }
+
+  .dropdown-menu a.active {
+    background: var(--role-color-light);
+    color: var(--role-color-deep);
+  }
+
+  /* ============================================================
+     ПОИСК
+     ============================================================ */
+  .search-wrap {
+    padding: 10px 14px 0 !important;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    padding: 12px 16px !important;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    font-size: 16px;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink);
+    transition: all 0.2s ease;
+  }
+
+  .search-wrap input:focus {
+    outline: none;
+    border-color: var(--role-color);
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--orange-glow);
+  }
+
+  /* ============================================================
+     КОНТЕНТ
+     ============================================================ */
+  .content {
+    padding: 10px 14px 80px !important;
+  }
+
+  /* ============================================================
+     СТАТЬИ
+     ============================================================ */
+  .articles-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .article-card {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 16px !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .article-card:hover {
+    border-color: var(--role-color);
+    box-shadow: 0 4px 16px rgba(255,106,0,0.08);
+  }
+
+  .article-card:active {
+    transform: scale(0.98);
+  }
+
+  .article-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px !important;
+  }
+
+  .article-head h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1rem, 3.5vw, 1.15rem);
+    margin: 0 !important;
+    color: var(--ink);
+    word-break: break-word;
+    flex: 1;
+  }
+
+  .article-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .btn-sm {
+    padding: 4px 10px !important;
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-sm:hover {
+    background: var(--bg);
+  }
+
+  .btn-sm.edit:hover {
+    border-color: var(--role-color);
+    color: var(--role-color);
+    background: var(--role-color-light);
+  }
+
+  .btn-sm.delete:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: #FDEDEB;
+  }
+
+  .btn-sm.hidden {
+    display: none;
+  }
+
+  .article-desc {
+    color: var(--ink-soft);
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    margin: 4px 0 8px !important;
+    line-height: 1.5;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  .article-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .btn-expand {
+    background: none;
+    border: none;
+    color: var(--role-color);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 12px 4px 2px !important;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-body);
+    transition: color 0.2s ease;
+  }
+
+  .btn-expand:hover {
+    color: var(--role-color-deep);
+  }
+
+  /* ============================================================
+     СТИЛИ ДЛЯ СОДЕРЖИМОГО СТАТЬИ
+     ============================================================ */
+  .article-body {
+    margin-top: 14px !important;
+    padding-top: 14px !important;
+    border-top: 1px solid var(--line);
+    display: none;
+    font-size: 15px !important;
+    line-height: 1.8 !important;
+    color: var(--ink-soft);
+  }
+
+  .article-body.open {
+    display: block;
+    animation: fade 0.25s ease;
+  }
+
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .article-body > * {
+    margin-bottom: 14px !important;
+  }
+  .article-body > *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .article-body h1,
+  .article-body h2,
+  .article-body h3,
+  .article-body h4,
+  .article-body h5,
+  .article-body h6 {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    color: var(--role-color-deep) !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    line-height: 1.4 !important;
+  }
+  .article-body h1 { font-size: 1.4rem !important; }
+  .article-body h2 { font-size: 1.25rem !important; }
+  .article-body h3 { font-size: 1.1rem !important; }
+  .article-body h4 { font-size: 1rem !important; }
+
+  .article-body p {
+    margin: 0 0 12px 0 !important;
+    padding: 0 !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
+    color: var(--ink-soft);
+  }
+
+  .article-body ul,
+  .article-body ol {
+    margin: 0 0 14px 0 !important;
+    padding: 0 0 0 22px !important;
+    list-style: disc !important;
+  }
+
+  .article-body ul li,
+  .article-body ol li {
+    margin-bottom: 10px !important;
+    padding-left: 0 !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
+    color: var(--ink-soft);
+  }
+
+  .article-body ul li::before {
+    display: none !important;
+  }
+
+  .article-body ul li b,
+  .article-body ul li strong,
+  .article-body ol li b,
+  .article-body ol li strong {
+    color: var(--ink) !important;
+    font-weight: 600 !important;
+  }
+
+  .article-body hr {
+    border: none !important;
+    border-top: 2px solid var(--line) !important;
+    margin: 18px 0 !important;
+    padding: 0 !important;
+  }
+
+  .article-body .script,
+  .article-body .script-block {
+    background: var(--role-color-light) !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border-left: 4px solid var(--role-color) !important;
+    color: var(--ink) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+  }
+
+  .article-body .script i,
+  .article-body .script-block i {
+    color: var(--ink-soft) !important;
+    font-style: italic !important;
+  }
+
+  .article-body .danger,
+  .article-body .forbidden {
+    background: #FDEDEB !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border-left: 4px solid var(--red) !important;
+    color: var(--ink-soft) !important;
+    font-size: 15px !important;
+    line-height: 1.8 !important;
+  }
+
+  .article-body .danger .lbl,
+  .article-body .forbidden .lbl {
+    font-weight: 700 !important;
+    color: var(--red) !important;
+  }
+
+  .article-body .note,
+  .article-body .important {
+    background: #F0F7FF !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border: 1px solid #E0EDF5 !important;
+    color: var(--ink-soft) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+  }
+
+  .article-body .note b,
+  .article-body .important b {
+    color: var(--ink) !important;
+  }
+
+  .article-body .table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 14px 0 !important;
+  }
+
+  .article-body table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 14px !important;
+    min-width: 280px !important;
+  }
+
+  .article-body table th {
+    border-bottom: 2px solid var(--role-color) !important;
+    padding: 10px 10px !important;
+    text-align: left !important;
+    color: var(--role-color-deep) !important;
+    font-weight: 700 !important;
+    background: #FAFAFB !important;
+  }
+
+  .article-body table td {
+    border-bottom: 1px solid var(--line) !important;
+    padding: 10px 10px !important;
+    vertical-align: top !important;
+    color: var(--ink-soft) !important;
+    line-height: 1.6 !important;
+  }
+
+  .article-body table tr:hover td {
+    background: #FAFAFB !important;
+  }
+
+  .article-body .badge-kpi {
+    display: inline-block !important;
+    background: var(--role-color) !important;
+    color: #fff !important;
+    padding: 6px 20px !important;
+    border-radius: 30px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin: 0 0 12px 0 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+  }
+
+  .article-body .footer-note {
+    margin: 16px 0 0 0 !important;
+    padding: 16px 20px !important;
+    background: var(--role-color-light) !important;
+    border-radius: 10px !important;
+    border: 2px solid var(--role-color) !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    color: var(--role-color-deep) !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .article-body .flex-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 14px 0 !important;
+  }
+
+  .article-body .flex-grid .item {
+    background: var(--bg) !important;
+    padding: 14px 16px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--line) !important;
+  }
+
+  .article-body .flex-grid .item .ttl {
+    font-weight: 700 !important;
+    color: var(--role-color-deep) !important;
+    margin-bottom: 4px !important;
+    font-size: 15px !important;
+  }
+
+  .article-body .flex-grid .item p {
+    margin: 0 !important;
+    font-size: 14px !important;
+    color: var(--ink-soft) !important;
+    line-height: 1.6 !important;
+  }
+
+  /* ============================================================
+     ПУСТОЕ СОСТОЯНИЕ
+     ============================================================ */
+  .empty {
+    text-align: center;
+    padding: 40px 12px !important;
+    color: var(--ink-muted);
+  }
+
+  .empty .icon {
+    font-size: 40px;
+    opacity: 0.4;
+  }
+
+  .empty p {
+    font-size: 16px;
+    margin-top: 6px !important;
+  }
+
+  /* ============================================================
+     FAB
+     ============================================================ */
+  .fab {
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--role-color);
+    color: #fff;
+    font-size: 30px;
+    font-weight: 300;
+    cursor: pointer;
+    box-shadow: var(--shadow-fab);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .fab:hover {
+    background: var(--role-color-deep);
+    transform: scale(1.06);
+  }
+
+  .fab:active {
+    transform: scale(0.92);
+  }
+
+  .fab.hidden {
+    display: none;
+  }
+
+  .fab.show {
+    animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes fabIn {
+    from { opacity: 0; transform: scale(0.6) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* ============================================================
+     МОДАЛКИ
+     ============================================================ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px !important;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-box {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 24px 20px !important;
+    max-width: 680px;
+    width: 100%;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+    border: 1px solid var(--line);
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-box h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px !important;
+    color: var(--ink);
+  }
+
+  .modal-box .sub {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin: 0 0 14px !important;
+  }
+
+  .modal-box .field {
+    margin-bottom: 12px !important;
+  }
+
+  .modal-box .field label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 4px !important;
+  }
+
+  .modal-box .field input,
+  .modal-box .field textarea,
+  .modal-box .field select {
+    width: 100%;
+    padding: 12px 14px !important;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    font-size: 16px;
+    font-family: var(--font-body);
+    background: var(--bg);
+    transition: all 0.2s ease;
+    color: var(--ink);
+  }
+
+  .modal-box .field textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+
+  .modal-box .field input:focus,
+  .modal-box .field textarea:focus,
+  .modal-box .field select:focus {
+    outline: none;
+    border-color: var(--role-color);
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--orange-glow);
+  }
+
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px !important;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+    padding: 12px !important;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .modal-actions .btn-primary {
+    background: var(--role-color);
+    color: #fff;
+  }
+
+  .modal-actions .btn-primary:hover {
+    background: var(--role-color-deep);
+  }
+
+  .modal-actions .btn-secondary {
+    background: var(--bg);
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+  }
+
+  .modal-actions .btn-secondary:hover {
+    background: var(--line);
+  }
+
+  .modal-actions .btn-danger {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .modal-actions .btn-danger:hover {
+    background: #c0392b;
+  }
+
+  .hint {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px !important;
+    background: var(--bg);
+    padding: 6px 10px !important;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+
+  .hint code {
+    background: var(--surface);
+    padding: 2px 6px !important;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--role-color-deep);
+    font-family: var(--font-mono);
+    border: 1px solid var(--line);
+  }
+
+  /* ============================================================
+     АДАПТИВНОСТЬ
+     ============================================================ */
+
+  @media (max-width: 767px) {
+    .header {
+      padding: 10px 12px !important;
+    }
+
+    .header-logo {
+      height: 24px;
+    }
+
+    .content {
+      padding: 8px 12px 70px !important;
+    }
+
+    .search-wrap {
+      padding: 8px 12px 0 !important;
+    }
+
+    .article-card {
+      padding: 12px 12px !important;
+    }
+
+    .article-body {
+      font-size: 14px !important;
+      line-height: 1.7 !important;
+    }
+
+    .article-body p,
+    .article-body ul li,
+    .article-body ol li {
+      font-size: 14px !important;
+    }
+
+    .article-body h1 { font-size: 1.2rem !important; }
+    .article-body h2 { font-size: 1.1rem !important; }
+    .article-body h3 { font-size: 1rem !important; }
+
+    .fab {
+      width: 50px;
+      height: 50px;
+      font-size: 26px;
+      bottom: 14px;
+      right: 12px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .page-wrap {
+      max-width: var(--max-width) !important;
+      margin: 0 auto !important;
+      padding: 16px 0 !important;
+    }
+
+    .card {
+      border-radius: 14px !important;
+      box-shadow: var(--shadow) !important;
+      border: 1px solid var(--line) !important;
+    }
+
+    .header {
+      padding: 14px 20px !important;
+    }
+
+    .header-logo {
+      height: 32px;
+    }
+
+    .content {
+      padding: 14px 20px 80px !important;
+    }
+
+    .search-wrap {
+      padding: 14px 20px 0 !important;
+    }
+
+    .article-card {
+      padding: 16px 20px !important;
+    }
+
+    .fab {
+      width: 60px;
+      height: 60px;
+      font-size: 32px;
+      bottom: 28px;
+      right: 28px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    :root {
+      --max-width: 900px;
+    }
+
+    .header {
+      padding: 18px 28px !important;
+    }
+
+    .header-logo {
+      height: 36px;
+    }
+
+    .content {
+      padding: 18px 28px 80px !important;
+    }
+
+    .search-wrap {
+      padding: 18px 28px 0 !important;
+    }
+
+    .article-card {
+      padding: 20px 24px !important;
+    }
+
+    .article-body .flex-grid {
+      flex-direction: row !important;
+    }
+
+    .article-body .flex-grid .item {
+      flex: 1 !important;
+    }
+
+    .modal-actions {
+      flex-direction: row !important;
+    }
+
+    .modal-actions .btn {
+      flex: 1 !important;
+    }
+
+    .modal-box {
+      padding: 32px 36px !important;
+    }
+
+    .fab {
+      bottom: 32px;
+      right: 32px;
+    }
+  }
+
+  @supports (padding: max(0px)) {
+    .fab {
+      bottom: max(14px, env(safe-area-inset-bottom));
+      right: max(12px, env(safe-area-inset-right));
+    }
+  }
+
+  @media (min-width: 768px) {
+    @supports (padding: max(0px)) {
+      .fab {
+        bottom: max(28px, env(safe-area-inset-bottom));
+        right: max(28px, env(safe-area-inset-right));
+      }
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <div class="card">
+
+    <!-- ШАПКА -->
+    <div class="header">
+      <div class="header-left">
+        <img src="logo.png" alt="Логотип" class="header-logo" />
+        <h1>Гайды для УСМ</h1>
+      </div>
+      <div class="header-actions">
+
+        <div class="dropdown" id="roleDropdown">
+          <button class="dropdown-btn" id="dropdownBtn">
+            ⚡ УСМ <span class="arrow">▼</span>
+          </button>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#" data-role="usm" class="active">
+              ⚡ УСМ <span class="check">✓</span>
+            </a>
+            <a href="#" data-role="sklad">📦 Кладовщик</a>
+            <a href="#" data-role="pk">🛍️ Продавец</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ПОИСК -->
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="🔍 Поиск по статьям..." />
+    </div>
+
+    <!-- КОНТЕНТ -->
+    <div class="content">
+      <div id="articlesContainer" class="articles-grid">
+        <div class="empty">
+          <div class="icon">⏳</div>
+          <p>Загрузка статей...</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab hidden" id="addArticleBtn" aria-label="Добавить статью">+</button>
+
+<!-- МОДАЛКИ -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-box">
+    <h2 id="editModalTitle">➕ Новая статья</h2>
+    <p class="sub">Используйте HTML-теги для форматирования</p>
+    <form id="editArticleForm">
+      <input type="hidden" id="editArticleId" value="">
+      <div class="field">
+        <label for="editArticleTitle">Название *</label>
+        <input type="text" id="editArticleTitle" required placeholder="Введите название">
+      </div>
+      <div class="field">
+        <label for="editArticleDescription">Описание</label>
+        <input type="text" id="editArticleDescription" placeholder="Кратко о чем статья...">
+      </div>
+      <div class="field">
+        <label for="editArticleContent">Содержание *</label>
+        <textarea id="editArticleContent" required placeholder="Полный текст с HTML-форматированием..."></textarea>
+        <div class="hint">💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;hr&gt;</code></div>
+      </div>
+      <div class="field">
+        <label for="editArticleCategory">Категория</label>
+        <select id="editArticleCategory">
+          <option value="general">Общее</option>
+          <option value="kpi">KPI</option>
+          <option value="processes">Процессы</option>
+          <option value="skills">Навыки</option>
+          <option value="client">Работа с клиентами</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
+        <button type="submit" class="btn btn-primary" id="saveArticleBtn">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <h2>🗑️ Удалить статью?</h2>
+    <p class="sub">Это действие нельзя отменить.</p>
+    <p id="deleteArticleTitle" style="font-weight:600;color:var(--role-color-deep);"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Отмена</button>
+      <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
+    </div>
+  </div>
+</div>
+
+<!-- СКРИПТ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, collection, query, where, getDocs, addDoc,
+  updateDoc, deleteDoc, doc, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, ADMIN_EMAIL, POSITION_PAGES } from "./firebase-config.js";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const ROLE = 'usm';
+let currentUser = null;
+let isAdmin = false;
+let allArticles = [];
+let editingId = null;
+let deletingId = null;
+
+const container = document.getElementById('articlesContainer');
+const searchInput = document.getElementById('searchInput');
+const addBtn = document.getElementById('addArticleBtn');
+
+const dropdownBtn = document.getElementById('dropdownBtn');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+const editModal = document.getElementById('editModal');
+const editTitle = document.getElementById('editModalTitle');
+const editForm = document.getElementById('editArticleForm');
+const editId = document.getElementById('editArticleId');
+const editName = document.getElementById('editArticleTitle');
+const editDesc = document.getElementById('editArticleDescription');
+const editContent = document.getElementById('editArticleContent');
+const editCat = document.getElementById('editArticleCategory');
+const cancelEdit = document.getElementById('cancelEditBtn');
+const saveBtn = document.getElementById('saveArticleBtn');
+
+const deleteModal = document.getElementById('deleteModal');
+const deleteTitle = document.getElementById('deleteArticleTitle');
+const cancelDelete = document.getElementById('cancelDeleteBtn');
+const confirmDelete = document.getElementById('confirmDeleteBtn');
+
+// ВЫПАДАЮЩИЙ СПИСОК
+dropdownBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.classList.toggle('open');
+  dropdownBtn.classList.toggle('open');
+});
+
+document.addEventListener('click', () => {
+  dropdownMenu.classList.remove('open');
+  dropdownBtn.classList.remove('open');
+});
+
+dropdownMenu.querySelectorAll('a').forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.preventDefault();
+    const role = item.dataset.role;
+    const label = item.textContent.trim().replace('✓', '').trim();
+    dropdownBtn.innerHTML = `${label} <span class="arrow">▼</span>`;
+    dropdownMenu.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+    item.classList.add('active');
+    dropdownMenu.classList.remove('open');
+    dropdownBtn.classList.remove('open');
+    window.location.href = POSITION_PAGES[role].page;
+  });
+});
+
+// ЗАГРУЗКА
+async function loadArticles() {
+  try {
+    const q = query(collection(db, "articles"), where("role", "==", ROLE), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    allArticles = [];
+    snap.forEach(d => allArticles.push({ id: d.id, ...d.data() }));
+    render(allArticles);
+  } catch (e) {
+    container.innerHTML = `<div class="empty"><div class="icon">⚠️</div><p>Ошибка загрузки</p></div>`;
+  }
+}
+
+// ОТОБРАЖЕНИЕ
+function render(articles) {
+  if (!articles || !articles.length) {
+    container.innerHTML = `<div class="empty"><div class="icon">📖</div><p>Пока нет статей</p>${isAdmin ? '<p style="font-size:14px;">Нажмите ➕</p>' : ''}</div>`;
+    return;
+  }
+
+  container.innerHTML = articles.map(a => `
+    <div class="article-card" data-id="${a.id}">
+      <div class="article-head">
+        <h3>${a.title || 'Без названия'}</h3>
+        <div class="article-actions">
+          <button class="btn-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
+          <button class="btn-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
+        </div>
+      </div>
+      ${a.description ? `<div class="article-desc">${a.description}</div>` : ''}
+      <div class="article-meta">
+        <span>📅 ${formatDate(a.createdAt)}</span>
+        ${a.category ? `<span>🏷️ ${a.category}</span>` : ''}
+        ${a.authorEmail ? `<span>✉️ ${a.authorEmail}</span>` : ''}
+      </div>
+      <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
+      <button class="btn-expand" data-id="${a.id}">📖 Читать полностью</button>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.btn-expand').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = b.dataset.id;
+      const body = document.getElementById(`body-${id}`);
+      if (body) {
+        body.classList.toggle('open');
+        b.textContent = body.classList.contains('open') ? '📕 Свернуть' : '📖 Читать полностью';
+      }
+    });
+  });
+
+  document.querySelectorAll('.edit').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const a = allArticles.find(x => x.id === b.dataset.id);
+      if (a) openEdit(a);
+    });
+  });
+
+  document.querySelectorAll('.delete').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const a = allArticles.find(x => x.id === b.dataset.id);
+      if (a) openDelete(a);
+    });
+  });
+}
+
+function formatDate(ts) {
+  if (!ts) return 'Неизвестно';
+  try {
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  } catch { return 'Неизвестно'; }
+}
+
+// ПОИСК
+searchInput.addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) { render(allArticles); return; }
+  render(allArticles.filter(a =>
+    (a.title || '').toLowerCase().includes(q) ||
+    (a.description || '').toLowerCase().includes(q) ||
+    (a.content || '').toLowerCase().includes(q)
+  ));
+});
+
+// МОДАЛКИ
+function openEdit(a = null) {
+  if (a) {
+    editTitle.textContent = '✏️ Редактировать';
+    editId.value = a.id;
+    editName.value = a.title || '';
+    editDesc.value = a.description || '';
+    editContent.value = a.content || '';
+    editCat.value = a.category || 'general';
+    saveBtn.textContent = 'Обновить';
+    editingId = a.id;
+  } else {
+    editTitle.textContent = '➕ Новая статья';
+    editId.value = '';
+    editName.value = '';
+    editDesc.value = '';
+    editContent.value = '';
+    editCat.value = 'general';
+    saveBtn.textContent = 'Добавить';
+    editingId = null;
+  }
+  editModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function openDelete(a) {
+  deletingId = a.id;
+  deleteTitle.textContent = `"${a.title || 'Без названия'}"`;
+  deleteModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeEdit() {
+  editModal.classList.remove('active');
+  document.body.style.overflow = '';
+  editForm.reset();
+}
+
+function closeDelete() {
+  deleteModal.classList.remove('active');
+  document.body.style.overflow = '';
+  deletingId = null;
+}
+
+cancelEdit.addEventListener('click', closeEdit);
+cancelDelete.addEventListener('click', closeDelete);
+editModal.addEventListener('click', e => { if (e.target === editModal) closeEdit(); });
+deleteModal.addEventListener('click', e => { if (e.target === deleteModal) closeDelete(); });
+
+// СОХРАНЕНИЕ
+editForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const title = editName.value.trim();
+  const desc = editDesc.value.trim();
+  const content = editContent.value.trim();
+  const cat = editCat.value;
+  if (!title || !content) { alert('Заполните название и содержание'); return; }
+  try {
+    if (editingId) {
+      await updateDoc(doc(db, 'articles', editingId), { title, description: desc, content, category: cat, updatedAt: serverTimestamp() });
+    } else {
+      await addDoc(collection(db, 'articles'), { title, description: desc, content, category: cat, role: ROLE, authorUid: currentUser?.uid, authorEmail: currentUser?.email, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+    }
+    closeEdit();
+    await loadArticles();
+  } catch (e) {
+    alert('Ошибка сохранения');
+  }
+});
+
+// УДАЛЕНИЕ
+confirmDelete.addEventListener('click', async () => {
+  if (!deletingId) return;
+  try {
+    await deleteDoc(doc(db, 'articles', deletingId));
+    closeDelete();
+    await loadArticles();
+  } catch (e) {
+    alert('Ошибка удаления');
+  }
+});
+
+// FAB
+addBtn.addEventListener('click', () => openEdit(null));
+
+function updateFab() {
+  if (isAdmin) {
+    addBtn.classList.remove('hidden');
+    setTimeout(() => addBtn.classList.add('show'), 100);
+  } else {
+    addBtn.classList.add('hidden');
+    addBtn.classList.remove('show');
+  }
+}
+
+// АВТОРИЗАЦИЯ
+onAuthStateChanged(auth, (user) => {
+  currentUser = user;
+  if (user) {
+    isAdmin = user.email === ADMIN_EMAIL;
+    updateFab();
+    loadArticles();
+  } else {
+    window.location.href = 'index.html';
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (editModal.classList.contains('active')) closeEdit();
+    if (deleteModal.classList.contains('active')) closeDelete();
+  }
+});
+</script>
+
+</body>
+</html>
