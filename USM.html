@@ -27,6 +27,7 @@
     --line: #E8ECF0;
     --red: #DC3545;
     --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-fab: 0 6px 24px rgba(255,106,0,0.35);
     --radius: 14px;
     --font-display: "Unbounded", sans-serif;
     --font-body: "Inter", sans-serif;
@@ -49,12 +50,13 @@
   }
 
   /* ============================================================
-     ОБЕРТКА — МАКСИМАЛЬНАЯ ШИРИНА
+     ОБЕРТКА
      ============================================================ */
   .page-wrap {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 8px 6px 30px;
+    padding: 8px 6px 80px; /* нижний отступ для FAB */
+    position: relative;
   }
 
   /* ============================================================
@@ -69,7 +71,7 @@
   }
 
   /* ============================================================
-     ШАПКА — КНОПКА СМЕНЫ ДОЛЖНОСТИ
+     ШАПКА
      ============================================================ */
   .header {
     padding: 12px 14px;
@@ -212,42 +214,6 @@
   }
 
   /* ============================================================
-     КНОПКА ДОБАВИТЬ
-     ============================================================ */
-  .btn-add {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 10px;
-    background: var(--orange);
-    color: #fff;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    min-height: 40px;
-    white-space: nowrap;
-    box-shadow: 0 2px 12px rgba(255,106,0,0.2);
-  }
-
-  .btn-add:hover {
-    background: var(--orange-deep);
-    box-shadow: 0 4px 20px rgba(255,106,0,0.3);
-  }
-
-  .btn-add:active {
-    transform: scale(0.95);
-  }
-
-  .btn-add.hidden {
-    display: none;
-  }
-
-  /* ============================================================
      ПОИСК
      ============================================================ */
   .search-wrap {
@@ -274,7 +240,7 @@
   }
 
   /* ============================================================
-     КОНТЕНТ — МАКСИМАЛЬНАЯ ШИРИНА
+     КОНТЕНТ
      ============================================================ */
   .content {
     padding: 12px 14px 16px;
@@ -307,7 +273,6 @@
     transform: scale(0.98);
   }
 
-  /* ЗАГОЛОВОК + КНОПКИ */
   .article-head {
     display: flex;
     align-items: flex-start;
@@ -410,7 +375,7 @@
   }
 
   /* ============================================================
-     ТЕЛО СТАТЬИ — НЕ СЪЕЗЖАЕТ ВПРАВО
+     ТЕЛО СТАТЬИ
      ============================================================ */
   .article-body {
     margin-top: 12px;
@@ -570,6 +535,56 @@
     font-size: 36px;
     margin-bottom: 8px;
     opacity: 0.4;
+  }
+
+  /* ============================================================
+     FLOATING ACTION BUTTON (FAB)
+     ============================================================ */
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: var(--orange);
+    color: #fff;
+    font-size: 30px;
+    font-weight: 300;
+    cursor: pointer;
+    box-shadow: var(--shadow-fab);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    touch-action: manipulation;
+  }
+
+  .fab:hover {
+    background: var(--orange-deep);
+    transform: scale(1.08);
+    box-shadow: 0 8px 32px rgba(255,106,0,0.45);
+  }
+
+  .fab:active {
+    transform: scale(0.92);
+  }
+
+  .fab.hidden {
+    display: none;
+  }
+
+  /* Анимация появления */
+  .fab.show {
+    animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes fabIn {
+    from { opacity: 0; transform: scale(0.6) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
   }
 
   /* ============================================================
@@ -738,7 +753,7 @@
 
   @media (max-width: 480px) {
     .page-wrap {
-      padding: 4px 2px 20px;
+      padding: 4px 2px 80px;
     }
 
     .card {
@@ -760,12 +775,6 @@
     .dropdown-btn {
       font-size: 11px;
       padding: 6px 10px;
-      min-height: 34px;
-    }
-
-    .btn-add {
-      font-size: 11px;
-      padding: 6px 12px;
       min-height: 34px;
     }
 
@@ -814,11 +823,19 @@
       font-size: 13px;
       padding: 8px 14px;
     }
+
+    .fab {
+      width: 54px;
+      height: 54px;
+      font-size: 26px;
+      bottom: 16px;
+      right: 16px;
+    }
   }
 
   @media (min-width: 481px) and (max-width: 768px) {
     .page-wrap {
-      padding: 10px 10px 30px;
+      padding: 10px 10px 80px;
     }
 
     .header {
@@ -832,11 +849,16 @@
     .search-wrap {
       padding: 12px 16px 0;
     }
+
+    .fab {
+      bottom: 24px;
+      right: 24px;
+    }
   }
 
   @media (min-width: 769px) {
     .page-wrap {
-      padding: 32px 24px 80px;
+      padding: 32px 24px 100px;
     }
 
     .header {
@@ -878,6 +900,14 @@
     .modal-box {
       padding: 32px 36px;
     }
+
+    .fab {
+      width: 64px;
+      height: 64px;
+      font-size: 32px;
+      bottom: 32px;
+      right: 32px;
+    }
   }
 
   /* SAFE AREA */
@@ -886,7 +916,20 @@
       padding-left: max(2px, env(safe-area-inset-left));
       padding-right: max(2px, env(safe-area-inset-right));
       padding-top: max(2px, env(safe-area-inset-top));
-      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding-bottom: max(80px, env(safe-area-inset-bottom));
+    }
+    .fab {
+      bottom: max(24px, env(safe-area-inset-bottom));
+      right: max(20px, env(safe-area-inset-right));
+    }
+  }
+
+  @media (max-width: 480px) {
+    @supports (padding: max(0px)) {
+      .fab {
+        bottom: max(16px, env(safe-area-inset-bottom));
+        right: max(16px, env(safe-area-inset-right));
+      }
     }
   }
 
@@ -896,7 +939,11 @@
         padding-left: max(24px, env(safe-area-inset-left));
         padding-right: max(24px, env(safe-area-inset-right));
         padding-top: max(32px, env(safe-area-inset-top));
-        padding-bottom: max(80px, env(safe-area-inset-bottom));
+        padding-bottom: max(100px, env(safe-area-inset-bottom));
+      }
+      .fab {
+        bottom: max(32px, env(safe-area-inset-bottom));
+        right: max(32px, env(safe-area-inset-right));
       }
     }
   }
@@ -921,7 +968,7 @@
   <div class="card">
 
     <!-- ============================================================
-         ШАПКА — СМЕНА ДОЛЖНОСТИ + ДОБАВИТЬ
+         ШАПКА
          ============================================================ -->
     <div class="header">
       <div class="header-left">
@@ -948,9 +995,6 @@
           </div>
         </div>
 
-        <!-- ДОБАВИТЬ СТАТЬЮ -->
-        <button class="btn-add hidden" id="addArticleBtn">➕</button>
-
       </div>
     </div>
 
@@ -975,6 +1019,13 @@
 
   </div>
 </div>
+
+<!-- ============================================================
+     FLOATING ACTION BUTTON (FAB)
+     ============================================================ -->
+<button class="fab hidden" id="addArticleBtn" aria-label="Добавить статью">
+  +
+</button>
 
 <!-- ============================================================
      МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ
@@ -1135,7 +1186,7 @@ function render(articles) {
       <div class="empty">
         <div class="icon">📖</div>
         <p>Пока нет статей</p>
-        ${isAdmin ? '<p style="font-size:13px;">Нажмите "➕" чтобы создать первую</p>' : ''}
+        ${isAdmin ? '<p style="font-size:13px;">Нажмите ➕ чтобы создать первую</p>' : ''}
       </div>`;
     return;
   }
@@ -1301,15 +1352,32 @@ confirmDelete.addEventListener('click', async () => {
 });
 
 // ============================================================
-// АВТОРИЗАЦИЯ
+// FAB
 // ============================================================
 addBtn.addEventListener('click', () => openEdit(null));
 
+// Показываем FAB только для админа
+function updateFab() {
+  if (isAdmin) {
+    addBtn.classList.remove('hidden');
+    // Добавляем анимацию появления
+    setTimeout(() => {
+      addBtn.classList.add('show');
+    }, 100);
+  } else {
+    addBtn.classList.add('hidden');
+    addBtn.classList.remove('show');
+  }
+}
+
+// ============================================================
+// АВТОРИЗАЦИЯ
+// ============================================================
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
   if (user) {
     isAdmin = user.email === ADMIN_EMAIL;
-    if (isAdmin) addBtn.classList.remove('hidden');
+    updateFab();
     loadArticles();
   } else {
     window.location.href = 'index.html';
