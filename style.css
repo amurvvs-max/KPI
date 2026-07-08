@@ -1,0 +1,774 @@
+/* =====================================================================
+ТОКЕНЫ
+Тема: "бейдж сотрудника" — карточки должностей выглядят как ID-карты.
+Палитра: холодный нейтральный фон + фирменный оранжевый акцент (DNS).
+===================================================================== */
+:root {
+  --ink: #1B1E27;
+  --ink-soft: #5B6170;
+  --bg: #F1F2F5;
+  --surface: #FFFFFF;
+  --orange: #FF6A00;
+  --orange-deep: #E85D00;
+  --orange-tint: #FFE9D6;
+  --line: #E4E6EB;
+  --green: #1E9E5A;
+  --red: #D8382B;
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* ---------- Layout: split hero ---------- */
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+}
+
+@media (max-width: 900px) {
+  html, body {
+    min-height: 100dvh;
+    background: linear-gradient(165deg, #20242F 0%, #1B1E27 55%, #23180F 100%);
+  }
+  .shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+  .side { 
+    display: none !important;
+  }
+  
+  .main {
+    position: relative;
+    background: transparent;
+    padding: 24px 18px;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+  }
+  .main::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    height: 420px;
+    max-width: 130vw;
+    max-height: 130vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255,106,0,0.45), transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.side {
+  background: var(--ink);
+  color: #fff;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.side::before {
+  content: "";
+  position: absolute;
+  right: -120px;
+  bottom: -120px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,106,0,0.35), transparent 70%);
+}
+.brand {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 600;
+}
+.side h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.15;
+  font-weight: 600;
+  max-width: 480px;
+  margin: 24px 0 0 0;
+}
+.side p {
+  color: #B7BBC6;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 420px;
+}
+.badge-stack {
+  position: relative;
+  height: 160px;
+  margin-top: 32px;
+}
+.mini-badge {
+  position: absolute;
+  width: 130px;
+  height: 84px;
+  background: #262A36;
+  border: 1px solid #383D4C;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+.mini-badge::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 8px;
+  border-radius: 4px;
+  background: #4A5063;
+}
+.mini-badge span {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: #454B5C;
+  margin-top: 8px;
+}
+.mini-badge span:first-child { width: 60%; background: var(--orange); margin-top: 0; height: 8px; }
+.mb-1 { top: 0; left: 10px; transform: rotate(-8deg); }
+.mb-2 { top: 20px; left: 130px; transform: rotate(6deg); z-index: 2; }
+.mb-3 { top: 55px; left: 40px; transform: rotate(3deg); }
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px;
+  box-shadow: 0 1px 2px rgba(20,22,30,0.04);
+  border: 1px solid var(--line);
+  position: relative;
+}
+.card h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+.card .sub {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin: 0 0 28px;
+}
+
+/* ---------- Form ---------- */
+.field {
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.field input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line);
+  font-size: 15px;
+  font-family: var(--font-body);
+  background: #FBFBFC;
+  transition: border-color 0.15s ease;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--orange);
+  background: #fff;
+}
+.hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+.btn {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--orange);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn:hover { background: var(--orange-deep); }
+.btn:active { transform: scale(0.98); }
+.btn:focus-visible { outline: 2px solid var(--orange-deep); outline-offset: 2px; }
+.btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+}
+.btn-ghost:hover { background: #F5F6F8; border-color: var(--ink-soft); }
+.switch-mode {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.switch-mode button {
+  background: none;
+  border: none;
+  color: var(--orange-deep);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+.error-msg {
+  background: #FDEDEB;
+  color: var(--red);
+  border: 1px solid #F6C9C2;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 16px;
+  display: none;
+}
+.error-msg.show { display: block; }
+.loading-msg {
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 12px;
+  display: none;
+}
+.loading-msg.show { display: block; }
+
+/* ---------- Badge / position cards (signature element) ---------- */
+.badge-grid {
+  display: grid;
+  gap: 14px;
+}
+.badge-card {
+  position: relative;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px 18px 16px;
+  cursor: pointer;
+  background: var(--surface);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  text-align: left;
+}
+.badge-card::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 24px;
+  width: 26px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--line);
+  transition: background 0.15s ease;
+}
+.badge-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255,106,0,0.12);
+}
+.badge-card:hover::before { background: var(--orange); }
+.badge-card .stripe {
+  width: 34px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--orange);
+  margin-bottom: 12px;
+}
+.badge-card .role-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+.badge-card .role-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.badge-card.selected {
+  border-color: var(--orange);
+  background: var(--orange-tint);
+}
+.badge-card.selected::before { background: var(--orange); }
+
+.top-right-link {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.top-right-link:hover { color: var(--ink); }
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F5F6F8;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.user-chip strong { color: var(--ink); font-weight: 600; }
+
+/* =====================================================================
+МОДАЛЬНОЕ ОКНО С ПОДСКАЗКОЙ
+===================================================================== */
+
+/* Кнопка помощи - ТОЛЬКО НА МОБИЛЬНЫХ */
+.help-btn-mobile {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 106, 0, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--orange);
+  cursor: pointer;
+  display: none; /* Скрыто на десктопе */
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
+  padding: 0;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.help-btn-mobile:hover {
+  transform: scale(1.05);
+  border-color: var(--orange);
+  box-shadow: 0 0 30px rgba(255, 106, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.help-btn-mobile:active {
+  transform: scale(0.92);
+}
+
+.help-btn-mobile:focus-visible {
+  outline: 2px solid var(--orange-deep);
+  outline-offset: 3px;
+}
+
+/* Анимация мягкого свечения */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 106, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 106, 0, 0.3), 0 0 60px rgba(255, 106, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.help-btn-mobile {
+  animation: glow 2.5s ease-in-out infinite;
+}
+
+/* Состояние "уже использовали" - полупрозрачная */
+.help-btn-mobile.was-used {
+  opacity: 0.4;
+  animation: none;
+  border-color: rgba(255, 106, 0, 0.15);
+  box-shadow: 0 0 10px rgba(255, 106, 0, 0.05);
+}
+
+.help-btn-mobile.was-used:hover {
+  opacity: 0.8;
+  border-color: rgba(255, 106, 0, 0.3);
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.1);
+}
+
+/* Показываем только на мобильных */
+@media (max-width: 900px) {
+  .help-btn-mobile {
+    display: flex;
+  }
+}
+
+@media (min-width: 901px) {
+  .help-btn-mobile {
+    display: none !important;
+  }
+}
+
+/* Оверлей модалки */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Само модальное окно */
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.92) translateY(20px);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+}
+
+.modal-overlay.active .modal {
+  transform: scale(1) translateY(0);
+}
+
+/* Кнопка закрытия */
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.modal-close:hover {
+  background: #F5F6F8;
+  color: var(--ink);
+  transform: rotate(90deg);
+}
+
+.modal-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Контент модалки */
+.modal-content {
+  padding: 40px 36px 36px;
+}
+
+.modal-icon {
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 8px;
+  /* Анимация wave удалена, иконка статична */
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-subtitle {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 0 0 20px;
+}
+
+.modal-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 20px 0;
+}
+
+.modal-section {
+  margin-bottom: 8px;
+}
+
+.modal-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.modal-section-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.modal-list {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+
+.modal-list li {
+  margin-bottom: 2px;
+}
+
+.modal-list li::marker {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.modal-text {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: var(--orange-deep);
+  font-weight: 600;
+}
+
+/* Кнопка "Понятно!" */
+.modal-btn {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--orange);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 24px;
+}
+
+.modal-btn:hover {
+  background: var(--orange-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 106, 0, 0.3);
+}
+
+.modal-btn:active {
+  transform: scale(0.98);
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 500px) {
+  .modal-content {
+    padding: 32px 24px 28px;
+  }
+  
+  .modal-title {
+    font-size: 20px;
+  }
+  
+  .modal-icon {
+    font-size: 40px;
+  }
+  
+  .help-btn-mobile {
+    width: 34px;
+    height: 34px;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .help-btn-mobile svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Скрываем скролл при открытой модалке */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* =====================================================================
+ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ЛЕВОЙ ПАНЕЛИ (ДЕСКТОП)
+===================================================================== */
+
+/* Контент левой панели с центрированием */
+.side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.side > div:first-child {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.side-content {
+  margin-top: 12px;
+}
+
+.welcome-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--orange);
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+  font-family: var(--font-display);
+}
+
+.info-block {
+  max-width: 400px;
+}
+
+.info-section {
+  margin-bottom: 16px;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+}
+
+.info-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #D0D4DD;
+  margin-bottom: 8px;
+}
+
+.info-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #B7BBC6;
+}
+
+.info-list li {
+  margin-bottom: 2px;
+}
+
+.info-list li::marker {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.info-list .highlight {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.info-text {
+  font-size: 14px;
+  color: #B7BBC6;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.info-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 16px 0;
+}
+
+/* Адаптация для мобильных - скрываем новый контент */
+@media (max-width: 900px) {
+  .side-content {
+    display: none;
+  }
+}
+
+/* Убеждаемся что бейджики остаются внизу */
+.badge-stack {
+  flex-shrink: 0;
+}
+
+/* =====================================================================
+КНОПКА "ВЫЙТИ" - ОРАНЖЕВЫЙ ЦВЕТ
+===================================================================== */
+
+/* Стиль для кнопки "Выйти" в правом верхнем углу */
+.top-right-link {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 13px;
+  color: var(--orange) !important; /* Оранжевый цвет */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.top-right-link:hover {
+  color: var(--orange-deep) !important; /* Более темный оранжевый при наведении */
+  transform: translateY(-1px);
+}
+
+.top-right-link:active {
+  transform: scale(0.95);
+}

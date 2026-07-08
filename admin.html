@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KPI Guide — статистика</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: var(--bg); }
+  .admin-wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+  .admin-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+  .admin-header h1 { font-family: var(--font-display); font-size: 26px; margin: 0 0 6px; }
+  .admin-header p { color: var(--ink-soft); margin: 0; font-size: 14px; }
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px 20px; }
+  .stat-card .num { font-family: var(--font-mono); font-size: 28px; font-weight: 500; color: var(--orange-deep); }
+  .stat-card .label { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; }
+  .panel-head { padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .panel-head h2 { font-family: var(--font-display); font-size: 16px; margin: 0; }
+  select { font-family: var(--font-body); padding: 8px 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--line); font-size: 13px; background: #FBFBFC; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 12px 22px; border-bottom: 1px solid var(--line); }
+  th { color: var(--ink-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; background: #FAFAFB; }
+  td.mono { font-family: var(--font-mono); font-size: 12.5px; }
+  tr:last-child td { border-bottom: none; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 12px; font-weight: 600; background: var(--orange-tint); color: var(--orange-deep); }
+  .empty-row td { text-align: center; color: var(--ink-soft); padding: 30px; }
+  .gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="card" style="max-width:380px;">
+    <h2>Вход в статистику</h2>
+    <p class="sub">Доступно только администратору.</p>
+    <div class="error-msg" id="gateError"></div>
+    <form id="gateForm">
+      <div class="field">
+        <label for="gEmail">Email</label>
+        <input type="email" id="gEmail" required>
+      </div>
+      <div class="field">
+        <label for="gPassword">Пароль</label>
+        <input type="password" id="gPassword" required>
+      </div>
+      <button class="btn" type="submit">Войти</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-wrap" id="dashboard" style="display:none;">
+  <div class="admin-header">
+    <div>
+      <h1>Статистика KPI Guide</h1>
+      <p>Регистрации и сессии сотрудников</p>
+    </div>
+    <a href="#" id="logoutLink" class="btn-ghost btn" style="width:auto; padding:10px 18px;">Выйти</a>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="num" id="statUsers">—</div><div class="label">Всего сотрудников</div></div>
+    <div class="stat-card"><div class="num" id="statSessions">—</div><div class="label">Всего сессий</div></div>
+    <div class="stat-card"><div class="num" id="statUsm">—</div><div class="label">УСМ</div></div>
+    <div class="stat-card"><div class="num" id="statSklad">—</div><div class="label">Кладовщик</div></div>
+    <div class="stat-card"><div class="num" id="statPk">—</div><div class="label">Продавец-консультант</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h2>Сотрудники</h2></div>
+    <table>
+      <thead><tr><th>Email</th><th>Должность</th><th>Дата регистрации</th></tr></thead>
+      <tbody id="usersBody"><tr class="empty-row"><td colspan="3">Загрузка...</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Сессии</h2>
+      <select id="roleFilter">
+        <option value="all">Все должности</option>
+        <option value="usm">УСМ</option>
+        <option value="sklad">Кладовщик</option>
+        <option value="pk">Продавец-консультант</option>
+      </select>
+    </div>
+    <table>
+      <thead><tr><th>Email</th><th>Должность</th><th>Страница</th><th>Начало</th><th>Окончание</th><th>Длительность</th></tr></thead>
+      <tbody id="sessionsBody"><tr class="empty-row"><td colspan="6">Загрузка...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, ADMIN_EMAIL, POSITION_PAGES } from "./firebase-config.js";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const gate = document.getElementById("gate");
+const dashboard = document.getElementById("dashboard");
+const gateForm = document.getElementById("gateForm");
+const gateError = document.getElementById("gateError");
+
+let allSessions = [];
+
+gateForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  gateError.classList.remove("show");
+  const email = document.getElementById("gEmail").value.trim();
+  const password = document.getElementById("gPassword").value;
+
+  if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+    gateError.textContent = "Этот email не имеет доступа к статистике.";
+    gateError.classList.add("show");
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    gateError.textContent = "Неверный email или пароль.";
+    gateError.classList.add("show");
+  }
+});
+
+document.getElementById("logoutLink").addEventListener("click", async (e) => {
+  e.preventDefault();
+  await signOut(auth);
+});
+
+onAuthStateChanged(auth, async (user) => {
+  if (user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+    gate.style.display = "none";
+    dashboard.style.display = "block";
+    await loadData();
+  } else {
+    gate.style.display = "flex";
+    dashboard.style.display = "none";
+  }
+});
+
+function fmtDate(ts) {
+  if (!ts) return "—";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+
+function fmtDuration(start, end) {
+  if (!start || !end) return "—";
+  const s = start.toDate ? start.toDate() : new Date(start);
+  const e = end.toDate ? end.toDate() : new Date(end);
+  const mins = Math.round((e - s) / 60000);
+  if (mins < 1) return "<1 мин";
+  if (mins < 60) return `${mins} мин`;
+  return `${Math.floor(mins / 60)} ч ${mins % 60} мин`;
+}
+
+function roleLabel(key) {
+  return POSITION_PAGES[key]?.label || key || "—";
+}
+
+async function loadData() {
+  // Пользователи
+  const usersSnap = await getDocs(query(collection(db, "users"), orderBy("createdAt", "desc")));
+  const usersBody = document.getElementById("usersBody");
+  usersBody.innerHTML = "";
+  let counts = { usm: 0, sklad: 0, pk: 0 };
+
+  if (usersSnap.empty) {
+    usersBody.innerHTML = `<tr class="empty-row"><td colspan="3">Пока никто не зарегистрировался.</td></tr>`;
+  } else {
+    usersSnap.forEach((docSnap) => {
+      const u = docSnap.data();
+      if (u.position && counts[u.position] !== undefined) counts[u.position]++;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${u.email || "—"}</td>
+        <td>${u.position ? `<span class="pill">${roleLabel(u.position)}</span>` : "—"}</td>
+        <td>${fmtDate(u.createdAt)}</td>
+      `;
+      usersBody.appendChild(tr);
+    });
+  }
+
+  document.getElementById("statUsers").textContent = usersSnap.size;
+  document.getElementById("statUsm").textContent = counts.usm;
+  document.getElementById("statSklad").textContent = counts.sklad;
+  document.getElementById("statPk").textContent = counts.pk;
+
+  // Сессии
+  const sessionsSnap = await getDocs(query(collection(db, "sessions"), orderBy("startTime", "desc")));
+  allSessions = [];
+  sessionsSnap.forEach((docSnap) => allSessions.push(docSnap.data()));
+  document.getElementById("statSessions").textContent = allSessions.length;
+  renderSessions("all");
+}
+
+function renderSessions(filter) {
+  const body = document.getElementById("sessionsBody");
+  body.innerHTML = "";
+  const filtered = filter === "all" ? allSessions : allSessions.filter((s) => s.position === filter);
+
+  if (filtered.length === 0) {
+    body.innerHTML = `<tr class="empty-row"><td colspan="6">Нет сессий по этому фильтру.</td></tr>`;
+    return;
+  }
+
+  filtered.forEach((s) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${s.email || "—"}</td>
+      <td><span class="pill">${roleLabel(s.position)}</span></td>
+      <td class="mono">${s.page || "—"}</td>
+      <td>${fmtDate(s.startTime)}</td>
+      <td>${fmtDate(s.endTime)}</td>
+      <td>${fmtDuration(s.startTime, s.endTime)}</td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+document.getElementById("roleFilter").addEventListener("change", (e) => {
+  renderSessions(e.target.value);
+});
+</script>
+
+</body>
+</html>
