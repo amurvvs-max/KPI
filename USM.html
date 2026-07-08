@@ -66,28 +66,6 @@
   .header h1 { font-family: var(--font-display); font-size: clamp(1rem, 4vw, 1.2rem); font-weight: 600; margin: 0 !important; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
 
-  .btn-sm-header {
-    padding: 6px 12px !important;
-    border: 1.5px solid var(--line);
-    border-radius: 8px;
-    background: transparent;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--font-body);
-    min-height: 36px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
-  }
-  .btn-sm-header:hover { background: var(--bg); }
-  .btn-sm-header.primary { background: var(--role-color); color: #fff; border-color: var(--role-color); }
-  .btn-sm-header.primary:hover { background: var(--role-color-deep); border-color: var(--role-color-deep); }
-  .btn-sm-header.primary.hidden { display: none; }
-
   /* ===== ВЫПАДАЮЩИЙ СПИСОК РОЛЕЙ ===== */
   .dropdown { position: relative; display: inline-block; }
   .dropdown-btn {
@@ -477,19 +455,15 @@
   .empty .icon { font-size: 40px; opacity: 0.4; }
   .empty p { font-size: 16px; margin-top: 6px !important; }
 
-  /* ===== FAB ===== */
-  .fab {
+  /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
+  .fab-article,
+  .fab-folder {
     position: fixed;
-    bottom: 20px;
-    right: 16px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
     border: none;
-    background: var(--role-color);
     color: #fff;
-    font-size: 30px;
-    font-weight: 300;
     cursor: pointer;
     box-shadow: var(--shadow-fab);
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -498,12 +472,39 @@
     align-items: center;
     justify-content: center;
     line-height: 1;
+    font-size: 30px;
+    font-weight: 300;
+    touch-action: manipulation;
   }
-  .fab:hover { background: var(--role-color-deep); transform: scale(1.06); }
-  .fab:active { transform: scale(0.92); }
-  .fab.hidden { display: none; }
-  .fab.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  @keyframes fabIn { from { opacity: 0; transform: scale(0.6) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+  .fab-article {
+    bottom: 20px;
+    right: 16px;
+    background: var(--role-color);
+  }
+  .fab-article:hover { background: var(--role-color-deep); transform: scale(1.06); }
+
+  .fab-folder {
+    bottom: 84px;
+    right: 16px;
+    background: var(--role-color);
+    font-size: 24px;
+  }
+  .fab-folder:hover { background: var(--role-color-deep); transform: scale(1.06); }
+
+  .fab-article:active,
+  .fab-folder:active { transform: scale(0.92); }
+
+  .fab-article.hidden,
+  .fab-folder.hidden { display: none; }
+
+  .fab-article.show,
+  .fab-folder.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+  @keyframes fabIn {
+    from { opacity: 0; transform: scale(0.6) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
 
   /* ===== МОДАЛКИ ===== */
   .modal-overlay {
@@ -628,7 +629,6 @@
     .header { padding: 10px 12px !important; }
     .header-logo { height: 24px; }
     .header-actions { width: 100%; justify-content: flex-end; }
-    .btn-sm-header { font-size: 12px; padding: 4px 10px !important; min-height: 32px; }
     .content { padding: 8px 12px 70px !important; }
     .search-wrap { padding: 8px 12px 0 !important; }
     .article-card { padding: 12px 12px !important; }
@@ -637,7 +637,8 @@
     .article-body h1 { font-size: 1.2rem !important; }
     .article-body h2 { font-size: 1.1rem !important; }
     .article-body h3 { font-size: 1rem !important; }
-    .fab { width: 50px; height: 50px; font-size: 26px; bottom: 14px; right: 12px; }
+    .fab-article { width: 50px; height: 50px; font-size: 26px; bottom: 14px; right: 12px; }
+    .fab-folder { width: 50px; height: 50px; font-size: 20px; bottom: 72px; right: 12px; }
     .modal-box { padding: 18px 14px !important; }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
     .folder-card { min-height: 100px; padding: 14px 12px !important; }
@@ -653,7 +654,8 @@
     .content { padding: 14px 20px 80px !important; }
     .search-wrap { padding: 14px 20px 0 !important; }
     .article-card { padding: 16px 20px !important; }
-    .fab { width: 60px; height: 60px; font-size: 32px; bottom: 28px; right: 28px; }
+    .fab-article { width: 60px; height: 60px; font-size: 32px; bottom: 28px; right: 28px; }
+    .fab-folder { width: 60px; height: 60px; font-size: 26px; bottom: 96px; right: 28px; }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
     .folder-card { min-height: 140px; }
   }
@@ -670,17 +672,21 @@
     .modal-actions { flex-direction: row !important; }
     .modal-actions .btn { flex: 1 !important; }
     .modal-box { padding: 32px 36px !important; }
-    .fab { bottom: 32px; right: 32px; }
+    .fab-article { bottom: 32px; right: 32px; }
+    .fab-folder { bottom: 100px; right: 32px; }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
     .folder-card { min-height: 160px; }
   }
 
   @supports (padding: max(0px)) {
-    .fab { bottom: max(14px, env(safe-area-inset-bottom)); right: max(12px, env(safe-area-inset-right)); }
+    .fab-article { bottom: max(14px, env(safe-area-inset-bottom)); right: max(12px, env(safe-area-inset-right)); }
+    .fab-folder { bottom: max(72px, env(safe-area-inset-bottom) + 58px); right: max(12px, env(safe-area-inset-right)); }
   }
+
   @media (min-width: 768px) {
     @supports (padding: max(0px)) {
-      .fab { bottom: max(28px, env(safe-area-inset-bottom)); right: max(28px, env(safe-area-inset-right)); }
+      .fab-article { bottom: max(28px, env(safe-area-inset-bottom)); right: max(28px, env(safe-area-inset-right)); }
+      .fab-folder { bottom: max(96px, env(safe-area-inset-bottom) + 68px); right: max(28px, env(safe-area-inset-right)); }
     }
   }
 
@@ -702,7 +708,6 @@
         <h1>Гайды для УСМ</h1>
       </div>
       <div class="header-actions">
-        <button class="btn-sm-header primary hidden" id="addFolderBtn">📁 + Папка</button>
         <div class="dropdown" id="roleDropdown">
           <button class="dropdown-btn" id="dropdownBtn">
             ⚡ УСМ <span class="arrow">▼</span>
@@ -731,8 +736,9 @@
   </div>
 </div>
 
-<!-- ===== FAB ===== -->
-<button class="fab hidden" id="addArticleBtn" aria-label="Добавить">+</button>
+<!-- ===== ПЛАВАЮЩИЕ КНОПКИ ===== -->
+<button class="fab-article hidden" id="addArticleBtn" aria-label="Добавить статью">+</button>
+<button class="fab-folder hidden" id="addFolderBtn" aria-label="Создать папку">📁</button>
 
 <!-- ===== МОДАЛКА СТАТЬИ ===== -->
 <div class="modal-overlay" id="editModal">
@@ -958,7 +964,7 @@ function render() {
         <div class="empty">
           <div class="icon">📂</div>
           <p>${searchQuery ? 'Папки не найдены' : 'Пока нет папок'}</p>
-          ${isAdmin ? '<p style="font-size:14px;">Нажмите "📁 + Папка" чтобы создать первую</p>' : ''}
+          ${isAdmin ? '<p style="font-size:14px;">Нажмите "📁" чтобы создать первую</p>' : ''}
         </div>
       `;
       return;
@@ -1329,11 +1335,15 @@ function updateFab() {
   if (isAdmin) {
     addBtn.classList.remove('hidden');
     addFolderBtn.classList.remove('hidden');
-    setTimeout(() => addBtn.classList.add('show'), 100);
+    setTimeout(() => {
+      addBtn.classList.add('show');
+      addFolderBtn.classList.add('show');
+    }, 100);
   } else {
     addBtn.classList.add('hidden');
     addFolderBtn.classList.add('hidden');
     addBtn.classList.remove('show');
+    addFolderBtn.classList.remove('show');
   }
 }
 
