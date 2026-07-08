@@ -8,12 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
-<!-- Подключаем трекер сессий -->
 <script type="module" src="session-tracker.js"></script>
 
 <style>
   /* ============================================================
-     ПЕРЕМЕННЫЕ — СВЕТЛАЯ ТЕМА С ГРАДИЕНТАМИ
+     ПЕРЕМЕННЫЕ
      ============================================================ */
   :root {
     --bg-primary: #f5f7fa;
@@ -28,7 +27,7 @@
     --orange-light: #FFF0E6;
     --orange-glow: rgba(255, 106, 0, 0.15);
     --orange-gradient: linear-gradient(135deg, #FF6A00 0%, #E85D00 50%, #FF8C42 100%);
-    --orange-gradient-soft: linear-gradient(135deg, rgba(255, 106, 0, 0.08) 0%, rgba(255, 140, 66, 0.05) 100%);
+    --orange-gradient-soft: linear-gradient(135deg, rgba(255, 106, 0, 0.08) 0%, rgba(255, 140, 66, 0.04) 100%);
     
     --text-primary: #1a1a2e;
     --text-secondary: #4a4a5a;
@@ -66,45 +65,15 @@
     overflow-x: hidden;
   }
 
-  /* ГРАДИЕНТНЫЙ ФОН */
   body {
     background: 
-      radial-gradient(ellipse at 10% 20%, rgba(255, 106, 0, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 80%, rgba(255, 106, 0, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, rgba(255, 140, 66, 0.04) 0%, transparent 70%),
+      radial-gradient(ellipse at 10% 20%, rgba(255, 106, 0, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(255, 106, 0, 0.04) 0%, transparent 50%),
       var(--bg-primary);
-    position: relative;
-  }
-
-  /* Декоративный градиентный элемент */
-  body::before {
-    content: '';
-    position: fixed;
-    top: -30%;
-    right: -20%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(255, 106, 0, 0.06), transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: -30%;
-    left: -20%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(255, 140, 66, 0.05), transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
   }
 
   /* ============================================================
-     ОСНОВНАЯ ОБЕРТКА — ПОЛНАЯ ШИРИНА НА МОБИЛЬНЫХ
+     ОСНОВНАЯ ОБЕРТКА
      ============================================================ */
   .page-wrap {
     max-width: 1300px;
@@ -115,7 +84,7 @@
   }
 
   /* ============================================================
-     СТЕКЛЯННАЯ КАРТОЧКА С ГРАДИЕНТОМ
+     СТЕКЛЯННАЯ КАРТОЧКА
      ============================================================ */
   .glass-card {
     background: var(--bg-glass);
@@ -126,27 +95,6 @@
     box-shadow: var(--shadow-md);
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-  }
-
-  /* Градиентная обводка */
-  .glass-card::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: var(--radius-lg);
-    padding: 1px;
-    background: var(--orange-gradient);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
-  }
-
-  .glass-card:hover::before {
-    opacity: 0.6;
   }
 
   .glass-card:hover {
@@ -154,7 +102,7 @@
   }
 
   /* ============================================================
-     ШАПКА С ГРАДИЕНТОМ
+     ШАПКА
      ============================================================ */
   .header {
     background: var(--orange-gradient);
@@ -167,7 +115,6 @@
     overflow: hidden;
   }
 
-  /* Декоративные элементы шапки */
   .header::before {
     content: '';
     position: absolute;
@@ -176,18 +123,6 @@
     width: 250px;
     height: 250px;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -60%;
-    left: -5%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
@@ -211,7 +146,6 @@
     color: var(--text-white);
     position: relative;
     z-index: 1;
-    letter-spacing: -0.3px;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
@@ -250,10 +184,6 @@
     transform: translateY(-2px);
   }
 
-  .btn-glass:active {
-    transform: scale(0.97);
-  }
-
   .btn-glass-primary {
     background: var(--text-white);
     color: var(--orange-1);
@@ -288,8 +218,6 @@
     font-family: 'Inter', sans-serif;
     color: var(--text-primary);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-appearance: none;
-    appearance: none;
     box-shadow: var(--shadow-sm);
   }
 
@@ -304,10 +232,10 @@
   }
 
   /* ============================================================
-     КОНТЕНТ — БЕЗ ОТСТУПОВ ПО КРАЯМ НА МОБИЛЬНЫХ
+     КОНТЕНТ
      ============================================================ */
   .content {
-    padding: 18px 16px 24px;
+    padding: 18px 20px 24px;
   }
 
   /* ============================================================
@@ -329,7 +257,6 @@
     position: relative;
   }
 
-  /* Градиентный акцент на карточке при наведении */
   .article-card::before {
     content: '';
     position: absolute;
@@ -349,10 +276,6 @@
 
   .article-card:hover::before {
     opacity: 1;
-  }
-
-  .article-card:active {
-    transform: scale(0.98);
   }
 
   .article-card-header {
@@ -431,10 +354,6 @@
     transform: translateY(-2px);
   }
 
-  .btn-icon:active {
-    transform: scale(0.95);
-  }
-
   .btn-icon-edit:hover {
     border-color: var(--orange-1);
     color: var(--orange-1);
@@ -451,7 +370,6 @@
     display: none;
   }
 
-  /* Кнопка "Читать полностью" */
   .btn-toggle-content {
     background: none;
     border: none;
@@ -473,23 +391,18 @@
 
   .btn-toggle-content:hover {
     opacity: 0.8;
-    letter-spacing: 0.3px;
-  }
-
-  .btn-toggle-content:active {
-    transform: scale(0.98);
   }
 
   /* ============================================================
-     СОДЕРЖИМОЕ СТАТЬИ (СВЕТЛОЕ)
+     СОДЕРЖИМОЕ СТАТЬИ — ОПТИМИЗИРОВАНО ДЛЯ МОБИЛЬНЫХ
      ============================================================ */
   .article-content {
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid var(--border-light);
     display: none;
-    font-size: clamp(0.82rem, 2.3vw, 0.92rem);
-    line-height: 1.6;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    line-height: 1.7;
     color: var(--text-secondary);
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -503,28 +416,23 @@
   }
 
   @keyframes fadeSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ДВЕ КОЛОНКИ — НА МОБИЛЬНЫХ СТАНОВЯТСЯ ОДНОЙ */
   .article-content .two-columns {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin: 12px 0;
+    gap: 16px;
+    margin: 14px 0;
   }
 
   .article-content .two-columns > div {
     flex: 1;
     background: var(--bg-primary);
     border-radius: var(--radius-sm);
-    padding: 14px 16px;
+    padding: 16px 18px;
     border: 1px solid var(--border-light);
     min-width: 0;
     overflow: hidden;
@@ -537,8 +445,8 @@
 
   .article-content .panel-title {
     font-weight: 700;
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-    margin-bottom: 10px;
+    font-size: clamp(0.9rem, 2.8vw, 1rem);
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -548,18 +456,21 @@
     background-clip: text;
   }
 
+  /* ============================================================
+     СПИСКИ — ПРАВИЛЬНЫЕ ОТСТУПЫ НА МОБИЛЬНЫХ
+     ============================================================ */
   .article-content .step-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
   }
 
   .article-content .step-list li {
-    margin-bottom: 8px;
-    padding-left: 22px;
+    margin-bottom: 10px;
+    padding-left: 26px;
     position: relative;
-    line-height: 1.5;
-    font-size: clamp(0.8rem, 2.2vw, 0.88rem);
+    line-height: 1.6;
+    font-size: clamp(0.82rem, 2.3vw, 0.92rem);
     word-break: break-word;
     color: var(--text-secondary);
   }
@@ -571,9 +482,9 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     position: absolute;
-    left: 2px;
-    font-size: clamp(9px, 1.8vw, 11px);
+    left: 4px;
     top: 2px;
+    font-size: clamp(11px, 2vw, 13px);
   }
 
   .article-content .step-list li strong,
@@ -587,24 +498,27 @@
     font-style: italic;
   }
 
+  /* ============================================================
+     БЛОКИ — СКРИПТЫ, ВАЖНЫЕ ЗАМЕТКИ, ЗАПРЕТЫ
+     ============================================================ */
   .article-content .script {
     background: var(--orange-light);
     border-left: 3px solid var(--orange-1);
-    padding: 10px 14px;
-    margin: 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
     border-radius: var(--radius-sm);
     font-weight: 500;
     color: var(--text-primary);
-    font-size: clamp(0.78rem, 2.1vw, 0.83rem);
+    font-size: clamp(0.82rem, 2.2vw, 0.88rem);
     word-break: break-word;
   }
 
   .article-content .important-note {
     background: #f0f7ff;
-    padding: 10px 14px;
+    padding: 12px 16px;
     border-radius: var(--radius-sm);
-    margin-top: 8px;
-    font-size: clamp(0.78rem, 2.1vw, 0.83rem);
+    margin-top: 10px;
+    font-size: clamp(0.82rem, 2.2vw, 0.88rem);
     border: 1px solid #e0edf5;
     word-break: break-word;
     color: var(--text-secondary);
@@ -617,46 +531,50 @@
   .article-content .forbidden {
     background: #fef2f2;
     border-left: 3px solid #ef4444;
-    padding: 10px 14px;
+    padding: 12px 16px;
     border-radius: var(--radius-sm);
-    margin-top: 8px;
+    margin-top: 10px;
     word-break: break-word;
   }
 
   .article-content .forbidden p {
     font-weight: 700;
     color: #dc2626;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: clamp(0.8rem, 2.2vw, 0.88rem);
+    font-size: clamp(0.82rem, 2.3vw, 0.92rem);
   }
 
   .article-content .forbidden span {
-    font-size: clamp(0.75rem, 2vw, 0.85rem);
+    font-size: clamp(0.8rem, 2.2vw, 0.88rem);
     color: var(--text-secondary);
   }
 
+  /* ============================================================
+     KPI БЕЙДЖ
+     ============================================================ */
   .article-content .kpi-badge {
-    background: var(--orange-light);
-    border: 1px solid rgba(255, 106, 0, 0.15);
     background: var(--orange-gradient);
     color: var(--text-white);
     border-radius: 30px;
-    padding: 3px 14px;
-    font-size: clamp(0.55rem, 1.6vw, 0.65rem);
+    padding: 4px 16px;
+    font-size: clamp(0.6rem, 1.8vw, 0.7rem);
     font-weight: 600;
     display: inline-block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     letter-spacing: 0.3px;
   }
 
+  /* ============================================================
+     ТАБЛИЦЫ — ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ
+     ============================================================ */
   .article-content .table-mini {
-    margin-top: 8px;
+    margin-top: 10px;
     width: 100%;
     border-collapse: collapse;
-    font-size: clamp(0.7rem, 1.8vw, 0.78rem);
+    font-size: clamp(0.72rem, 2vw, 0.82rem);
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -665,11 +583,11 @@
   .article-content .table-mini td,
   .article-content .table-mini th {
     border-bottom: 1px solid var(--border-light);
-    padding: 8px 6px;
+    padding: 10px 8px;
     vertical-align: top;
     text-align: left;
     word-break: break-word;
-    min-width: 40px;
+    min-width: 60px;
     color: var(--text-secondary);
   }
 
@@ -679,26 +597,29 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    min-width: 50px;
-    font-size: clamp(0.68rem, 1.7vw, 0.75rem);
+    min-width: 70px;
+    font-size: clamp(0.7rem, 1.8vw, 0.78rem);
   }
 
   .article-content .table-mini tr:hover td {
     background: var(--bg-primary);
   }
 
+  /* ============================================================
+     FLEX КАРТОЧКИ
+     ============================================================ */
   .article-content .flex-cards {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin: 10px 0;
+    gap: 14px;
+    margin: 12px 0;
   }
 
   .article-content .flex-card {
     flex: 1;
     background: var(--bg-primary);
     border-radius: var(--radius-sm);
-    padding: 14px 16px;
+    padding: 16px 18px;
     border: 1px solid var(--border-light);
     transition: all 0.3s ease;
     min-width: 0;
@@ -710,8 +631,8 @@
 
   .article-content .flex-card .card-title {
     font-weight: 700;
-    font-size: clamp(0.82rem, 2.3vw, 0.9rem);
-    margin-bottom: 4px;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    margin-bottom: 6px;
     background: var(--orange-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -719,16 +640,19 @@
   }
 
   .article-content .flex-card p {
-    font-size: clamp(0.78rem, 2.1vw, 0.86rem);
-    line-height: 1.5;
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+    line-height: 1.6;
     margin: 0;
     color: var(--text-secondary);
     word-break: break-word;
   }
 
+  /* ============================================================
+     ПОДВАЛ СТАТЬИ
+     ============================================================ */
   .article-content .footer-note {
-    margin-top: 14px;
-    padding: 14px 18px;
+    margin-top: 16px;
+    padding: 16px 20px;
     background: var(--orange-gradient-soft);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 106, 0, 0.08);
@@ -737,7 +661,7 @@
 
   .article-content .footer-note .footer-text {
     font-weight: 700;
-    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    font-size: clamp(0.9rem, 2.8vw, 1.1rem);
     background: var(--orange-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -765,7 +689,7 @@
   }
 
   /* ============================================================
-     МОДАЛКИ (СВЕТЛЫЕ)
+     МОДАЛКИ
      ============================================================ */
   .modal-overlay {
     position: fixed;
@@ -801,18 +725,11 @@
     -webkit-overflow-scrolling: touch;
     box-shadow: var(--shadow-lg);
     animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .modal-content h2 {
@@ -855,13 +772,6 @@
     font-family: 'Inter', sans-serif;
     color: var(--text-primary);
     transition: all 0.3s ease;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-
-  .modal-content .field input::placeholder,
-  .modal-content .field textarea::placeholder {
-    color: var(--text-muted);
   }
 
   .modal-content .field textarea {
@@ -878,11 +788,6 @@
     outline: none;
     border-color: var(--orange-1);
     box-shadow: 0 0 0 4px var(--orange-glow);
-  }
-
-  .modal-content .field select option {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
   }
 
   .modal-actions {
@@ -916,10 +821,6 @@
     box-shadow: 0 8px 24px rgba(255, 106, 0, 0.4);
   }
 
-  .modal-actions .btn-primary:active {
-    transform: scale(0.97);
-  }
-
   .modal-actions .btn-cancel {
     background: var(--bg-primary);
     color: var(--text-secondary);
@@ -928,10 +829,6 @@
 
   .modal-actions .btn-cancel:hover {
     background: var(--border-light);
-  }
-
-  .modal-actions .btn-cancel:active {
-    transform: scale(0.97);
   }
 
   .modal-actions .btn-danger {
@@ -943,10 +840,6 @@
   .modal-actions .btn-danger:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
-  }
-
-  .modal-actions .btn-danger:active {
-    transform: scale(0.97);
   }
 
   .formatting-hint {
@@ -972,27 +865,22 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-family: 'JetBrains Mono', monospace;
-    border: 1px solid var(--border-light);
   }
 
   /* ============================================================
-     АДАПТИВНОСТЬ
+     АДАПТИВНОСТЬ — МОБИЛЬНЫЕ ПЕРВЫЙ ПОДХОД
      ============================================================ */
 
-  /* ТЕЛЕФОНЫ — полная ширина, минимальные отступы */
+  /* ТЕЛЕФОНЫ */
   @media (max-width: 767px) {
     .page-wrap {
-      padding: 8px;
+      padding: 8px 6px;
     }
 
     .glass-card {
       border-radius: 16px;
       border: none;
       box-shadow: var(--shadow-md);
-    }
-
-    .glass-card::before {
-      display: none;
     }
 
     .header {
@@ -1009,7 +897,7 @@
     }
 
     .content {
-      padding: 12px 10px 16px;
+      padding: 12px 12px 16px;
     }
 
     .article-card {
@@ -1022,20 +910,46 @@
     }
 
     .article-content {
-      font-size: clamp(0.78rem, 2.5vw, 0.88rem);
+      font-size: clamp(0.82rem, 2.8vw, 0.92rem);
+      line-height: 1.6;
     }
 
     .article-content .two-columns > div {
-      padding: 10px 12px;
+      padding: 12px 14px;
     }
 
     .article-content .panel-title {
-      font-size: clamp(0.8rem, 2.8vw, 0.9rem);
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
     }
 
     .article-content .step-list li {
-      font-size: clamp(0.75rem, 2.2vw, 0.85rem);
-      padding-left: 18px;
+      font-size: clamp(0.8rem, 2.6vw, 0.9rem);
+      padding-left: 22px;
+      margin-bottom: 8px;
+    }
+
+    .article-content .step-list li::before {
+      font-size: clamp(10px, 2vw, 12px);
+      left: 2px;
+    }
+
+    .article-content .script,
+    .article-content .important-note,
+    .article-content .forbidden {
+      padding: 10px 14px;
+      font-size: clamp(0.8rem, 2.6vw, 0.9rem);
+    }
+
+    .article-content .flex-card {
+      padding: 12px 14px;
+    }
+
+    .article-content .footer-note {
+      padding: 12px 14px;
+    }
+
+    .article-content .footer-note .footer-text {
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
     }
 
     .modal-content {
@@ -1045,6 +959,11 @@
     .modal-actions .btn {
       font-size: clamp(13px, 3vw, 15px);
       padding: 10px 14px;
+    }
+
+    .btn-glass {
+      font-size: 11px;
+      padding: 7px 12px;
     }
   }
 
@@ -1132,7 +1051,7 @@
   /* САМЫЕ МАЛЕНЬКИЕ ЭКРАНЫ */
   @media (max-width: 360px) {
     .page-wrap {
-      padding: 4px;
+      padding: 4px 2px;
     }
 
     .glass-card {
@@ -1144,33 +1063,34 @@
     }
 
     .header-icon {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
 
     .content {
-      padding: 8px 6px 12px;
+      padding: 8px 8px 12px;
     }
 
     .article-card {
       padding: 10px 10px;
     }
 
-    .btn-glass {
-      font-size: 10px;
-      padding: 6px 10px;
-    }
-
-    .btn-glass-primary {
-      padding: 6px 10px;
+    .article-content .step-list li {
+      padding-left: 18px;
+      font-size: clamp(0.75rem, 2.5vw, 0.82rem);
     }
 
     .modal-content {
-      padding: 14px 12px;
+      padding: 12px 10px;
     }
 
     .modal-actions .btn {
       font-size: 12px;
       padding: 8px 12px;
+    }
+
+    .btn-glass {
+      font-size: 10px;
+      padding: 5px 8px;
     }
   }
 
@@ -1179,10 +1099,10 @@
      ============================================================ */
   @supports (padding: max(0px)) {
     .page-wrap {
-      padding-left: max(8px, env(safe-area-inset-left));
-      padding-right: max(8px, env(safe-area-inset-right));
-      padding-top: max(8px, env(safe-area-inset-top));
-      padding-bottom: max(8px, env(safe-area-inset-bottom));
+      padding-left: max(6px, env(safe-area-inset-left));
+      padding-right: max(6px, env(safe-area-inset-right));
+      padding-top: max(6px, env(safe-area-inset-top));
+      padding-bottom: max(6px, env(safe-area-inset-bottom));
     }
   }
 
@@ -1197,19 +1117,8 @@
     }
   }
 
-  @media (min-width: 1024px) {
-    @supports (padding: max(0px)) {
-      .page-wrap {
-        padding-left: max(32px, env(safe-area-inset-left));
-        padding-right: max(32px, env(safe-area-inset-right));
-        padding-top: max(32px, env(safe-area-inset-top));
-        padding-bottom: max(32px, env(safe-area-inset-bottom));
-      }
-    }
-  }
-
   /* ============================================================
-     КАСТОМНЫЙ СКРОЛЛ
+     СКРОЛЛ
      ============================================================ */
   ::-webkit-scrollbar {
     width: 5px;
@@ -1231,17 +1140,13 @@
   }
 
   /* ============================================================
-     ДОПОЛНИТЕЛЬНЫЕ ГРАДИЕНТЫ ДЛЯ ЭЛЕМЕНТОВ
+     ДОПОЛНИТЕЛЬНЫЕ УТИЛИТЫ
      ============================================================ */
   .gradient-text {
     background: var(--orange-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  .gradient-border {
-    border-image: var(--orange-gradient) 1;
   }
 
   .gradient-bg {
@@ -1282,26 +1187,22 @@
 </div>
 
 <!-- ============================================================
-     МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ
+     МОДАЛКИ
      ============================================================ -->
 <div class="modal-overlay" id="editModal">
   <div class="modal-content">
     <h2 id="editModalTitle">➕ Новая статья</h2>
     <p class="sub">Используйте HTML-теги для форматирования</p>
-
     <form id="editArticleForm">
       <input type="hidden" id="editArticleId" value="">
-
       <div class="field">
         <label for="editArticleTitle">Название статьи *</label>
         <input type="text" id="editArticleTitle" required placeholder="Введите название">
       </div>
-
       <div class="field">
         <label for="editArticleDescription">Краткое описание</label>
         <input type="text" id="editArticleDescription" placeholder="Кратко о чем статья...">
       </div>
-
       <div class="field">
         <label for="editArticleContent">Содержание *</label>
         <textarea id="editArticleContent" required placeholder="Полный текст статьи с HTML-форматированием..."></textarea>
@@ -1309,7 +1210,6 @@
           💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;div class="..."&gt;</code>
         </div>
       </div>
-
       <div class="field">
         <label for="editArticleCategory">Категория</label>
         <select id="editArticleCategory">
@@ -1320,7 +1220,6 @@
           <option value="client">Работа с клиентами</option>
         </select>
       </div>
-
       <div class="modal-actions">
         <button type="button" class="btn btn-cancel" id="cancelEditBtn">Отмена</button>
         <button type="submit" class="btn btn-primary" id="saveArticleBtn">Сохранить</button>
@@ -1329,9 +1228,6 @@
   </div>
 </div>
 
-<!-- ============================================================
-     МОДАЛКА УДАЛЕНИЯ
-     ============================================================ -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal-content">
     <h2>🗑️ Удалить статью?</h2>
@@ -1351,23 +1247,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  orderBy,
-  serverTimestamp
+  getFirestore, collection, query, where, getDocs, addDoc,
+  updateDoc, deleteDoc, doc, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL } from "./firebase-config.js";
 
-// ============================================================
-// ИНИЦИАЛИЗАЦИЯ
-// ============================================================
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -1379,12 +1263,10 @@ let allArticles = [];
 let editingId = null;
 let deletingId = null;
 
-// DOM элементы
 const articlesContainer = document.getElementById('articlesContainer');
 const searchInput = document.getElementById('searchInput');
 const addArticleBtn = document.getElementById('addArticleBtn');
 
-// Модалка редактирования
 const editModal = document.getElementById('editModal');
 const editModalTitle = document.getElementById('editModalTitle');
 const editArticleForm = document.getElementById('editArticleForm');
@@ -1396,58 +1278,32 @@ const editArticleCategory = document.getElementById('editArticleCategory');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
 const saveArticleBtn = document.getElementById('saveArticleBtn');
 
-// Модалка удаления
 const deleteModal = document.getElementById('deleteModal');
 const deleteArticleTitle = document.getElementById('deleteArticleTitle');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
-// ============================================================
-// ЗАГРУЗКА СТАТЕЙ
-// ============================================================
 async function loadArticles() {
   try {
-    const q = query(
-      collection(db, "articles"),
-      where("role", "==", ROLE),
-      orderBy("createdAt", "desc")
-    );
-
+    const q = query(collection(db, "articles"), where("role", "==", ROLE), orderBy("createdAt", "desc"));
     const snapshot = await getDocs(q);
     allArticles = [];
-
-    snapshot.forEach(doc => {
-      allArticles.push({
-        id: doc.id,
-        ...doc.data()
-      });
-    });
-
+    snapshot.forEach(doc => allArticles.push({ id: doc.id, ...doc.data() }));
     renderArticles(allArticles);
   } catch (error) {
-    console.error("Ошибка загрузки статей:", error);
-    articlesContainer.innerHTML = `
-      <div class="empty-state">
-        <div class="icon">⚠️</div>
-        <p>Не удалось загрузить статьи</p>
-        <p style="font-size:13px; color: #dc2626;">${error.message}</p>
-      </div>
-    `;
+    console.error("Ошибка загрузки:", error);
+    articlesContainer.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><p>Не удалось загрузить статьи</p><p style="font-size:13px; color:#dc2626;">${error.message}</p></div>`;
   }
 }
 
-// ============================================================
-// ОТОБРАЖЕНИЕ СТАТЕЙ
-// ============================================================
 function renderArticles(articles) {
   if (!articles || articles.length === 0) {
     articlesContainer.innerHTML = `
       <div class="empty-state">
         <div class="icon">📖</div>
-        <p>Пока нет статей для этой должности</p>
-        ${isAdmin ? '<p style="font-size:13px; color: var(--text-muted);">Нажмите "Добавить" чтобы создать первую</p>' : ''}
-      </div>
-    `;
+        <p>Пока нет статей</p>
+        ${isAdmin ? '<p style="font-size:13px; color:var(--text-muted);">Нажмите "Добавить"</p>' : ''}
+      </div>`;
     return;
   }
 
@@ -1460,24 +1316,17 @@ function renderArticles(articles) {
           <button class="btn-icon btn-icon-delete ${isAdmin ? '' : 'hidden'}" data-id="${article.id}">🗑️</button>
         </div>
       </div>
-
       ${article.description ? `<p class="article-description">${article.description}</p>` : ''}
-
       <div class="meta">
         <span>📅 ${formatDate(article.createdAt)}</span>
         ${article.category ? `<span>🏷️ ${article.category}</span>` : ''}
         ${article.authorEmail ? `<span>✍️ ${article.authorEmail}</span>` : ''}
       </div>
-
-      <div class="article-content" id="content-${article.id}">
-        ${article.content || '<p>Содержание не добавлено</p>'}
-      </div>
-
+      <div class="article-content" id="content-${article.id}">${article.content || '<p>Содержание не добавлено</p>'}</div>
       <button class="btn-toggle-content" data-id="${article.id}">📖 Читать полностью</button>
     </div>
   `).join('');
 
-  // Клик по кнопке "Читать полностью"
   document.querySelectorAll('.btn-toggle-content').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -1490,67 +1339,41 @@ function renderArticles(articles) {
     });
   });
 
-  // Кнопки редактирования
   document.querySelectorAll('.btn-icon-edit').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const id = btn.dataset.id;
-      const article = allArticles.find(a => a.id === id);
+      const article = allArticles.find(a => a.id === btn.dataset.id);
       if (article) openEditModal(article);
     });
   });
 
-  // Кнопки удаления
   document.querySelectorAll('.btn-icon-delete').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const id = btn.dataset.id;
-      const article = allArticles.find(a => a.id === id);
+      const article = allArticles.find(a => a.id === btn.dataset.id);
       if (article) openDeleteModal(article);
     });
   });
 }
 
-// ============================================================
-// ФОРМАТИРОВАНИЕ ДАТЫ
-// ============================================================
-function formatDate(timestamp) {
-  if (!timestamp) return 'Неизвестно';
+function formatDate(ts) {
+  if (!ts) return 'Неизвестно';
   try {
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    return date.toLocaleDateString('ru-RU', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  } catch {
-    return 'Неизвестно';
-  }
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  } catch { return 'Неизвестно'; }
 }
 
-// ============================================================
-// ПОИСК
-// ============================================================
 searchInput.addEventListener('input', (e) => {
-  const query = e.target.value.toLowerCase().trim();
-  if (!query) {
-    renderArticles(allArticles);
-    return;
-  }
-
-  const filtered = allArticles.filter(article => {
-    const title = (article.title || '').toLowerCase();
-    const desc = (article.description || '').toLowerCase();
-    const content = (article.content || '').toLowerCase();
-    return title.includes(query) || desc.includes(query) || content.includes(query);
-  });
-
-  renderArticles(filtered);
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) { renderArticles(allArticles); return; }
+  renderArticles(allArticles.filter(a => 
+    (a.title || '').toLowerCase().includes(q) ||
+    (a.description || '').toLowerCase().includes(q) ||
+    (a.content || '').toLowerCase().includes(q)
+  ));
 });
 
-// ============================================================
-// ОТКРЫТИЕ МОДАЛКИ РЕДАКТИРОВАНИЯ
-// ============================================================
 function openEditModal(article = null) {
   if (article) {
     editModalTitle.textContent = '✏️ Редактировать';
@@ -1571,14 +1394,10 @@ function openEditModal(article = null) {
     saveArticleBtn.textContent = 'Добавить';
     editingId = null;
   }
-
   editModal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
-// ============================================================
-// ОТКРЫТИЕ МОДАЛКИ УДАЛЕНИЯ
-// ============================================================
 function openDeleteModal(article) {
   deletingId = article.id;
   deleteArticleTitle.textContent = `"${article.title || 'Без названия'}"`;
@@ -1586,9 +1405,6 @@ function openDeleteModal(article) {
   document.body.style.overflow = 'hidden';
 }
 
-// ============================================================
-// ЗАКРЫТИЕ МОДАЛОК
-// ============================================================
 function closeEditModal() {
   editModal.classList.remove('active');
   document.body.style.overflow = '';
@@ -1603,102 +1419,55 @@ function closeDeleteModal() {
 
 cancelEditBtn.addEventListener('click', closeEditModal);
 cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+editModal.addEventListener('click', (e) => { if (e.target === editModal) closeEditModal(); });
+deleteModal.addEventListener('click', (e) => { if (e.target === deleteModal) closeDeleteModal(); });
 
-editModal.addEventListener('click', (e) => {
-  if (e.target === editModal) closeEditModal();
-});
-
-deleteModal.addEventListener('click', (e) => {
-  if (e.target === deleteModal) closeDeleteModal();
-});
-
-// ============================================================
-// СОХРАНЕНИЕ СТАТЬИ
-// ============================================================
 editArticleForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const title = editArticleTitle.value.trim();
   const description = editArticleDescription.value.trim();
   const content = editArticleContent.value.trim();
   const category = editArticleCategory.value;
-
-  if (!title || !content) {
-    alert('Заполните название и содержание статьи');
-    return;
-  }
-
+  if (!title || !content) { alert('Заполните название и содержание'); return; }
   try {
     if (editingId) {
-      await updateDoc(doc(db, 'articles', editingId), {
-        title,
-        description,
-        content,
-        category,
-        updatedAt: serverTimestamp()
-      });
+      await updateDoc(doc(db, 'articles', editingId), { title, description, content, category, updatedAt: serverTimestamp() });
     } else {
-      await addDoc(collection(db, 'articles'), {
-        title,
-        description,
-        content,
-        category,
-        role: ROLE,
-        authorUid: currentUser?.uid || null,
-        authorEmail: currentUser?.email || null,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      });
+      await addDoc(collection(db, 'articles'), { title, description, content, category, role: ROLE, authorUid: currentUser?.uid, authorEmail: currentUser?.email, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
     }
-
     closeEditModal();
     await loadArticles();
   } catch (error) {
-    console.error('Ошибка сохранения статьи:', error);
-    alert('Не удалось сохранить статью. Попробуйте еще раз.');
+    console.error('Ошибка сохранения:', error);
+    alert('Не удалось сохранить статью');
   }
 });
 
-// ============================================================
-// УДАЛЕНИЕ СТАТЬИ
-// ============================================================
 confirmDeleteBtn.addEventListener('click', async () => {
   if (!deletingId) return;
-
   try {
     await deleteDoc(doc(db, 'articles', deletingId));
     closeDeleteModal();
     await loadArticles();
   } catch (error) {
-    console.error('Ошибка удаления статьи:', error);
-    alert('Не удалось удалить статью. Попробуйте еще раз.');
+    console.error('Ошибка удаления:', error);
+    alert('Не удалось удалить статью');
   }
 });
 
-// ============================================================
-// ДОБАВЛЕНИЕ СТАТЬИ
-// ============================================================
-addArticleBtn.addEventListener('click', () => {
-  openEditModal(null);
-});
+addArticleBtn.addEventListener('click', () => openEditModal(null));
 
-// ============================================================
-// ПРОВЕРКА АВТОРИЗАЦИИ
-// ============================================================
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
   if (user) {
     isAdmin = user.email === ADMIN_EMAIL;
-    if (isAdmin) {
-      addArticleBtn.classList.remove('hidden');
-    }
+    if (isAdmin) addArticleBtn.classList.remove('hidden');
     loadArticles();
   } else {
     window.location.href = 'index.html';
   }
 });
 
-// Закрытие модалок по Escape
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (editModal.classList.contains('active')) closeEditModal();
