@@ -33,9 +33,6 @@
     --font-mono: "JetBrains Mono", monospace;
   }
 
-  /* ============================================================
-     ГЛОБАЛЬНЫЕ
-     ============================================================ */
   * {
     -webkit-tap-highlight-color: transparent;
     margin: 0;
@@ -52,12 +49,12 @@
   }
 
   /* ============================================================
-     ОБЕРТКА — ПОЛНАЯ ШИРИНА
+     ОБЕРТКА — МАКСИМАЛЬНАЯ ШИРИНА
      ============================================================ */
   .page-wrap {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 12px 10px 40px;
+    padding: 8px 6px 30px;
   }
 
   /* ============================================================
@@ -72,35 +69,35 @@
   }
 
   /* ============================================================
-     ШАПКА — КНОПКИ СПРАВА, КРУПНЫЕ
+     ШАПКА — КНОПКА СМЕНЫ ДОЛЖНОСТИ
      ============================================================ */
   .header {
-    padding: 14px 16px;
+    padding: 12px 14px;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: nowrap;
   }
 
   .header-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     min-width: 0;
     flex-shrink: 1;
   }
 
   .header-icon {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     flex-shrink: 0;
   }
 
   .header h1 {
     font-family: var(--font-display);
-    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
     font-weight: 600;
     margin: 0;
     color: var(--ink);
@@ -117,52 +114,133 @@
   }
 
   /* ============================================================
-     КНОПКИ — КРУПНЫЕ, УДОБНЫЕ ДЛЯ ПАЛЬЦЕВ
+     ВЫПАДАЮЩИЙ СПИСОК ДОЛЖНОСТЕЙ
      ============================================================ */
-  .btn {
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 10px 16px;
-    border: none;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1.5px solid var(--line);
     border-radius: 10px;
+    background: var(--bg);
+    color: var(--ink-soft);
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s ease;
-    text-decoration: none;
-    white-space: nowrap;
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 40px;
   }
 
-  .btn:active {
-    transform: scale(0.95);
-  }
-
-  .btn-back {
-    background: var(--bg);
-    color: var(--ink-soft);
-    border: 1.5px solid var(--line);
-    padding: 10px 14px;
-  }
-
-  .btn-back:hover {
+  .dropdown-btn:hover {
     background: var(--line);
   }
 
+  .dropdown-btn:active {
+    transform: scale(0.95);
+  }
+
+  .dropdown-btn .arrow {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .dropdown-btn.open .arrow {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 180px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: none;
+    z-index: 50;
+    animation: dropIn 0.2s ease;
+  }
+
+  .dropdown-menu.open {
+    display: block;
+  }
+
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s ease;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .dropdown-menu a:last-child {
+    border-bottom: none;
+  }
+
+  .dropdown-menu a:hover {
+    background: var(--orange-light);
+  }
+
+  .dropdown-menu a .check {
+    margin-left: auto;
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  .dropdown-menu a.active {
+    background: var(--orange-light);
+    color: var(--orange-deep);
+  }
+
+  /* ============================================================
+     КНОПКА ДОБАВИТЬ
+     ============================================================ */
   .btn-add {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
     background: var(--orange);
     color: #fff;
-    padding: 10px 18px;
-    box-shadow: 0 2px 12px rgba(255,106,0,0.25);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 40px;
+    white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(255,106,0,0.2);
   }
 
   .btn-add:hover {
     background: var(--orange-deep);
-    box-shadow: 0 4px 20px rgba(255,106,0,0.35);
+    box-shadow: 0 4px 20px rgba(255,106,0,0.3);
+  }
+
+  .btn-add:active {
+    transform: scale(0.95);
   }
 
   .btn-add.hidden {
@@ -170,18 +248,18 @@
   }
 
   /* ============================================================
-     ПОИСК — ВО ВСЮ ШИРИНУ
+     ПОИСК
      ============================================================ */
   .search-wrap {
-    padding: 14px 16px 0;
+    padding: 12px 14px 0;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-radius: 10px;
     border: 1.5px solid var(--line);
-    font-size: 15px;
+    font-size: 14px;
     font-family: var(--font-body);
     background: var(--bg);
     color: var(--ink);
@@ -196,10 +274,10 @@
   }
 
   /* ============================================================
-     КОНТЕНТ
+     КОНТЕНТ — МАКСИМАЛЬНАЯ ШИРИНА
      ============================================================ */
   .content {
-    padding: 14px 16px 20px;
+    padding: 12px 14px 16px;
   }
 
   /* ============================================================
@@ -207,16 +285,17 @@
      ============================================================ */
   .articles-grid {
     display: grid;
-    gap: 12px;
+    gap: 10px;
   }
 
   .article-card {
     background: var(--surface);
     border: 1.5px solid var(--line);
     border-radius: 12px;
-    padding: 16px 16px;
+    padding: 14px 14px;
     cursor: pointer;
     transition: all 0.2s ease;
+    width: 100%;
   }
 
   .article-card:hover {
@@ -228,19 +307,20 @@
     transform: scale(0.98);
   }
 
-  /* Заголовок + кнопки в одной строке */
+  /* ЗАГОЛОВОК + КНОПКИ */
   .article-head {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 4px;
+    gap: 8px;
+    margin-bottom: 2px;
+    width: 100%;
   }
 
   .article-head h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(0.95rem, 3vw, 1.1rem);
+    font-size: clamp(0.9rem, 3vw, 1.05rem);
     margin: 0;
     color: var(--ink);
     word-break: break-word;
@@ -251,11 +331,10 @@
     display: flex;
     gap: 4px;
     flex-shrink: 0;
-    margin-top: 2px;
   }
 
   .btn-sm {
-    padding: 4px 12px;
+    padding: 4px 10px;
     border: 1.5px solid var(--line);
     border-radius: 8px;
     background: transparent;
@@ -265,7 +344,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: var(--font-body);
-    min-height: 32px;
+    min-height: 30px;
   }
 
   .btn-sm:hover {
@@ -291,7 +370,7 @@
   .article-desc {
     color: var(--ink-soft);
     font-size: clamp(0.82rem, 2.2vw, 0.9rem);
-    margin: 4px 0 8px;
+    margin: 4px 0 6px;
     line-height: 1.5;
   }
 
@@ -319,7 +398,7 @@
     font-weight: 600;
     font-size: 13px;
     cursor: pointer;
-    padding: 10px 4px 4px;
+    padding: 10px 4px 2px;
     width: 100%;
     text-align: left;
     font-family: var(--font-body);
@@ -331,7 +410,7 @@
   }
 
   /* ============================================================
-     ТЕЛО СТАТЬИ
+     ТЕЛО СТАТЬИ — НЕ СЪЕЗЖАЕТ ВПРАВО
      ============================================================ */
   .article-body {
     margin-top: 12px;
@@ -341,6 +420,7 @@
     font-size: 14px;
     line-height: 1.7;
     color: var(--ink-soft);
+    width: 100%;
   }
 
   .article-body.open {
@@ -349,7 +429,7 @@
   }
 
   @keyframes fade {
-    from { opacity: 0; transform: translateY(-6px); }
+    from { opacity: 0; transform: translateY(-4px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
@@ -596,6 +676,40 @@
     width: 100%;
     padding: 12px;
     font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .modal-actions .btn-primary {
+    background: var(--orange);
+    color: #fff;
+  }
+
+  .modal-actions .btn-primary:hover {
+    background: var(--orange-deep);
+  }
+
+  .modal-actions .btn-secondary {
+    background: var(--bg);
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+  }
+
+  .modal-actions .btn-secondary:hover {
+    background: var(--line);
+  }
+
+  .modal-actions .btn-danger {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .modal-actions .btn-danger:hover {
+    background: #c0392b;
   }
 
   .hint {
@@ -622,69 +736,65 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
-  /* ТЕЛЕФОНЫ — ШИРОКО И УДОБНО */
   @media (max-width: 480px) {
     .page-wrap {
-      padding: 6px 4px 30px;
+      padding: 4px 2px 20px;
     }
 
     .card {
-      border-radius: 12px;
+      border-radius: 10px;
     }
 
     .header {
-      padding: 10px 12px;
-    }
-
-    .header-icon {
-      font-size: 1.3rem;
-    }
-
-    .header h1 {
-      font-size: clamp(0.8rem, 4vw, 0.95rem);
-    }
-
-    .btn {
-      font-size: 12px;
-      padding: 8px 12px;
-      min-height: 38px;
-      min-width: 38px;
-    }
-
-    .btn-back {
       padding: 8px 10px;
     }
 
+    .header-icon {
+      font-size: 1.2rem;
+    }
+
+    .header h1 {
+      font-size: clamp(0.75rem, 3.5vw, 0.9rem);
+    }
+
+    .dropdown-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      min-height: 34px;
+    }
+
     .btn-add {
-      padding: 8px 14px;
+      font-size: 11px;
+      padding: 6px 12px;
+      min-height: 34px;
     }
 
     .search-wrap {
-      padding: 10px 12px 0;
+      padding: 10px 10px 0;
     }
 
     .search-wrap input {
-      padding: 12px 14px;
-      font-size: 14px;
+      padding: 10px 12px;
+      font-size: 13px;
     }
 
     .content {
-      padding: 10px 12px 16px;
+      padding: 10px 10px 14px;
     }
 
     .article-card {
-      padding: 12px 12px;
+      padding: 10px 10px;
       border-radius: 10px;
     }
 
     .article-head h3 {
-      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+      font-size: clamp(0.8rem, 3.5vw, 0.9rem);
     }
 
     .btn-sm {
-      font-size: 11px;
-      padding: 3px 10px;
-      min-height: 28px;
+      font-size: 10px;
+      padding: 3px 8px;
+      min-height: 26px;
     }
 
     .article-body {
@@ -695,51 +805,50 @@
       padding: 16px 14px;
     }
 
-    .modal-actions .btn {
+    .dropdown-menu {
+      min-width: 150px;
+      right: -10px;
+    }
+
+    .dropdown-menu a {
       font-size: 13px;
-      padding: 10px;
+      padding: 8px 14px;
     }
   }
 
-  /* ПЛАНШЕТЫ */
   @media (min-width: 481px) and (max-width: 768px) {
     .page-wrap {
-      padding: 12px 12px 40px;
+      padding: 10px 10px 30px;
     }
 
     .header {
-      padding: 14px 18px;
+      padding: 12px 16px;
     }
 
     .content {
-      padding: 14px 18px 20px;
+      padding: 12px 16px 18px;
     }
 
     .search-wrap {
-      padding: 14px 18px 0;
+      padding: 12px 16px 0;
     }
   }
 
-  /* ДЕСКТОП */
   @media (min-width: 769px) {
     .page-wrap {
       padding: 32px 24px 80px;
     }
 
     .header {
-      padding: 18px 28px;
-    }
-
-    .header-actions {
-      gap: 10px;
+      padding: 16px 28px;
     }
 
     .content {
-      padding: 18px 28px 28px;
+      padding: 16px 28px 24px;
     }
 
     .search-wrap {
-      padding: 18px 28px 0;
+      padding: 16px 28px 0;
     }
 
     .articles-grid {
@@ -747,7 +856,7 @@
     }
 
     .article-card {
-      padding: 20px 24px;
+      padding: 18px 22px;
     }
 
     .article-body .flex-grid {
@@ -774,10 +883,10 @@
   /* SAFE AREA */
   @supports (padding: max(0px)) {
     .page-wrap {
-      padding-left: max(4px, env(safe-area-inset-left));
-      padding-right: max(4px, env(safe-area-inset-right));
-      padding-top: max(4px, env(safe-area-inset-top));
-      padding-bottom: max(30px, env(safe-area-inset-bottom));
+      padding-left: max(2px, env(safe-area-inset-left));
+      padding-right: max(2px, env(safe-area-inset-right));
+      padding-top: max(2px, env(safe-area-inset-top));
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
     }
   }
 
@@ -793,8 +902,8 @@
   }
 
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
   }
   ::-webkit-scrollbar-track {
     background: var(--bg);
@@ -802,9 +911,6 @@
   ::-webkit-scrollbar-thumb {
     background: var(--line);
     border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--ink-muted);
   }
 </style>
 </head>
@@ -815,7 +921,7 @@
   <div class="card">
 
     <!-- ============================================================
-         ШАПКА — КНОПКИ СПРАВА В ОДНОЙ СТРОКЕ
+         ШАПКА — СМЕНА ДОЛЖНОСТИ + ДОБАВИТЬ
          ============================================================ -->
     <div class="header">
       <div class="header-left">
@@ -823,13 +929,33 @@
         <h1>Материалы для УСМ</h1>
       </div>
       <div class="header-actions">
-        <a href="index.html" class="btn btn-back">← Назад</a>
-        <button class="btn btn-add hidden" id="addArticleBtn">➕ Добавить</button>
+
+        <!-- ВЫПАДАЮЩИЙ СПИСОК ДОЛЖНОСТЕЙ -->
+        <div class="dropdown" id="roleDropdown">
+          <button class="dropdown-btn" id="dropdownBtn">
+            ⚡ УСМ <span class="arrow">▼</span>
+          </button>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#" data-role="usm" class="active">
+              ⚡ УСМ <span class="check">✓</span>
+            </a>
+            <a href="#" data-role="sklad">
+              📦 Кладовщик
+            </a>
+            <a href="#" data-role="pk">
+              🛍️ Продавец
+            </a>
+          </div>
+        </div>
+
+        <!-- ДОБАВИТЬ СТАТЬЮ -->
+        <button class="btn-add hidden" id="addArticleBtn">➕</button>
+
       </div>
     </div>
 
     <!-- ============================================================
-         ПОИСК — ВО ВСЮ ШИРИНУ
+         ПОИСК
          ============================================================ -->
     <div class="search-wrap">
       <input type="text" id="searchInput" placeholder="🔍 Поиск по статьям..." />
@@ -851,7 +977,7 @@
 </div>
 
 <!-- ============================================================
-     МОДАЛКА
+     МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ
      ============================================================ -->
 <div class="modal-overlay" id="editModal">
   <div class="modal-box">
@@ -883,8 +1009,8 @@
         </select>
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-back" id="cancelEditBtn">Отмена</button>
-        <button type="submit" class="btn btn-add" id="saveArticleBtn">Сохранить</button>
+        <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
+        <button type="submit" class="btn btn-primary" id="saveArticleBtn">Сохранить</button>
       </div>
     </form>
   </div>
@@ -899,8 +1025,8 @@
     <p class="sub">Это действие нельзя отменить.</p>
     <p id="deleteArticleTitle" style="font-weight:600; color:var(--orange-deep);"></p>
     <div class="modal-actions">
-      <button type="button" class="btn btn-back" id="cancelDeleteBtn">Отмена</button>
-      <button type="button" class="btn" style="background:var(--red);color:#fff;" id="confirmDeleteBtn">Удалить</button>
+      <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Отмена</button>
+      <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
     </div>
   </div>
 </div>
@@ -915,7 +1041,7 @@ import {
   getFirestore, collection, query, where, getDocs, addDoc,
   updateDoc, deleteDoc, doc, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { firebaseConfig, ADMIN_EMAIL } from "./firebase-config.js";
+import { firebaseConfig, ADMIN_EMAIL, POSITION_PAGES } from "./firebase-config.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -928,9 +1054,14 @@ let allArticles = [];
 let editingId = null;
 let deletingId = null;
 
+// DOM
 const container = document.getElementById('articlesContainer');
 const searchInput = document.getElementById('searchInput');
 const addBtn = document.getElementById('addArticleBtn');
+
+// Роли
+const dropdownBtn = document.getElementById('dropdownBtn');
+const dropdownMenu = document.getElementById('dropdownMenu');
 
 const editModal = document.getElementById('editModal');
 const editTitle = document.getElementById('editModalTitle');
@@ -948,6 +1079,40 @@ const deleteTitle = document.getElementById('deleteArticleTitle');
 const cancelDelete = document.getElementById('cancelDeleteBtn');
 const confirmDelete = document.getElementById('confirmDeleteBtn');
 
+// ============================================================
+// ВЫПАДАЮЩИЙ СПИСОК
+// ============================================================
+dropdownBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.classList.toggle('open');
+  dropdownBtn.classList.toggle('open');
+});
+
+document.addEventListener('click', () => {
+  dropdownMenu.classList.remove('open');
+  dropdownBtn.classList.remove('open');
+});
+
+dropdownMenu.querySelectorAll('a').forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.preventDefault();
+    const role = item.dataset.role;
+    const label = item.textContent.trim().replace('✓', '').trim();
+    dropdownBtn.innerHTML = `${label} <span class="arrow">▼</span>`;
+
+    dropdownMenu.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+    item.classList.add('active');
+
+    dropdownMenu.classList.remove('open');
+    dropdownBtn.classList.remove('open');
+
+    window.location.href = POSITION_PAGES[role].page;
+  });
+});
+
+// ============================================================
+// ЗАГРУЗКА СТАТЕЙ
+// ============================================================
 async function loadArticles() {
   try {
     const q = query(collection(db, "articles"), where("role", "==", ROLE), orderBy("createdAt", "desc"));
@@ -961,13 +1126,16 @@ async function loadArticles() {
   }
 }
 
+// ============================================================
+// ОТОБРАЖЕНИЕ
+// ============================================================
 function render(articles) {
   if (!articles || !articles.length) {
     container.innerHTML = `
       <div class="empty">
         <div class="icon">📖</div>
         <p>Пока нет статей</p>
-        ${isAdmin ? '<p style="font-size:13px;">Нажмите "Добавить" чтобы создать первую</p>' : ''}
+        ${isAdmin ? '<p style="font-size:13px;">Нажмите "➕" чтобы создать первую</p>' : ''}
       </div>`;
     return;
   }
@@ -1029,6 +1197,9 @@ function formatDate(ts) {
   } catch { return 'Неизвестно'; }
 }
 
+// ============================================================
+// ПОИСК
+// ============================================================
 searchInput.addEventListener('input', (e) => {
   const q = e.target.value.toLowerCase().trim();
   if (!q) { render(allArticles); return; }
@@ -1039,6 +1210,9 @@ searchInput.addEventListener('input', (e) => {
   ));
 });
 
+// ============================================================
+// МОДАЛКИ
+// ============================================================
 function openEdit(a = null) {
   if (a) {
     editTitle.textContent = '✏️ Редактировать';
@@ -1087,6 +1261,9 @@ cancelDelete.addEventListener('click', closeDelete);
 editModal.addEventListener('click', e => { if (e.target === editModal) closeEdit(); });
 deleteModal.addEventListener('click', e => { if (e.target === deleteModal) closeDelete(); });
 
+// ============================================================
+// СОХРАНЕНИЕ
+// ============================================================
 editForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const title = editName.value.trim();
@@ -1108,6 +1285,9 @@ editForm.addEventListener('submit', async (e) => {
   }
 });
 
+// ============================================================
+// УДАЛЕНИЕ
+// ============================================================
 confirmDelete.addEventListener('click', async () => {
   if (!deletingId) return;
   try {
@@ -1120,6 +1300,9 @@ confirmDelete.addEventListener('click', async () => {
   }
 });
 
+// ============================================================
+// АВТОРИЗАЦИЯ
+// ============================================================
 addBtn.addEventListener('click', () => openEdit(null));
 
 onAuthStateChanged(auth, (user) => {
