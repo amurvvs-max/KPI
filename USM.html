@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>KPI Guide — УСМ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -17,29 +17,24 @@
   :root {
     --bg: #F5F7FA;
     --surface: #FFFFFF;
-    --surface-hover: #FAFBFC;
     --ink: #1A1A2E;
     --ink-soft: #5A5A6E;
     --ink-muted: #9A9AAE;
     --orange: #FF6A00;
     --orange-deep: #E85D00;
     --orange-light: #FFF0E6;
-    --orange-glow: rgba(255, 106, 0, 0.12);
+    --orange-glow: rgba(255,106,0,0.12);
     --line: #E8ECF0;
     --red: #DC3545;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
-    --shadow-lg: 0 12px 48px rgba(0,0,0,0.08);
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --radius: 14px;
     --font-display: "Unbounded", sans-serif;
     --font-body: "Inter", sans-serif;
     --font-mono: "JetBrains Mono", monospace;
   }
 
   /* ============================================================
-     ГЛОБАЛЬНЫЕ СТИЛИ
+     ГЛОБАЛЬНЫЕ
      ============================================================ */
   * {
     -webkit-tap-highlight-color: transparent;
@@ -54,221 +49,143 @@
     background: var(--bg);
     font-family: var(--font-body);
     color: var(--ink);
-    -webkit-font-smoothing: antialiased;
   }
 
   /* ============================================================
-     ГРАДИЕНТНЫЙ ФОН
-     ============================================================ */
-  body {
-    background:
-      radial-gradient(ellipse at 20% 50%, rgba(255,106,0,0.04) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 50%, rgba(255,106,0,0.03) 0%, transparent 50%),
-      var(--bg);
-  }
-
-  /* ============================================================
-     ОБЕРТКА
+     ОБЕРТКА — ПОЛНАЯ ШИРИНА
      ============================================================ */
   .page-wrap {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 20px 16px 60px;
-    position: relative;
-    z-index: 1;
+    padding: 12px 10px 40px;
   }
 
   /* ============================================================
-     ГЛАВНАЯ КАРТОЧКА
+     КАРТОЧКА
      ============================================================ */
   .card {
     background: var(--surface);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     border: 1px solid var(--line);
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
-  }
-
-  .card:hover {
-    box-shadow: var(--shadow-md);
   }
 
   /* ============================================================
-     ШАПКА — СВЕТЛАЯ
+     ШАПКА — КНОПКИ СПРАВА, КРУПНЫЕ
      ============================================================ */
   .header {
-    padding: 16px 20px;
+    padding: 14px 16px;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: nowrap;
   }
 
   .header-left {
     display: flex;
     align-items: center;
-    gap: 12px;
-    flex: 1;
-    min-width: 160px;
+    gap: 10px;
+    min-width: 0;
+    flex-shrink: 1;
   }
 
   .header-icon {
-    font-size: 1.8rem;
-    line-height: 1;
+    font-size: 1.6rem;
     flex-shrink: 0;
   }
 
   .header h1 {
     font-family: var(--font-display);
-    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
     font-weight: 600;
     margin: 0;
     color: var(--ink);
-    letter-spacing: -0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 6px;
+    flex-shrink: 0;
   }
 
   /* ============================================================
-     КНОПКИ
+     КНОПКИ — КРУПНЫЕ, УДОБНЫЕ ДЛЯ ПАЛЬЦЕВ
      ============================================================ */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 10px 18px;
+    gap: 4px;
+    padding: 10px 16px;
     border: none;
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
     white-space: nowrap;
+    min-height: 44px;
+    min-width: 44px;
   }
 
   .btn:active {
-    transform: scale(0.96);
+    transform: scale(0.95);
   }
 
   .btn-back {
     background: var(--bg);
     color: var(--ink-soft);
     border: 1.5px solid var(--line);
+    padding: 10px 14px;
   }
 
   .btn-back:hover {
     background: var(--line);
-    color: var(--ink);
   }
 
   .btn-add {
     background: var(--orange);
     color: #fff;
+    padding: 10px 18px;
     box-shadow: 0 2px 12px rgba(255,106,0,0.25);
   }
 
   .btn-add:hover {
     background: var(--orange-deep);
     box-shadow: 0 4px 20px rgba(255,106,0,0.35);
-    transform: translateY(-1px);
   }
 
   .btn-add.hidden {
     display: none;
   }
 
-  .btn-primary {
-    background: var(--orange);
-    color: #fff;
-  }
-
-  .btn-primary:hover {
-    background: var(--orange-deep);
-  }
-
-  .btn-secondary {
-    background: var(--bg);
-    color: var(--ink-soft);
-    border: 1.5px solid var(--line);
-  }
-
-  .btn-secondary:hover {
-    background: var(--line);
-  }
-
-  .btn-danger {
-    background: var(--red);
-    color: #fff;
-  }
-
-  .btn-danger:hover {
-    background: #c0392b;
-  }
-
-  .btn-icon-sm {
-    padding: 6px 12px;
-    font-size: 12px;
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--font-body);
-  }
-
-  .btn-icon-sm:hover {
-    background: var(--bg);
-  }
-
-  .btn-icon-sm.edit:hover {
-    border-color: var(--orange);
-    color: var(--orange);
-    background: var(--orange-light);
-  }
-
-  .btn-icon-sm.delete:hover {
-    border-color: var(--red);
-    color: var(--red);
-    background: #FDEDEB;
-  }
-
-  .btn-icon-sm.hidden {
-    display: none;
-  }
-
   /* ============================================================
-     ПОИСК
+     ПОИСК — ВО ВСЮ ШИРИНУ
      ============================================================ */
   .search-wrap {
-    padding: 16px 20px 0;
+    padding: 14px 16px 0;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 12px 16px;
-    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    border-radius: 10px;
     border: 1.5px solid var(--line);
     font-size: 15px;
     font-family: var(--font-body);
     background: var(--bg);
     color: var(--ink);
     transition: all 0.2s ease;
-  }
-
-  .search-wrap input::placeholder {
-    color: var(--ink-muted);
   }
 
   .search-wrap input:focus {
@@ -282,11 +199,11 @@
      КОНТЕНТ
      ============================================================ */
   .content {
-    padding: 16px 20px 24px;
+    padding: 14px 16px 20px;
   }
 
   /* ============================================================
-     СТАТЬИ — КАРТОЧКИ
+     СТАТЬИ
      ============================================================ */
   .articles-grid {
     display: grid;
@@ -296,47 +213,89 @@
   .article-card {
     background: var(--surface);
     border: 1.5px solid var(--line);
-    border-radius: var(--radius-md);
-    padding: 16px 18px;
+    border-radius: 12px;
+    padding: 16px 16px;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
   }
 
   .article-card:hover {
     border-color: var(--orange);
     box-shadow: 0 4px 16px rgba(255,106,0,0.08);
-    transform: translateY(-2px);
   }
 
   .article-card:active {
     transform: scale(0.98);
   }
 
-  .article-card-header {
+  /* Заголовок + кнопки в одной строке */
+  .article-head {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
     margin-bottom: 4px;
   }
 
-  .article-card h3 {
+  .article-head h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
     margin: 0;
     color: var(--ink);
     word-break: break-word;
+    flex: 1;
   }
 
-  .article-card .desc {
+  .article-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .btn-sm {
+    padding: 4px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+    min-height: 32px;
+  }
+
+  .btn-sm:hover {
+    background: var(--bg);
+  }
+
+  .btn-sm.edit:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: var(--orange-light);
+  }
+
+  .btn-sm.delete:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: #FDEDEB;
+  }
+
+  .btn-sm.hidden {
+    display: none;
+  }
+
+  .article-desc {
     color: var(--ink-soft);
     font-size: clamp(0.82rem, 2.2vw, 0.9rem);
-    margin: 2px 0 6px;
+    margin: 4px 0 8px;
     line-height: 1.5;
-    word-break: break-word;
   }
 
-  .article-card .meta {
+  .article-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -344,19 +303,15 @@
     color: var(--ink-muted);
   }
 
-  .article-card .meta span {
+  .article-meta span {
     display: flex;
     align-items: center;
     gap: 4px;
   }
 
-  .article-card .admin-actions {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  /* Кнопка разворачивания */
+  /* ============================================================
+     КНОПКА РАЗВОРАЧИВАНИЯ
+     ============================================================ */
   .btn-expand {
     background: none;
     border: none;
@@ -364,7 +319,7 @@
     font-weight: 600;
     font-size: 13px;
     cursor: pointer;
-    padding: 8px 4px 4px;
+    padding: 10px 4px 4px;
     width: 100%;
     text-align: left;
     font-family: var(--font-body);
@@ -376,7 +331,7 @@
   }
 
   /* ============================================================
-     СОДЕРЖИМОЕ СТАТЬИ
+     ТЕЛО СТАТЬИ
      ============================================================ */
   .article-body {
     margin-top: 12px;
@@ -386,21 +341,18 @@
     font-size: 14px;
     line-height: 1.7;
     color: var(--ink-soft);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
   }
 
   .article-body.open {
     display: block;
-    animation: fadeSlide 0.25s ease;
+    animation: fade 0.25s ease;
   }
 
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(-8px); }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(-6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Стили для содержимого */
   .article-body ul {
     list-style: none;
     padding: 0;
@@ -420,42 +372,40 @@
     position: absolute;
     left: 2px;
     top: 0;
-    font-weight: 700;
   }
 
-  .article-body .script-box {
+  .article-body .script {
     background: var(--orange-light);
     padding: 10px 14px;
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     margin: 6px 0;
     border-left: 3px solid var(--orange);
     color: var(--ink);
   }
 
-  .article-body .note-box {
+  .article-body .note {
     background: #F0F7FF;
     padding: 10px 14px;
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     margin: 6px 0;
     border: 1px solid #E0EDF5;
   }
 
-  .article-body .danger-box {
+  .article-body .danger {
     background: #FDEDEB;
     padding: 10px 14px;
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     margin: 6px 0;
     border-left: 3px solid var(--red);
   }
 
-  .article-body .danger-box .label {
+  .article-body .danger .lbl {
     font-weight: 700;
     color: var(--red);
   }
 
   .article-body .table-wrap {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     margin: 8px 0;
   }
 
@@ -463,7 +413,7 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
-    min-width: 260px;
+    min-width: 240px;
   }
 
   .article-body table th {
@@ -480,7 +430,7 @@
     vertical-align: top;
   }
 
-  .article-body .badge-kpi {
+  .article-body .badge {
     display: inline-block;
     background: var(--orange);
     color: #fff;
@@ -501,11 +451,11 @@
   .article-body .flex-grid .item {
     background: var(--bg);
     padding: 12px 14px;
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     border: 1px solid var(--line);
   }
 
-  .article-body .flex-grid .item .title {
+  .article-body .flex-grid .item .ttl {
     font-weight: 700;
     color: var(--orange-deep);
     margin-bottom: 2px;
@@ -517,34 +467,29 @@
     color: var(--ink-soft);
   }
 
-  .article-body .footer-note {
+  .article-body .footer {
     margin-top: 12px;
     padding: 12px 16px;
     background: var(--orange-light);
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     text-align: center;
     font-weight: 700;
     color: var(--orange-deep);
-    border: 1px solid rgba(255,106,0,0.08);
   }
 
   /* ============================================================
      ПУСТОЕ СОСТОЯНИЕ
      ============================================================ */
-  .empty-state {
+  .empty {
     text-align: center;
     padding: 40px 16px;
     color: var(--ink-muted);
   }
 
-  .empty-state .icon {
+  .empty .icon {
     font-size: 36px;
     margin-bottom: 8px;
     opacity: 0.4;
-  }
-
-  .empty-state p {
-    margin: 2px 0;
   }
 
   /* ============================================================
@@ -555,7 +500,6 @@
     inset: 0;
     background: rgba(0,0,0,0.35);
     backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -569,13 +513,13 @@
 
   .modal-box {
     background: var(--surface);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius);
     padding: 24px 20px;
     max-width: 680px;
     width: 100%;
     max-height: 92vh;
     overflow-y: auto;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.15);
     border: 1px solid var(--line);
     animation: modalIn 0.3s ease;
   }
@@ -615,8 +559,8 @@
   .modal-box .field textarea,
   .modal-box .field select {
     width: 100%;
-    padding: 10px 14px;
-    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    border-radius: 10px;
     border: 1.5px solid var(--line);
     font-size: 14px;
     font-family: var(--font-body);
@@ -630,7 +574,6 @@
     resize: vertical;
     font-family: var(--font-mono);
     font-size: 13px;
-    line-height: 1.5;
   }
 
   .modal-box .field input:focus,
@@ -661,7 +604,7 @@
     margin-top: 4px;
     background: var(--bg);
     padding: 6px 10px;
-    border-radius: var(--radius-sm);
+    border-radius: 8px;
     border: 1px solid var(--line);
   }
 
@@ -679,53 +622,69 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
+  /* ТЕЛЕФОНЫ — ШИРОКО И УДОБНО */
   @media (max-width: 480px) {
     .page-wrap {
-      padding: 10px 8px 40px;
+      padding: 6px 4px 30px;
+    }
+
+    .card {
+      border-radius: 12px;
     }
 
     .header {
-      padding: 12px 14px;
-      gap: 8px;
-    }
-
-    .header-left {
-      gap: 8px;
-      min-width: 120px;
+      padding: 10px 12px;
     }
 
     .header-icon {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .header h1 {
-      font-size: clamp(0.85rem, 4vw, 1rem);
+      font-size: clamp(0.8rem, 4vw, 0.95rem);
     }
 
     .btn {
       font-size: 12px;
+      padding: 8px 12px;
+      min-height: 38px;
+      min-width: 38px;
+    }
+
+    .btn-back {
+      padding: 8px 10px;
+    }
+
+    .btn-add {
       padding: 8px 14px;
     }
 
     .search-wrap {
-      padding: 12px 14px 0;
+      padding: 10px 12px 0;
     }
 
     .search-wrap input {
-      padding: 10px 14px;
+      padding: 12px 14px;
       font-size: 14px;
     }
 
     .content {
-      padding: 12px 14px 16px;
+      padding: 10px 12px 16px;
     }
 
     .article-card {
-      padding: 12px 14px;
+      padding: 12px 12px;
+      border-radius: 10px;
     }
 
-    .article-card h3 {
-      font-size: clamp(0.82rem, 3.5vw, 0.95rem);
+    .article-head h3 {
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+    }
+
+    .btn-sm {
+      font-size: 11px;
+      padding: 3px 10px;
+      min-height: 28px;
     }
 
     .article-body {
@@ -742,9 +701,10 @@
     }
   }
 
+  /* ПЛАНШЕТЫ */
   @media (min-width: 481px) and (max-width: 768px) {
     .page-wrap {
-      padding: 16px 16px 50px;
+      padding: 12px 12px 40px;
     }
 
     .header {
@@ -760,6 +720,7 @@
     }
   }
 
+  /* ДЕСКТОП */
   @media (min-width: 769px) {
     .page-wrap {
       padding: 32px 24px 80px;
@@ -770,7 +731,7 @@
     }
 
     .header-actions {
-      gap: 12px;
+      gap: 10px;
     }
 
     .content {
@@ -789,13 +750,12 @@
       padding: 20px 24px;
     }
 
-    .article-card-header {
+    .article-body .flex-grid {
       flex-direction: row;
-      align-items: flex-start;
     }
 
-    .article-card .admin-actions {
-      flex: none;
+    .article-body .flex-grid .item {
+      flex: 1;
     }
 
     .modal-actions {
@@ -809,25 +769,15 @@
     .modal-box {
       padding: 32px 36px;
     }
-
-    .article-body .flex-grid {
-      flex-direction: row;
-    }
-
-    .article-body .flex-grid .item {
-      flex: 1;
-    }
   }
 
-  /* ============================================================
-     SAFE AREA
-     ============================================================ */
+  /* SAFE AREA */
   @supports (padding: max(0px)) {
     .page-wrap {
-      padding-left: max(8px, env(safe-area-inset-left));
-      padding-right: max(8px, env(safe-area-inset-right));
-      padding-top: max(8px, env(safe-area-inset-top));
-      padding-bottom: max(40px, env(safe-area-inset-bottom));
+      padding-left: max(4px, env(safe-area-inset-left));
+      padding-right: max(4px, env(safe-area-inset-right));
+      padding-top: max(4px, env(safe-area-inset-top));
+      padding-bottom: max(30px, env(safe-area-inset-bottom));
     }
   }
 
@@ -842,23 +792,17 @@
     }
   }
 
-  /* ============================================================
-     СКРОЛЛ
-     ============================================================ */
   ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
-
   ::-webkit-scrollbar-track {
     background: var(--bg);
   }
-
   ::-webkit-scrollbar-thumb {
     background: var(--line);
     border-radius: 4px;
   }
-
   ::-webkit-scrollbar-thumb:hover {
     background: var(--ink-muted);
   }
@@ -871,7 +815,7 @@
   <div class="card">
 
     <!-- ============================================================
-         ШАПКА
+         ШАПКА — КНОПКИ СПРАВА В ОДНОЙ СТРОКЕ
          ============================================================ -->
     <div class="header">
       <div class="header-left">
@@ -885,7 +829,7 @@
     </div>
 
     <!-- ============================================================
-         ПОИСК
+         ПОИСК — ВО ВСЮ ШИРИНУ
          ============================================================ -->
     <div class="search-wrap">
       <input type="text" id="searchInput" placeholder="🔍 Поиск по статьям..." />
@@ -896,7 +840,7 @@
          ============================================================ -->
     <div class="content">
       <div id="articlesContainer" class="articles-grid">
-        <div class="empty-state">
+        <div class="empty">
           <div class="icon">⏳</div>
           <p>Загрузка статей...</p>
         </div>
@@ -907,34 +851,27 @@
 </div>
 
 <!-- ============================================================
-     МОДАЛКА СОЗДАНИЯ / РЕДАКТИРОВАНИЯ
+     МОДАЛКА
      ============================================================ -->
 <div class="modal-overlay" id="editModal">
   <div class="modal-box">
     <h2 id="editModalTitle">➕ Новая статья</h2>
     <p class="sub">Используйте HTML-теги для форматирования</p>
-
     <form id="editArticleForm">
       <input type="hidden" id="editArticleId" value="">
-
       <div class="field">
         <label for="editArticleTitle">Название *</label>
         <input type="text" id="editArticleTitle" required placeholder="Введите название">
       </div>
-
       <div class="field">
         <label for="editArticleDescription">Краткое описание</label>
         <input type="text" id="editArticleDescription" placeholder="Кратко о чем статья...">
       </div>
-
       <div class="field">
         <label for="editArticleContent">Содержание *</label>
         <textarea id="editArticleContent" required placeholder="Полный текст с HTML-форматированием..."></textarea>
-        <div class="hint">
-          💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;div class="..."&gt;</code>
-        </div>
+        <div class="hint">💡 Теги: <code>&lt;b&gt;</code> <code>&lt;i&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;li&gt;</code> <code>&lt;table&gt;</code> <code>&lt;div class="..."&gt;</code></div>
       </div>
-
       <div class="field">
         <label for="editArticleCategory">Категория</label>
         <select id="editArticleCategory">
@@ -945,10 +882,9 @@
           <option value="client">Работа с клиентами</option>
         </select>
       </div>
-
       <div class="modal-actions">
-        <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
-        <button type="submit" class="btn btn-primary" id="saveArticleBtn">Сохранить</button>
+        <button type="button" class="btn btn-back" id="cancelEditBtn">Отмена</button>
+        <button type="submit" class="btn btn-add" id="saveArticleBtn">Сохранить</button>
       </div>
     </form>
   </div>
@@ -961,10 +897,10 @@
   <div class="modal-box">
     <h2>🗑️ Удалить статью?</h2>
     <p class="sub">Это действие нельзя отменить.</p>
-    <p id="deleteArticleTitle" style="font-weight:600; color: var(--orange-deep); word-break:break-word;"></p>
+    <p id="deleteArticleTitle" style="font-weight:600; color:var(--orange-deep);"></p>
     <div class="modal-actions">
-      <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Отмена</button>
-      <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
+      <button type="button" class="btn btn-back" id="cancelDeleteBtn">Отмена</button>
+      <button type="button" class="btn" style="background:var(--red);color:#fff;" id="confirmDeleteBtn">Удалить</button>
     </div>
   </div>
 </div>
@@ -1020,14 +956,15 @@ async function loadArticles() {
     snap.forEach(d => allArticles.push({ id: d.id, ...d.data() }));
     render(allArticles);
   } catch (e) {
-    container.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><p>Ошибка загрузки</p><p style="font-size:13px;color:var(--red);">${e.message}</p></div>`;
+    container.innerHTML = `<div class="empty"><div class="icon">⚠️</div><p>Ошибка загрузки</p></div>`;
+    console.error(e);
   }
 }
 
 function render(articles) {
   if (!articles || !articles.length) {
     container.innerHTML = `
-      <div class="empty-state">
+      <div class="empty">
         <div class="icon">📖</div>
         <p>Пока нет статей</p>
         ${isAdmin ? '<p style="font-size:13px;">Нажмите "Добавить" чтобы создать первую</p>' : ''}
@@ -1037,20 +974,18 @@ function render(articles) {
 
   container.innerHTML = articles.map(a => `
     <div class="article-card" data-id="${a.id}">
-      <div class="article-card-header">
-        <div style="flex:1;">
-          <h3>${a.title || 'Без названия'}</h3>
-          ${a.description ? `<div class="desc">${a.description}</div>` : ''}
-        </div>
-        <div class="admin-actions">
-          <button class="btn-icon-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
-          <button class="btn-icon-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
+      <div class="article-head">
+        <h3>${a.title || 'Без названия'}</h3>
+        <div class="article-actions">
+          <button class="btn-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
+          <button class="btn-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
         </div>
       </div>
-      <div class="meta">
+      ${a.description ? `<div class="article-desc">${a.description}</div>` : ''}
+      <div class="article-meta">
         <span>📅 ${formatDate(a.createdAt)}</span>
         ${a.category ? `<span>🏷️ ${a.category}</span>` : ''}
-        ${a.authorEmail ? `<span>✍️ ${a.authorEmail}</span>` : ''}
+        ${a.authorEmail ? `<span>✉️ ${a.authorEmail}</span>` : ''}
       </div>
       <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
       <button class="btn-expand" data-id="${a.id}">📖 Читать полностью</button>
