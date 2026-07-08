@@ -33,6 +33,9 @@
     --font-body: "Inter", sans-serif;
     --font-mono: "JetBrains Mono", monospace;
     --max-width: 800px;
+    --role-color: #FF6A00;
+    --role-color-deep: #E85D00;
+    --role-color-light: #FFF0E6;
   }
 
   /* ============================================================
@@ -59,9 +62,6 @@
     font-size: 16px;
   }
 
-  /* ============================================================
-     ОБЕРТКА
-     ============================================================ */
   .page-wrap {
     width: 100% !important;
     max-width: 100% !important;
@@ -97,14 +97,16 @@
   .header-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-shrink: 1;
     min-width: 0;
   }
 
-  .header-icon {
-    font-size: 1.6rem;
+  .header-logo {
+    height: 32px;
+    width: auto;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   .header h1 {
@@ -199,18 +201,18 @@
   }
 
   .dropdown-menu a:hover {
-    background: var(--orange-light);
+    background: var(--role-color-light);
   }
 
   .dropdown-menu a .check {
     margin-left: auto;
-    color: var(--orange);
+    color: var(--role-color);
     font-weight: 700;
   }
 
   .dropdown-menu a.active {
-    background: var(--orange-light);
-    color: var(--orange-deep);
+    background: var(--role-color-light);
+    color: var(--role-color-deep);
   }
 
   /* ============================================================
@@ -234,7 +236,7 @@
 
   .search-wrap input:focus {
     outline: none;
-    border-color: var(--orange);
+    border-color: var(--role-color);
     background: var(--surface);
     box-shadow: 0 0 0 4px var(--orange-glow);
   }
@@ -264,7 +266,7 @@
   }
 
   .article-card:hover {
-    border-color: var(--orange);
+    border-color: var(--role-color);
     box-shadow: 0 4px 16px rgba(255,106,0,0.08);
   }
 
@@ -317,9 +319,9 @@
   }
 
   .btn-sm.edit:hover {
-    border-color: var(--orange);
-    color: var(--orange);
-    background: var(--orange-light);
+    border-color: var(--role-color);
+    color: var(--role-color);
+    background: var(--role-color-light);
   }
 
   .btn-sm.delete:hover {
@@ -356,7 +358,7 @@
   .btn-expand {
     background: none;
     border: none;
-    color: var(--orange);
+    color: var(--role-color);
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
@@ -368,11 +370,11 @@
   }
 
   .btn-expand:hover {
-    color: var(--orange-deep);
+    color: var(--role-color-deep);
   }
 
   /* ============================================================
-     ⭐ СТИЛИ ДЛЯ СОДЕРЖИМОГО СТАТЬИ
+     СТИЛИ ДЛЯ СОДЕРЖИМОГО СТАТЬИ
      ============================================================ */
   .article-body {
     margin-top: 14px !important;
@@ -394,7 +396,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Отступы между блоками */
   .article-body > * {
     margin-bottom: 14px !important;
   }
@@ -402,7 +403,6 @@
     margin-bottom: 0 !important;
   }
 
-  /* Заголовки */
   .article-body h1,
   .article-body h2,
   .article-body h3,
@@ -411,7 +411,7 @@
   .article-body h6 {
     font-family: var(--font-display) !important;
     font-weight: 700 !important;
-    color: var(--orange-deep) !important;
+    color: var(--role-color-deep) !important;
     margin: 0 0 10px 0 !important;
     padding: 0 !important;
     line-height: 1.4 !important;
@@ -421,7 +421,6 @@
   .article-body h3 { font-size: 1.1rem !important; }
   .article-body h4 { font-size: 1rem !important; }
 
-  /* Параграфы */
   .article-body p {
     margin: 0 0 12px 0 !important;
     padding: 0 !important;
@@ -430,7 +429,6 @@
     color: var(--ink-soft);
   }
 
-  /* Списки — обычные маркеры, без смещения */
   .article-body ul,
   .article-body ol {
     margin: 0 0 14px 0 !important;
@@ -459,7 +457,6 @@
     font-weight: 600 !important;
   }
 
-  /* Горизонтальная линия */
   .article-body hr {
     border: none !important;
     border-top: 2px solid var(--line) !important;
@@ -467,14 +464,13 @@
     padding: 0 !important;
   }
 
-  /* Блок "Скрипт" */
   .article-body .script,
   .article-body .script-block {
-    background: var(--orange-light) !important;
+    background: var(--role-color-light) !important;
     padding: 14px 18px !important;
     border-radius: 10px !important;
     margin: 14px 0 !important;
-    border-left: 4px solid var(--orange) !important;
+    border-left: 4px solid var(--role-color) !important;
     color: var(--ink) !important;
     font-size: 15px !important;
     line-height: 1.7 !important;
@@ -486,7 +482,6 @@
     font-style: italic !important;
   }
 
-  /* Блок "Запрещено" */
   .article-body .danger,
   .article-body .forbidden {
     background: #FDEDEB !important;
@@ -505,7 +500,6 @@
     color: var(--red) !important;
   }
 
-  /* Блок "Важно" */
   .article-body .note,
   .article-body .important {
     background: #F0F7FF !important;
@@ -523,7 +517,6 @@
     color: var(--ink) !important;
   }
 
-  /* Таблицы */
   .article-body .table-wrap {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
@@ -538,10 +531,10 @@
   }
 
   .article-body table th {
-    border-bottom: 2px solid var(--orange) !important;
+    border-bottom: 2px solid var(--role-color) !important;
     padding: 10px 10px !important;
     text-align: left !important;
-    color: var(--orange-deep) !important;
+    color: var(--role-color-deep) !important;
     font-weight: 700 !important;
     background: #FAFAFB !important;
   }
@@ -558,10 +551,9 @@
     background: #FAFAFB !important;
   }
 
-  /* Бейдж KPI */
   .article-body .badge-kpi {
     display: inline-block !important;
-    background: var(--orange) !important;
+    background: var(--role-color) !important;
     color: #fff !important;
     padding: 6px 20px !important;
     border-radius: 30px !important;
@@ -572,21 +564,19 @@
     text-transform: uppercase !important;
   }
 
-  /* Финальный блок */
   .article-body .footer-note {
     margin: 16px 0 0 0 !important;
     padding: 16px 20px !important;
-    background: var(--orange-light) !important;
+    background: var(--role-color-light) !important;
     border-radius: 10px !important;
-    border: 2px solid var(--orange) !important;
+    border: 2px solid var(--role-color) !important;
     text-align: center !important;
     font-weight: 700 !important;
-    color: var(--orange-deep) !important;
+    color: var(--role-color-deep) !important;
     font-size: 16px !important;
     line-height: 1.6 !important;
   }
 
-  /* Карточки внутри статьи */
   .article-body .flex-grid {
     display: flex !important;
     flex-direction: column !important;
@@ -603,7 +593,7 @@
 
   .article-body .flex-grid .item .ttl {
     font-weight: 700 !important;
-    color: var(--orange-deep) !important;
+    color: var(--role-color-deep) !important;
     margin-bottom: 4px !important;
     font-size: 15px !important;
   }
@@ -645,7 +635,7 @@
     height: 56px;
     border-radius: 50%;
     border: none;
-    background: var(--orange);
+    background: var(--role-color);
     color: #fff;
     font-size: 30px;
     font-weight: 300;
@@ -660,7 +650,7 @@
   }
 
   .fab:hover {
-    background: var(--orange-deep);
+    background: var(--role-color-deep);
     transform: scale(1.06);
   }
 
@@ -769,7 +759,7 @@
   .modal-box .field textarea:focus,
   .modal-box .field select:focus {
     outline: none;
-    border-color: var(--orange);
+    border-color: var(--role-color);
     background: var(--surface);
     box-shadow: 0 0 0 4px var(--orange-glow);
   }
@@ -794,12 +784,12 @@
   }
 
   .modal-actions .btn-primary {
-    background: var(--orange);
+    background: var(--role-color);
     color: #fff;
   }
 
   .modal-actions .btn-primary:hover {
-    background: var(--orange-deep);
+    background: var(--role-color-deep);
   }
 
   .modal-actions .btn-secondary {
@@ -836,7 +826,7 @@
     padding: 2px 6px !important;
     border-radius: 4px;
     font-size: 11px;
-    color: var(--orange-deep);
+    color: var(--role-color-deep);
     font-family: var(--font-mono);
     border: 1px solid var(--line);
   }
@@ -848,6 +838,10 @@
   @media (max-width: 767px) {
     .header {
       padding: 10px 12px !important;
+    }
+
+    .header-logo {
+      height: 24px;
     }
 
     .content {
@@ -903,6 +897,10 @@
       padding: 14px 20px !important;
     }
 
+    .header-logo {
+      height: 32px;
+    }
+
     .content {
       padding: 14px 20px 80px !important;
     }
@@ -931,6 +929,10 @@
 
     .header {
       padding: 18px 28px !important;
+    }
+
+    .header-logo {
+      height: 36px;
     }
 
     .content {
@@ -1012,7 +1014,7 @@
     <!-- ШАПКА -->
     <div class="header">
       <div class="header-left">
-        <span class="header-icon">📚</span>
+        <img src="logo.png" alt="Логотип" class="header-logo" />
         <h1>Материалы для УСМ</h1>
       </div>
       <div class="header-actions">
@@ -1096,7 +1098,7 @@
   <div class="modal-box">
     <h2>🗑️ Удалить статью?</h2>
     <p class="sub">Это действие нельзя отменить.</p>
-    <p id="deleteArticleTitle" style="font-weight:600;color:var(--orange-deep);"></p>
+    <p id="deleteArticleTitle" style="font-weight:600;color:var(--role-color-deep);"></p>
     <div class="modal-actions">
       <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Отмена</button>
       <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
