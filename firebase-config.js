@@ -9,6 +9,7 @@ export const firebaseConfig = {
 
 export const ADMIN_EMAIL = "amurvvs@gmail.com"; // ← СВОЙ EMAIL
 
+// Соответствие должностей и страниц
 export const POSITION_PAGES = {
   usm: { label: "УСМ", page: "USM.html" },
   sklad: { label: "Кладовщик", page: "sklad.html" },
