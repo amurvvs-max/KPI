@@ -13,5 +13,4 @@ export const ADMIN_EMAIL = "amurvvs@gmail.com"; // ← СВОЙ EMAIL
 export const POSITION_PAGES = {
   usm: { label: "УСМ", page: "USM.html" },
   sklad: { label: "Кладовщик", page: "sklad.html" },
-  pk: { label: "Продавец-консультант", page: "pk.html" },
 };
