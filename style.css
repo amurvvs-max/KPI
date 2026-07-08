@@ -777,7 +777,7 @@ body.no-scroll {
 
 /* Логотип в шапке страниц (USM, sklad, pk) */
 .header-logo {
-  height: 32px;
+  height: 44px;
   width: auto;
   flex-shrink: 0;
   object-fit: contain;
@@ -786,14 +786,14 @@ body.no-scroll {
 
 /* Логотип на странице входа (левая панель) */
 .brand-logo {
-  height: 40px;
+  height: 48px;
   width: auto;
   display: block;
 }
 
 /* Логотип в админке */
 .admin-logo {
-  height: 32px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -801,24 +801,24 @@ body.no-scroll {
 /* Адаптация для мобильных */
 @media (max-width: 480px) {
   .header-logo {
-    height: 24px;
-  }
-  .brand-logo {
     height: 32px;
   }
+  .brand-logo {
+    height: 36px;
+  }
   .admin-logo {
-    height: 26px;
+    height: 30px;
   }
 }
 
 @media (min-width: 768px) {
   .header-logo {
-    height: 36px;
+    height: 48px;
   }
   .brand-logo {
-    height: 44px;
+    height: 52px;
   }
   .admin-logo {
-    height: 36px;
+    height: 44px;
   }
 }
