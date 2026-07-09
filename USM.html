@@ -247,16 +247,19 @@
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+    min-width: 0;
   }
   .folder-item .folder-name {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1rem;
     color: var(--ink);
+    word-break: break-word;
   }
   .folder-item .folder-count {
     font-size: 13px;
     color: var(--ink-muted);
+    flex-shrink: 0;
   }
   .folder-item .folder-actions {
     display: flex;
@@ -279,6 +282,7 @@
     min-height: 32px;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
   }
   .btn-sm:hover { background: var(--bg); }
   .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
@@ -318,6 +322,7 @@
     word-break: break-word;
     flex: 1;
     padding-right: 8px;
+    min-width: 0;
   }
 
   .article-actions {
@@ -357,6 +362,7 @@
     padding: 0 !important;
     border: none !important;
     border-radius: 0 !important;
+    flex-shrink: 0;
   }
   .article-stats .views-icon {
     font-size: 13px;
@@ -777,15 +783,13 @@
   .modal-box-small .field { margin-bottom: 12px !important; }
 
   /* ============================================================
-     АДАПТИВНОСТЬ
+     МОБИЛЬНАЯ ВЕРСИЯ — АККУРАТНЫЙ СПИСОК
      ============================================================ */
-
-  /* МОБИЛЬНАЯ ВЕРСИЯ — АККУРАТНЫЙ СПИСОК */
   @media (max-width: 767px) {
     .header { padding: 10px 12px !important; }
-    .header-logo { height: 30px; }
-    .header h1 { font-size: 0.95rem; }
-    .dropdown-btn { font-size: 12px; padding: 6px 10px !important; min-height: 34px; }
+    .header-logo { height: 28px; }
+    .header h1 { font-size: 0.85rem; }
+    .dropdown-btn { font-size: 11px; padding: 6px 10px !important; min-height: 32px; }
     .search-wrap { padding: 8px 12px 0 !important; }
     .search-wrap input { padding: 10px 14px !important; font-size: 15px; }
     .content { padding: 8px 12px 70px !important; }
@@ -801,14 +805,15 @@
       flex-direction: row;
       align-items: center;
       text-align: left;
-      padding: 12px 14px !important;
+      padding: 10px 14px !important;
       cursor: pointer;
-      gap: 12px;
+      gap: 10px;
       min-height: auto;
       justify-content: flex-start;
       border-radius: 10px;
       background: var(--surface);
       border: 1.5px solid var(--line);
+      flex-wrap: nowrap;
     }
 
     .folder-item .drag-handle {
@@ -816,7 +821,7 @@
     }
 
     .folder-item .folder-icon {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       margin-bottom: 0;
       flex-shrink: 0;
     }
@@ -824,21 +829,23 @@
     .folder-item .folder-info {
       flex-direction: row;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex: 1;
-      width: auto;
+      min-width: 0;
       flex-wrap: wrap;
     }
 
     .folder-item .folder-name {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       text-align: left;
       word-break: break-word;
+      flex: 0 1 auto;
     }
 
     .folder-item .folder-count {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--ink-muted);
+      flex-shrink: 0;
     }
 
     .folder-item .folder-actions {
@@ -849,9 +856,9 @@
     }
 
     .folder-item .btn-sm.delete-folder {
-      font-size: 12px;
-      padding: 4px 10px !important;
-      min-height: 28px;
+      font-size: 11px;
+      padding: 3px 8px !important;
+      min-height: 26px;
     }
 
     .folder-item:active {
@@ -871,40 +878,64 @@
     .article-body h2 { font-size: 1.1rem !important; }
     .article-body h3 { font-size: 1rem !important; }
     
+    .article-head h3 {
+      font-size: 0.95rem;
+    }
+
+    .btn-sm {
+      font-size: 11px;
+      padding: 3px 8px !important;
+      min-height: 28px;
+    }
+
     .btn-expand {
-      width: 30px;
-      height: 30px;
-      min-width: 30px;
-      min-height: 30px;
-      font-size: 12px;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      min-height: 28px;
+      font-size: 11px;
       box-shadow: 0 2px 10px rgba(255, 106, 0, 0.25);
     }
-    .btn-expand .icon { font-size: 10px; }
+    .btn-expand .icon { font-size: 9px; }
     .article-card.expanded .btn-expand {
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
-      min-height: 36px;
-      font-size: 14px;
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+      min-height: 34px;
+      font-size: 13px;
+    }
+
+    .article-meta {
+      font-size: 11px;
+      gap: 8px 12px;
+    }
+
+    .article-stats {
+      font-size: 11px;
+    }
+    .article-stats .views-icon {
+      font-size: 11px;
     }
     
     .fab-article {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
+      width: 48px;
+      height: 48px;
+      font-size: 22px;
       bottom: 14px;
       right: 12px;
     }
     .fab-folder {
-      width: 50px;
-      height: 50px;
-      font-size: 18px;
-      bottom: 72px;
+      width: 48px;
+      height: 48px;
+      font-size: 16px;
+      bottom: 70px;
       right: 12px;
     }
-    .modal-box { padding: 18px 14px !important; }
-    .article-stats { font-size: 11px; }
-    .article-stats .views-icon { font-size: 11px; }
+    .modal-box { padding: 16px 14px !important; }
+    
+    .folder-nav .back-btn { font-size: 12px; }
+    .folder-nav .folder-title { font-size: 0.95rem; }
+    .folder-nav .article-count { font-size: 11px; }
   }
 
   /* ПЛАНШЕТ — ТОЖЕ АККУРАТНЫЙ СПИСОК */
@@ -912,12 +943,11 @@
     .page-wrap { max-width: var(--max-width) !important; margin: 0 auto !important; padding: 16px 0 !important; }
     .card { border-radius: 14px !important; box-shadow: var(--shadow) !important; border: 1px solid var(--line) !important; }
     .header { padding: 14px 20px !important; }
-    .header-logo { height: 38px; }
+    .header-logo { height: 36px; }
     .header h1 { font-size: 1.1rem; }
     .content { padding: 14px 20px 80px !important; }
     .search-wrap { padding: 14px 20px 0 !important; }
     
-    /* Папки — аккуратный список */
     .folders-list {
       display: flex;
       flex-direction: column;
@@ -930,7 +960,7 @@
       text-align: left;
       padding: 14px 18px !important;
       cursor: pointer;
-      gap: 14px;
+      gap: 12px;
       min-height: auto;
       justify-content: flex-start;
       border-radius: 12px;
@@ -941,20 +971,21 @@
     }
 
     .folder-item .folder-icon {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       flex-shrink: 0;
     }
 
     .folder-item .folder-info {
       flex-direction: row;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex: 1;
       flex-wrap: wrap;
+      min-width: 0;
     }
 
     .folder-item .folder-name {
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     .folder-item .folder-actions {
@@ -981,22 +1012,22 @@
       font-size: 15px;
     }
     .fab-article {
-      width: 60px;
-      height: 60px;
-      font-size: 30px;
+      width: 56px;
+      height: 56px;
+      font-size: 28px;
       bottom: 28px;
       right: 28px;
     }
     .fab-folder {
-      width: 60px;
-      height: 60px;
-      font-size: 24px;
-      bottom: 96px;
+      width: 56px;
+      height: 56px;
+      font-size: 20px;
+      bottom: 92px;
       right: 28px;
     }
   }
 
-  /* ПК */
+  /* ПК — полный функционал с перетаскиванием */
   @media (min-width: 1200px) {
     .page-wrap {
       max-width: var(--max-width) !important;
@@ -1042,7 +1073,6 @@
       padding: 20px 36px 80px !important;
     }
 
-    /* Папки — список с перетаскиванием */
     .folders-list {
       display: flex;
       flex-direction: column;
@@ -1133,13 +1163,13 @@
   /* ===== SAFE AREA ===== */
   @supports (padding: max(0px)) {
     .fab-article { bottom: max(14px, env(safe-area-inset-bottom)); right: max(12px, env(safe-area-inset-right)); }
-    .fab-folder { bottom: max(72px, env(safe-area-inset-bottom) + 58px); right: max(12px, env(safe-area-inset-right)); }
+    .fab-folder { bottom: max(70px, env(safe-area-inset-bottom) + 56px); right: max(12px, env(safe-area-inset-right)); }
   }
 
   @media (min-width: 768px) {
     @supports (padding: max(0px)) {
       .fab-article { bottom: max(28px, env(safe-area-inset-bottom)); right: max(28px, env(safe-area-inset-right)); }
-      .fab-folder { bottom: max(96px, env(safe-area-inset-bottom) + 68px); right: max(28px, env(safe-area-inset-right)); }
+      .fab-folder { bottom: max(92px, env(safe-area-inset-bottom) + 64px); right: max(28px, env(safe-area-inset-right)); }
     }
   }
 
