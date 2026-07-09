@@ -308,12 +308,32 @@
   .article-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px 18px;
     font-size: 13px;
     color: var(--ink-muted);
     margin-bottom: 8px !important;
   }
   .article-meta span { display: flex; align-items: center; gap: 4px; }
+  
+  /* ===== СТАТИСТИКА ПРОСМОТРОВ ===== */
+  .article-stats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    background: var(--bg);
+    padding: 4px 12px !important;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+  }
+  .article-stats .views-icon {
+    font-size: 14px;
+  }
+  .article-stats .views-count {
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
 
   /* ===== КРУГЛАЯ КНОПКА РАЗВОРАЧИВАНИЯ ===== */
   .btn-expand {
@@ -781,6 +801,13 @@
     .folder-card { min-height: 100px; padding: 14px 12px !important; }
     .folder-card .folder-icon { font-size: 2.2rem; }
     .folder-card .folder-name { font-size: 0.9rem; }
+    .article-stats {
+      font-size: 11px;
+      padding: 2px 10px !important;
+    }
+    .article-stats .views-icon {
+      font-size: 12px;
+    }
   }
 
   /* ПЛАНШЕТ */
@@ -1113,7 +1140,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore, collection, query, where, getDocs, addDoc,
-  updateDoc, deleteDoc, doc, orderBy, serverTimestamp
+  updateDoc, deleteDoc, doc, orderBy, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL, POSITION_PAGES } from "./firebase-config.js";
 
@@ -1227,11 +1254,37 @@ async function loadArticles() {
     const q = query(collection(db, "articles"), where("role", "==", ROLE), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
     allArticles = [];
-    snap.forEach(d => allArticles.push({ id: d.id, ...d.data() }));
+    snap.forEach(d => {
+      const data = d.data();
+      allArticles.push({ 
+        id: d.id, 
+        ...data,
+        views: data.views || 0 // если поля нет, ставим 0
+      });
+    });
     return allArticles;
   } catch (e) {
     console.error("Ошибка загрузки статей:", e);
     return [];
+  }
+}
+
+// ============================================================
+// УВЕЛИЧЕНИЕ СЧЕТЧИКА ПРОСМОТРОВ
+// ============================================================
+async function incrementViews(articleId) {
+  try {
+    const articleRef = doc(db, 'articles', articleId);
+    await updateDoc(articleRef, {
+      views: increment(1)
+    });
+    // Обновляем в локальном массиве
+    const article = allArticles.find(a => a.id === articleId);
+    if (article) {
+      article.views = (article.views || 0) + 1;
+    }
+  } catch (e) {
+    console.error("Ошибка обновления просмотров:", e);
   }
 }
 
@@ -1367,6 +1420,7 @@ function render() {
 
     html += `<div class="articles-grid">`;
     articles.forEach(a => {
+      const views = a.views || 0;
       html += `
         <div class="article-card" data-id="${a.id}">
           <div class="article-head">
@@ -1380,6 +1434,11 @@ function render() {
           <div class="article-meta">
             <span>📅 ${formatDate(a.createdAt)}</span>
             ${a.authorEmail ? `<span>✉️ ${a.authorEmail}</span>` : ''}
+            <span class="article-stats">
+              <span class="views-icon">👁️</span>
+              <span class="views-count">${views}</span>
+              <span>${declension(views, 'просмотр', 'просмотра', 'просмотров')}</span>
+            </span>
           </div>
           <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
           <button class="btn-expand" data-id="${a.id}" aria-label="Развернуть статью">
@@ -1399,16 +1458,29 @@ function render() {
     });
 
     document.querySelectorAll('.btn-expand').forEach(b => {
-      b.addEventListener('click', (e) => {
+      b.addEventListener('click', async (e) => {
         e.stopPropagation();
         const id = b.dataset.id;
         const card = b.closest('.article-card');
         const body = document.getElementById(`body-${id}`);
         const icon = b.querySelector('.icon');
+        const wasClosed = !body.classList.contains('open');
+        
         if (body) {
           body.classList.toggle('open');
           icon.classList.toggle('open');
           card.classList.toggle('expanded');
+          
+          // Если статья была закрыта и теперь открывается — увеличиваем счетчик
+          if (wasClosed) {
+            await incrementViews(id);
+            // Обновляем отображение счетчика
+            const statsSpan = card.querySelector('.article-stats .views-count');
+            if (statsSpan) {
+              const currentViews = parseInt(statsSpan.textContent) || 0;
+              statsSpan.textContent = currentViews + 1;
+            }
+          }
         }
       });
     });
@@ -1558,6 +1630,7 @@ editForm.addEventListener('submit', async (e) => {
         role: ROLE,
         authorUid: currentUser?.uid,
         authorEmail: currentUser?.email,
+        views: 0, // начальное значение просмотров
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });
@@ -1639,7 +1712,7 @@ function updateFab() {
     }, 100);
   } else {
     addBtn.classList.add('hidden');
-    addFolderBtn.classList.add('hidden');
+    addFolderBtn.classList.remove('hidden');
     addBtn.classList.remove('show');
     addFolderBtn.classList.remove('show');
   }
