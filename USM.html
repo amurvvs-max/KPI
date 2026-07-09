@@ -189,52 +189,100 @@
     margin-left: auto !important;
   }
 
-  /* ===== ПЛИТКИ ПАПОК ===== */
-  .folders-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 14px;
-  }
-
-  .folder-card {
-    background: var(--surface);
-    border: 1.5px solid var(--line);
-    border-radius: 12px;
-    padding: 20px 16px !important;
-    cursor: pointer;
-    transition: all 0.25s ease;
+  /* ===== ПЛИТКИ ПАПОК (СПИСОК) ===== */
+  .folders-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    min-height: 120px;
-    justify-content: center;
+    gap: 8px;
   }
-  .folder-card:hover {
-    border-color: var(--role-color);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(255,106,0,0.10);
-  }
-  .folder-card:active { transform: scale(0.96); }
 
-  .folder-card .folder-icon { font-size: 2.8rem; margin-bottom: 8px !important; }
-  .folder-card .folder-name {
+  .folder-item {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 18px !important;
+    cursor: grab;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+  }
+  .folder-item:hover {
+    border-color: var(--role-color);
+    box-shadow: 0 2px 12px rgba(255,106,0,0.08);
+  }
+  .folder-item:active {
+    cursor: grabbing;
+  }
+  .folder-item.dragging {
+    opacity: 0.4;
+    border-color: var(--role-color);
+    box-shadow: 0 8px 24px rgba(255,106,0,0.15);
+  }
+  .folder-item.drag-over {
+    border-color: var(--role-color);
+    background: var(--role-color-light);
+    transform: scale(1.01);
+    border-width: 2px;
+  }
+  .folder-item .drag-handle {
+    color: var(--ink-muted);
+    font-size: 18px;
+    cursor: grab;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .folder-item:hover .drag-handle {
+    opacity: 1;
+  }
+  .folder-item .folder-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .folder-item .folder-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .folder-item .folder-name {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1rem;
     color: var(--ink);
-    word-break: break-word;
   }
-  .folder-card .folder-count {
-    font-size: 12px;
+  .folder-item .folder-count {
+    font-size: 13px;
     color: var(--ink-muted);
-    margin-top: 4px !important;
   }
-  .folder-card .folder-actions {
-    margin-top: 10px !important;
+  .folder-item .folder-actions {
     display: flex;
     gap: 6px;
+    flex-shrink: 0;
+    margin-left: auto !important;
   }
+
+  .btn-sm {
+    padding: 4px 10px !important;
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  .btn-sm:hover { background: var(--bg); }
+  .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
+  .btn-sm.hidden { display: none; }
 
   /* ===== СТАТЬИ ===== */
   .articles-grid {
@@ -279,25 +327,8 @@
     flex-shrink: 0;
   }
   
-  .btn-sm {
-    padding: 4px 10px !important;
-    border: 1.5px solid var(--line);
-    border-radius: 6px;
-    background: transparent;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--font-body);
-    min-height: 32px;
-    display: flex;
-    align-items: center;
-  }
-  .btn-sm:hover { background: var(--bg); }
   .btn-sm.edit:hover { border-color: var(--role-color); color: var(--role-color); background: var(--role-color-light); }
   .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
-  .btn-sm.hidden { display: none; }
 
   .article-desc {
     color: var(--ink-soft);
@@ -797,10 +828,16 @@
       right: 12px;
     }
     .modal-box { padding: 18px 14px !important; }
-    .folders-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-    .folder-card { min-height: 100px; padding: 14px 12px !important; }
-    .folder-card .folder-icon { font-size: 2.2rem; }
-    .folder-card .folder-name { font-size: 0.9rem; }
+    .folder-item {
+      padding: 12px 14px !important;
+      flex-wrap: wrap;
+    }
+    .folder-item .folder-info {
+      flex: 1 1 100%;
+    }
+    .folder-item .folder-actions {
+      margin-left: auto !important;
+    }
     .article-stats {
       font-size: 11px;
     }
@@ -850,8 +887,7 @@
       bottom: 96px;
       right: 28px;
     }
-    .folders-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
-    .folder-card { min-height: 140px; }
+    .folder-item { padding: 16px 20px !important; }
   }
 
   /* ПК */
@@ -915,28 +951,12 @@
       min-height: 38px;
     }
 
-    .folders-grid {
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-      gap: 20px !important;
+    .folder-item {
+      padding: 18px 24px !important;
+      border-radius: 12px;
     }
-
-    .folder-card {
-      min-height: 160px !important;
-      padding: 24px 20px !important;
-      border-radius: 14px;
-    }
-
-    .folder-card .folder-icon {
-      font-size: 3.2rem;
-    }
-
-    .folder-card .folder-name {
-      font-size: 1.1rem;
-    }
-
-    .folder-card .folder-count {
-      font-size: 14px;
-    }
+    .folder-item .folder-icon { font-size: 2rem; }
+    .folder-item .folder-name { font-size: 1.1rem; }
 
     .btn-expand {
       width: 36px;
@@ -1153,6 +1173,7 @@ let allArticles = [];
 let allFolders = [];
 let editingId = null;
 let deletingId = null;
+let folderOrder = []; // массив ID папок в порядке сортировки
 
 let currentView = 'folders';
 let currentFolderId = null;
@@ -1218,15 +1239,41 @@ dropdownMenu.querySelectorAll('a').forEach(item => {
 // ============================================================
 async function loadFolders() {
   try {
-    const q = query(collection(db, "folders"), where("role", "==", ROLE), orderBy("name", "asc"));
+    const q = query(collection(db, "folders"), where("role", "==", ROLE));
     const snap = await getDocs(q);
     allFolders = [];
     snap.forEach(d => allFolders.push({ id: d.id, ...d.data() }));
+    
+    // Восстанавливаем порядок из localStorage или используем порядок по умолчанию
+    const savedOrder = localStorage.getItem('folderOrder_usm');
+    if (savedOrder) {
+      try {
+        const order = JSON.parse(savedOrder);
+        // Проверяем, что все ID из order существуют
+        const validOrder = order.filter(id => allFolders.some(f => f.id === id));
+        // Добавляем новые папки, которых нет в order
+        const existingIds = new Set(validOrder);
+        const newFolders = allFolders.filter(f => !existingIds.has(f.id));
+        folderOrder = [...validOrder, ...newFolders.map(f => f.id)];
+      } catch {
+        folderOrder = allFolders.map(f => f.id);
+      }
+    } else {
+      folderOrder = allFolders.map(f => f.id);
+    }
+    
     return allFolders;
   } catch (e) {
     console.error("Ошибка загрузки папок:", e);
     return [];
   }
+}
+
+// ============================================================
+// СОХРАНЕНИЕ ПОРЯДКА ПАПОК
+// ============================================================
+function saveFolderOrder() {
+  localStorage.setItem('folderOrder_usm', JSON.stringify(folderOrder));
 }
 
 // ============================================================
@@ -1313,6 +1360,21 @@ function render() {
   // ----- Режим: список папок -----
   if (currentView === 'folders') {
     let filteredFolders = searchFolders(searchQuery, allFolders);
+    
+    // Сортируем папки согласно сохраненному порядку
+    if (searchQuery) {
+      // При поиске не используем drag&drop порядок, показываем все найденные
+      filteredFolders.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      // Сортируем по сохраненному порядку
+      filteredFolders.sort((a, b) => {
+        const indexA = folderOrder.indexOf(a.id);
+        const indexB = folderOrder.indexOf(b.id);
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+        return indexA - indexB;
+      });
+    }
 
     if (!filteredFolders.length) {
       container.innerHTML = `
@@ -1325,14 +1387,17 @@ function render() {
       return;
     }
 
-    let html = `<div class="folders-grid">`;
-    filteredFolders.forEach(folder => {
+    let html = `<div class="folders-list" id="foldersList">`;
+    filteredFolders.forEach((folder, index) => {
       const count = allArticles.filter(a => a.folderId === folder.id).length;
       html += `
-        <div class="folder-card" data-folder-id="${folder.id}">
-          <div class="folder-icon">📁</div>
-          <div class="folder-name">${folder.name}</div>
-          <div class="folder-count">${count} ${declension(count, 'статья', 'статьи', 'статей')}</div>
+        <div class="folder-item" data-folder-id="${folder.id}" data-index="${index}" draggable="${isAdmin}">
+          ${isAdmin ? `<span class="drag-handle">⠿</span>` : ''}
+          <span class="folder-icon">📁</span>
+          <div class="folder-info">
+            <span class="folder-name">${folder.name}</span>
+            <span class="folder-count">${count} ${declension(count, 'статья', 'статьи', 'статей')}</span>
+          </div>
           ${isAdmin ? `
             <div class="folder-actions">
               <button class="btn-sm delete-folder" data-id="${folder.id}" style="border-color:#DC3545; color:#DC3545;">🗑️</button>
@@ -1344,14 +1409,17 @@ function render() {
     html += `</div>`;
     container.innerHTML = html;
 
-    document.querySelectorAll('.folder-card').forEach(card => {
-      card.addEventListener('click', (e) => {
+    // Навешиваем события на папки
+    document.querySelectorAll('.folder-item').forEach(item => {
+      item.addEventListener('click', (e) => {
         if (e.target.closest('.delete-folder')) return;
-        const folderId = card.dataset.folderId;
+        if (e.target.closest('.drag-handle')) return;
+        const folderId = item.dataset.folderId;
         openFolder(folderId);
       });
     });
 
+    // Навешиваем события удаления папок
     document.querySelectorAll('.delete-folder').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -1363,6 +1431,9 @@ function render() {
               await deleteDoc(doc(db, 'articles', a.id));
             }
             await deleteDoc(doc(db, 'folders', id));
+            // Удаляем из порядка
+            folderOrder = folderOrder.filter(fId => fId !== id);
+            saveFolderOrder();
             await refreshData();
           } catch (e) {
             alert('Ошибка удаления папки');
@@ -1370,6 +1441,11 @@ function render() {
         }
       });
     });
+
+    // Настраиваем Drag&Drop для админа
+    if (isAdmin) {
+      setupDragAndDrop();
+    }
 
     return;
   }
@@ -1501,6 +1577,64 @@ function render() {
 }
 
 // ============================================================
+// DRAG & DROP ДЛЯ ПАПОК
+// ============================================================
+function setupDragAndDrop() {
+  const items = document.querySelectorAll('.folder-item');
+  let draggedItem = null;
+
+  items.forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      draggedItem = item;
+      item.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', item.dataset.folderId);
+    });
+
+    item.addEventListener('dragend', (e) => {
+      item.classList.remove('dragging');
+      document.querySelectorAll('.folder-item').forEach(el => el.classList.remove('drag-over'));
+    });
+
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (draggedItem && draggedItem !== item) {
+        document.querySelectorAll('.folder-item').forEach(el => el.classList.remove('drag-over'));
+        item.classList.add('drag-over');
+      }
+    });
+
+    item.addEventListener('dragleave', (e) => {
+      item.classList.remove('drag-over');
+    });
+
+    item.addEventListener('drop', (e) => {
+      e.preventDefault();
+      item.classList.remove('drag-over');
+      
+      if (!draggedItem || draggedItem === item) return;
+      
+      const fromId = draggedItem.dataset.folderId;
+      const toId = item.dataset.folderId;
+      
+      // Обновляем порядок в массиве
+      const fromIndex = folderOrder.indexOf(fromId);
+      const toIndex = folderOrder.indexOf(toId);
+      
+      if (fromIndex === -1 || toIndex === -1) return;
+      
+      // Перемещаем элемент
+      folderOrder.splice(fromIndex, 1);
+      folderOrder.splice(toIndex, 0, fromId);
+      
+      saveFolderOrder();
+      render();
+    });
+  });
+}
+
+// ============================================================
 // ОТКРЫТЬ ПАПКУ
 // ============================================================
 function openFolder(folderId) {
@@ -1544,7 +1678,7 @@ async function refreshData() {
 }
 
 // ============================================================
-// ПОИСК
+// ПОИСК — ОСНОВНОЙ ОБРАБОТЧИК
 // ============================================================
 searchInput.addEventListener('input', render);
 
@@ -1680,12 +1814,15 @@ folderForm.addEventListener('submit', async (e) => {
   if (!name) { alert('Введите название папки'); return; }
 
   try {
-    await addDoc(collection(db, 'folders'), {
+    const docRef = await addDoc(collection(db, 'folders'), {
       name,
       role: ROLE,
       createdBy: currentUser?.email,
       createdAt: serverTimestamp()
     });
+    // Добавляем новую папку в конец списка
+    folderOrder.push(docRef.id);
+    saveFolderOrder();
     folderModal.classList.remove('active');
     document.body.style.overflow = '';
     await refreshData();
