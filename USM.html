@@ -794,7 +794,6 @@
     .search-wrap input { padding: 10px 14px !important; font-size: 15px; }
     .content { padding: 8px 12px 70px !important; }
     
-    /* Папки — аккуратный список */
     .folders-list {
       display: flex;
       flex-direction: column;
@@ -870,7 +869,6 @@
       box-shadow: none;
     }
 
-    /* Статьи на мобилке */
     .article-card { padding: 12px 12px !important; }
     .article-body { font-size: 14px !important; line-height: 1.7 !important; }
     .article-body p, .article-body ul li, .article-body ol li { font-size: 14px !important; }
@@ -1318,6 +1316,7 @@ let allFolders = [];
 let editingId = null;
 let deletingId = null;
 let folderOrder = [];
+let orderDocId = null; // ID документа с порядком папок
 
 let currentView = 'folders';
 let currentFolderId = null;
@@ -1379,6 +1378,46 @@ dropdownMenu.querySelectorAll('a').forEach(item => {
 });
 
 // ============================================================
+// ЗАГРУЗКА/СОХРАНЕНИЕ ПОРЯДКА ПАПОК В FIREBASE
+// ============================================================
+async function loadFolderOrder() {
+  try {
+    const q = query(collection(db, "folderOrder"), where("role", "==", ROLE));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      const doc = snap.docs[0];
+      orderDocId = doc.id;
+      return doc.data().order || [];
+    }
+    return null;
+  } catch (e) {
+    console.error("Ошибка загрузки порядка папок:", e);
+    return null;
+  }
+}
+
+async function saveFolderOrderToFirebase(order) {
+  try {
+    if (orderDocId) {
+      await updateDoc(doc(db, 'folderOrder', orderDocId), {
+        order: order,
+        updatedAt: serverTimestamp()
+      });
+    } else {
+      const docRef = await addDoc(collection(db, 'folderOrder'), {
+        role: ROLE,
+        order: order,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+      orderDocId = docRef.id;
+    }
+  } catch (e) {
+    console.error("Ошибка сохранения порядка папок:", e);
+  }
+}
+
+// ============================================================
 // ЗАГРУЗКА ПАПОК
 // ============================================================
 async function loadFolders() {
@@ -1388,19 +1427,17 @@ async function loadFolders() {
     allFolders = [];
     snap.forEach(d => allFolders.push({ id: d.id, ...d.data() }));
     
-    const savedOrder = localStorage.getItem('folderOrder_usm');
-    if (savedOrder) {
-      try {
-        const order = JSON.parse(savedOrder);
-        const validOrder = order.filter(id => allFolders.some(f => f.id === id));
-        const existingIds = new Set(validOrder);
-        const newFolders = allFolders.filter(f => !existingIds.has(f.id));
-        folderOrder = [...validOrder, ...newFolders.map(f => f.id)];
-      } catch {
-        folderOrder = allFolders.map(f => f.id);
-      }
+    // Загружаем порядок из Firebase
+    const savedOrder = await loadFolderOrder();
+    if (savedOrder && savedOrder.length > 0) {
+      const validOrder = savedOrder.filter(id => allFolders.some(f => f.id === id));
+      const existingIds = new Set(validOrder);
+      const newFolders = allFolders.filter(f => !existingIds.has(f.id));
+      folderOrder = [...validOrder, ...newFolders.map(f => f.id)];
     } else {
       folderOrder = allFolders.map(f => f.id);
+      // Сохраняем начальный порядок в Firebase
+      await saveFolderOrderToFirebase(folderOrder);
     }
     
     return allFolders;
@@ -1408,10 +1445,6 @@ async function loadFolders() {
     console.error("Ошибка загрузки папок:", e);
     return [];
   }
-}
-
-function saveFolderOrder() {
-  localStorage.setItem('folderOrder_usm', JSON.stringify(folderOrder));
 }
 
 // ============================================================
@@ -1474,7 +1507,7 @@ async function incrementViews(articleId) {
 // ПОИСК ПО СТАТЬЯМ
 // ============================================================
 function searchArticles(query, articles) {
-  if (!query) return articles;
+  if (!query || query.trim() === '') return articles;
   const q = query.toLowerCase().trim();
   return articles.filter(a =>
     (a.title || '').toLowerCase().includes(q) ||
@@ -1484,7 +1517,7 @@ function searchArticles(query, articles) {
 }
 
 function searchFolders(query, folders) {
-  if (!query) return folders;
+  if (!query || query.trim() === '') return folders;
   const q = query.toLowerCase().trim();
   return folders.filter(f => (f.name || '').toLowerCase().includes(q));
 }
@@ -1499,7 +1532,7 @@ function render() {
   if (currentView === 'folders') {
     let filteredFolders = searchFolders(searchQuery, allFolders);
     
-    if (searchQuery) {
+    if (searchQuery && searchQuery.trim() !== '') {
       filteredFolders.sort((a, b) => a.name.localeCompare(b.name));
     } else {
       filteredFolders.sort((a, b) => {
@@ -1515,7 +1548,7 @@ function render() {
       container.innerHTML = `
         <div class="empty">
           <div class="icon">📂</div>
-          <p>${searchQuery ? 'Папки не найдены' : 'Пока нет папок'}</p>
+          <p>${searchQuery && searchQuery.trim() !== '' ? 'Папки не найдены' : 'Пока нет папок'}</p>
           ${isAdmin ? '<p style="font-size:14px;">Нажмите "📁" чтобы создать первую</p>' : ''}
         </div>
       `;
@@ -1565,7 +1598,7 @@ function render() {
             }
             await deleteDoc(doc(db, 'folders', id));
             folderOrder = folderOrder.filter(fId => fId !== id);
-            saveFolderOrder();
+            await saveFolderOrderToFirebase(folderOrder);
             await refreshData();
           } catch (e) {
             alert('Ошибка удаления папки');
@@ -1606,7 +1639,7 @@ function render() {
       html += `
         <div class="empty">
           <div class="icon">📄</div>
-          <p>${searchQuery ? 'Статьи не найдены' : 'В этой папке пока нет статей'}</p>
+          <p>${searchQuery && searchQuery.trim() !== '' ? 'Статьи не найдены' : 'В этой папке пока нет статей'}</p>
           ${isAdmin ? '<p style="font-size:14px;">Нажмите ➕ чтобы создать первую</p>' : ''}
         </div>
       `;
@@ -1738,7 +1771,7 @@ function setupDragAndDrop() {
       item.classList.remove('drag-over');
     });
 
-    item.addEventListener('drop', (e) => {
+    item.addEventListener('drop', async (e) => {
       e.preventDefault();
       item.classList.remove('drag-over');
       
@@ -1755,7 +1788,8 @@ function setupDragAndDrop() {
       folderOrder.splice(fromIndex, 1);
       folderOrder.splice(toIndex, 0, fromId);
       
-      saveFolderOrder();
+      // Сохраняем порядок в Firebase
+      await saveFolderOrderToFirebase(folderOrder);
       render();
     });
   });
@@ -1805,7 +1839,7 @@ async function refreshData() {
 }
 
 // ============================================================
-// ПОИСК
+// ПОИСК — ОСНОВНОЙ ОБРАБОТЧИК
 // ============================================================
 searchInput.addEventListener('input', render);
 
@@ -1948,7 +1982,7 @@ folderForm.addEventListener('submit', async (e) => {
       createdAt: serverTimestamp()
     });
     folderOrder.push(docRef.id);
-    saveFolderOrder();
+    await saveFolderOrderToFirebase(folderOrder);
     folderModal.classList.remove('active');
     document.body.style.overflow = '';
     await refreshData();
