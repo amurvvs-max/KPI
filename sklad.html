@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>KPI Guide — Кладовщик</title>
+<title>KPI Guide — УСМ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -306,30 +306,53 @@
   }
   .article-meta span { display: flex; align-items: center; gap: 4px; }
 
-  /* ===== КНОПКА РАЗВОРАЧИВАНИЯ ===== */
+  /* ===== КРУГЛАЯ КНОПКА РАЗВОРАЧИВАНИЯ ===== */
   .btn-expand {
-    background: none;
-    border: none;
-    color: var(--role-color);
-    font-weight: 600;
-    font-size: 16px;
+    background: linear-gradient(135deg, #FF6A00 0%, #E85D00 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 400;
+    font-size: 18px;
     cursor: pointer;
-    padding: 14px 16px 8px !important;
-    width: 100%;
-    text-align: left;
+    padding: 0 !important;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    text-align: center;
     font-family: var(--font-body);
-    transition: all 0.2s ease;
-    border-radius: 8px;
-    margin-top: 4px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: 8px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(255, 106, 0, 0.35);
+    line-height: 1;
+    flex-shrink: 0;
   }
 
   .btn-expand:hover {
-    background: var(--role-color-light);
-    color: var(--role-color-deep);
+    transform: scale(1.12);
+    box-shadow: 0 8px 32px rgba(255, 106, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.4);
   }
 
   .btn-expand:active {
-    transform: scale(0.98);
+    transform: scale(0.88);
+  }
+
+  .btn-expand .icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-expand .icon.open {
+    transform: rotate(180deg);
+  }
+
+  .article-card .btn-expand {
+    margin-top: 12px;
   }
 
   /* ===== ТЕЛО СТАТЬИ ===== */
@@ -516,7 +539,7 @@
   .empty .icon { font-size: 40px; opacity: 0.4; }
   .empty p { font-size: 16px; margin-top: 6px !important; }
 
-  /* ===== ПЛАВАЮЩИЕ КНОПКИ — АККУРАТНЫЕ ===== */
+  /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
   .fab-article,
   .fab-folder {
     position: fixed;
@@ -705,8 +728,12 @@
     .article-body h2 { font-size: 1.1rem !important; }
     .article-body h3 { font-size: 1rem !important; }
     .btn-expand {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      min-height: 38px;
       font-size: 14px;
-      padding: 10px 4px 6px !important;
+      box-shadow: 0 3px 12px rgba(255, 106, 0, 0.3);
     }
     .fab-article {
       width: 50px;
@@ -740,8 +767,11 @@
     .search-wrap { padding: 14px 20px 0 !important; }
     .article-card { padding: 16px 20px !important; }
     .btn-expand {
-      font-size: 15px;
-      padding: 12px 8px 8px !important;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      font-size: 16px;
     }
     .fab-article {
       width: 60px;
@@ -846,15 +876,12 @@
     }
 
     .btn-expand {
-      font-size: 18px;
-      padding: 18px 20px 10px !important;
-      border-radius: 10px;
-    }
-
-    .btn-expand:hover {
-      background: var(--role-color-light);
-      color: var(--role-color-deep);
-      padding-left: 28px !important;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      min-height: 56px;
+      font-size: 22px;
+      box-shadow: 0 4px 20px rgba(255, 106, 0, 0.4);
     }
 
     .article-body {
@@ -932,18 +959,18 @@
     <div class="header">
       <div class="header-left">
         <img src="logo.png" alt="Логотип" class="header-logo" />
-        <h1>Гайды для кладовщика</h1>
+        <h1>Гайды для УСМ</h1>
       </div>
       <div class="header-actions">
         <div class="dropdown" id="roleDropdown">
           <button class="dropdown-btn" id="dropdownBtn">
-            📦 Кладовщик <span class="arrow">▼</span>
+            ⚡ УСМ <span class="arrow">▼</span>
           </button>
           <div class="dropdown-menu" id="dropdownMenu">
-            <a href="#" data-role="usm">⚡ УСМ</a>
-            <a href="#" data-role="sklad" class="active">
-              📦 Кладовщик <span class="check">✓</span>
+            <a href="#" data-role="usm" class="active">
+              ⚡ УСМ <span class="check">✓</span>
             </a>
+            <a href="#" data-role="sklad">📦 Кладовщик</a>
           </div>
         </div>
       </div>
@@ -1047,7 +1074,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const ROLE = 'sklad';
+const ROLE = 'usm';
 let currentUser = null;
 let isAdmin = false;
 let allArticles = [];
@@ -1308,7 +1335,9 @@ function render() {
             ${a.authorEmail ? `<span>✉️ ${a.authorEmail}</span>` : ''}
           </div>
           <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
-          <button class="btn-expand" data-id="${a.id}">📖 Читать полностью</button>
+          <button class="btn-expand" data-id="${a.id}" aria-label="Развернуть статью">
+            <span class="icon">▼</span>
+          </button>
         </div>
       `;
     });
@@ -1327,9 +1356,10 @@ function render() {
         e.stopPropagation();
         const id = b.dataset.id;
         const body = document.getElementById(`body-${id}`);
+        const icon = b.querySelector('.icon');
         if (body) {
           body.classList.toggle('open');
-          b.textContent = body.classList.contains('open') ? '📕 Свернуть' : '📖 Читать полностью';
+          icon.classList.toggle('open');
         }
       });
     });
