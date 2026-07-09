@@ -1316,7 +1316,7 @@ let allFolders = [];
 let editingId = null;
 let deletingId = null;
 let folderOrder = [];
-let orderDocId = null; // ID документа с порядком папок
+let orderDocId = null;
 
 let currentView = 'folders';
 let currentFolderId = null;
@@ -1352,6 +1352,47 @@ const cancelFolderBtn = document.getElementById('cancelFolderBtn');
 const saveFolderBtn = document.getElementById('saveFolderBtn');
 
 // ============================================================
+// ЗАГРУЗКА/СОХРАНЕНИЕ ПОРЯДКА ПАПОК В FIREBASE
+// ============================================================
+async function loadFolderOrder() {
+  try {
+    const q = query(collection(db, "folderOrder"), where("role", "==", ROLE));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      const doc = snap.docs[0];
+      orderDocId = doc.id;
+      return doc.data().order || [];
+    }
+    return null;
+  } catch (e) {
+    console.warn("Не удалось загрузить порядок папок, используем порядок по умолчанию:", e.message);
+    return null;
+  }
+}
+
+async function saveFolderOrderToFirebase(order) {
+  try {
+    if (orderDocId) {
+      await updateDoc(doc(db, 'folderOrder', orderDocId), {
+        order: order,
+        updatedAt: serverTimestamp()
+      });
+    } else {
+      const docRef = await addDoc(collection(db, 'folderOrder'), {
+        role: ROLE,
+        order: order,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+      orderDocId = docRef.id;
+    }
+    console.log("Порядок папок сохранен в Firebase");
+  } catch (e) {
+    console.warn("Не удалось сохранить порядок папок в Firebase:", e.message);
+  }
+}
+
+// ============================================================
 // ВЫПАДАЮЩИЙ СПИСОК РОЛЕЙ
 // ============================================================
 dropdownBtn.addEventListener('click', (e) => {
@@ -1378,46 +1419,6 @@ dropdownMenu.querySelectorAll('a').forEach(item => {
 });
 
 // ============================================================
-// ЗАГРУЗКА/СОХРАНЕНИЕ ПОРЯДКА ПАПОК В FIREBASE
-// ============================================================
-async function loadFolderOrder() {
-  try {
-    const q = query(collection(db, "folderOrder"), where("role", "==", ROLE));
-    const snap = await getDocs(q);
-    if (!snap.empty) {
-      const doc = snap.docs[0];
-      orderDocId = doc.id;
-      return doc.data().order || [];
-    }
-    return null;
-  } catch (e) {
-    console.error("Ошибка загрузки порядка папок:", e);
-    return null;
-  }
-}
-
-async function saveFolderOrderToFirebase(order) {
-  try {
-    if (orderDocId) {
-      await updateDoc(doc(db, 'folderOrder', orderDocId), {
-        order: order,
-        updatedAt: serverTimestamp()
-      });
-    } else {
-      const docRef = await addDoc(collection(db, 'folderOrder'), {
-        role: ROLE,
-        order: order,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      });
-      orderDocId = docRef.id;
-    }
-  } catch (e) {
-    console.error("Ошибка сохранения порядка папок:", e);
-  }
-}
-
-// ============================================================
 // ЗАГРУЗКА ПАПОК
 // ============================================================
 async function loadFolders() {
@@ -1427,7 +1428,6 @@ async function loadFolders() {
     allFolders = [];
     snap.forEach(d => allFolders.push({ id: d.id, ...d.data() }));
     
-    // Загружаем порядок из Firebase
     const savedOrder = await loadFolderOrder();
     if (savedOrder && savedOrder.length > 0) {
       const validOrder = savedOrder.filter(id => allFolders.some(f => f.id === id));
@@ -1436,7 +1436,6 @@ async function loadFolders() {
       folderOrder = [...validOrder, ...newFolders.map(f => f.id)];
     } else {
       folderOrder = allFolders.map(f => f.id);
-      // Сохраняем начальный порядок в Firebase
       await saveFolderOrderToFirebase(folderOrder);
     }
     
@@ -1788,7 +1787,6 @@ function setupDragAndDrop() {
       folderOrder.splice(fromIndex, 1);
       folderOrder.splice(toIndex, 0, fromId);
       
-      // Сохраняем порядок в Firebase
       await saveFolderOrderToFirebase(folderOrder);
       render();
     });
