@@ -230,11 +230,6 @@
     color: var(--ink-muted);
     margin-top: 4px !important;
   }
-  .folder-card .folder-actions {
-    margin-top: 10px !important;
-    display: flex;
-    gap: 6px;
-  }
 
   /* ===== СТАТЬИ ===== */
   .articles-grid {
@@ -249,15 +244,16 @@
     padding: 16px 16px !important;
     cursor: pointer;
     transition: all 0.2s ease;
+    position: relative;
   }
   .article-card:hover { border-color: var(--role-color); box-shadow: 0 4px 16px rgba(255,106,0,0.08); }
   .article-card:active { transform: scale(0.98); }
 
   .article-head {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 12px;
     margin-bottom: 4px !important;
   }
   .article-head h3 {
@@ -268,28 +264,8 @@
     color: var(--ink);
     word-break: break-word;
     flex: 1;
+    padding-right: 8px;
   }
-
-  .article-actions { display: flex; gap: 6px; flex-shrink: 0; }
-  .btn-sm {
-    padding: 4px 10px !important;
-    border: 1.5px solid var(--line);
-    border-radius: 6px;
-    background: transparent;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--font-body);
-    min-height: 32px;
-    display: flex;
-    align-items: center;
-  }
-  .btn-sm:hover { background: var(--bg); }
-  .btn-sm.edit:hover { border-color: var(--role-color); color: var(--role-color); background: var(--role-color-light); }
-  .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
-  .btn-sm.hidden { display: none; }
 
   .article-desc {
     color: var(--ink-soft);
@@ -300,41 +276,62 @@
   .article-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px 18px;
     font-size: 13px;
     color: var(--ink-muted);
+    margin-bottom: 8px !important;
   }
   .article-meta span { display: flex; align-items: center; gap: 4px; }
+  
+  /* ===== СТАТИСТИКА ПРОСМОТРОВ ===== */
+  .article-stats {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  .article-stats .views-icon {
+    font-size: 13px;
+  }
+  .article-stats .views-count {
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
 
   /* ===== КРУГЛАЯ КНОПКА РАЗВОРАЧИВАНИЯ ===== */
   .btn-expand {
+    flex-shrink: 0;
     background: linear-gradient(135deg, #FF6A00 0%, #E85D00 100%);
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     color: #fff;
-    font-weight: 400;
-    font-size: 18px;
     cursor: pointer;
-    padding: 0 !important;
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    min-height: 48px;
-    text-align: center;
-    font-family: var(--font-body);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    margin: 8px auto 0;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(255, 106, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 3px 12px rgba(255, 106, 0, 0.3);
     line-height: 1;
-    flex-shrink: 0;
+    margin: 0 !important;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 2;
   }
 
   .btn-expand:hover {
-    transform: scale(1.12);
-    box-shadow: 0 8px 32px rgba(255, 106, 0, 0.5);
+    transform: scale(1.15);
+    box-shadow: 0 6px 24px rgba(255, 106, 0, 0.45);
     border-color: rgba(255, 255, 255, 0.4);
   }
 
@@ -345,14 +342,22 @@
   .btn-expand .icon {
     display: inline-block;
     transition: transform 0.3s ease;
+    font-size: 12px;
   }
 
   .btn-expand .icon.open {
     transform: rotate(180deg);
   }
 
-  .article-card .btn-expand {
-    margin-top: 12px;
+  /* Когда статья раскрыта - кнопка внизу */
+  .article-card.expanded .btn-expand {
+    position: static;
+    margin: 12px auto 0 !important;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 16px;
   }
 
   /* ===== ТЕЛО СТАТЬИ ===== */
@@ -540,8 +545,7 @@
   .empty p { font-size: 16px; margin-top: 6px !important; }
 
   /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
-  .fab-article,
-  .fab-folder {
+  .fab-article {
     position: fixed;
     width: 56px;
     height: 56px;
@@ -561,29 +565,23 @@
     box-shadow: 0 4px 16px rgba(255, 106, 0, 0.35);
     background: linear-gradient(135deg, #FF6A00 0%, #E85D00 100%);
     border: 2px solid rgba(255, 255, 255, 0.15);
+    bottom: 20px;
+    right: 16px;
   }
 
-  .fab-article:hover,
-  .fab-folder:hover {
+  .fab-article:hover {
     transform: scale(1.08);
     box-shadow: 0 8px 32px rgba(255, 106, 0, 0.5);
     background: linear-gradient(135deg, #FF8C42 0%, #FF6A00 100%);
     border-color: rgba(255, 255, 255, 0.3);
   }
 
-  .fab-article:active,
-  .fab-folder:active {
+  .fab-article:active {
     transform: scale(0.92);
   }
 
-  .fab-article { bottom: 20px; right: 16px; }
-  .fab-folder { bottom: 84px; right: 16px; font-size: 22px; }
-
-  .fab-article.hidden,
-  .fab-folder.hidden { display: none; }
-
-  .fab-article.show,
-  .fab-folder.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .fab-article.hidden { display: none; }
+  .fab-article.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
   @keyframes fabIn {
     from { opacity: 0; transform: scale(0.6) translateY(30px); }
@@ -728,12 +726,22 @@
     .article-body h2 { font-size: 1.1rem !important; }
     .article-body h3 { font-size: 1rem !important; }
     .btn-expand {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
-      min-height: 38px;
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      min-height: 30px;
+      font-size: 12px;
+      box-shadow: 0 2px 10px rgba(255, 106, 0, 0.25);
+    }
+    .btn-expand .icon {
+      font-size: 10px;
+    }
+    .article-card.expanded .btn-expand {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
       font-size: 14px;
-      box-shadow: 0 3px 12px rgba(255, 106, 0, 0.3);
     }
     .fab-article {
       width: 50px;
@@ -742,18 +750,17 @@
       bottom: 14px;
       right: 12px;
     }
-    .fab-folder {
-      width: 50px;
-      height: 50px;
-      font-size: 18px;
-      bottom: 72px;
-      right: 12px;
-    }
     .modal-box { padding: 18px 14px !important; }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
     .folder-card { min-height: 100px; padding: 14px 12px !important; }
     .folder-card .folder-icon { font-size: 2.2rem; }
     .folder-card .folder-name { font-size: 0.9rem; }
+    .article-stats {
+      font-size: 11px;
+    }
+    .article-stats .views-icon {
+      font-size: 11px;
+    }
   }
 
   /* ПЛАНШЕТ */
@@ -767,24 +774,27 @@
     .search-wrap { padding: 14px 20px 0 !important; }
     .article-card { padding: 16px 20px !important; }
     .btn-expand {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      min-height: 44px;
-      font-size: 16px;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+      font-size: 13px;
+    }
+    .btn-expand .icon {
+      font-size: 11px;
+    }
+    .article-card.expanded .btn-expand {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      min-height: 38px;
+      font-size: 15px;
     }
     .fab-article {
       width: 60px;
       height: 60px;
       font-size: 30px;
       bottom: 28px;
-      right: 28px;
-    }
-    .fab-folder {
-      width: 60px;
-      height: 60px;
-      font-size: 24px;
-      bottom: 96px;
       right: 28px;
     }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
@@ -846,12 +856,6 @@
       font-size: 1.3rem;
     }
 
-    .btn-sm {
-      font-size: 14px;
-      padding: 6px 14px !important;
-      min-height: 38px;
-    }
-
     .folders-grid {
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
       gap: 20px !important;
@@ -876,12 +880,22 @@
     }
 
     .btn-expand {
-      width: 56px;
-      height: 56px;
-      min-width: 56px;
-      min-height: 56px;
-      font-size: 22px;
-      box-shadow: 0 4px 20px rgba(255, 106, 0, 0.4);
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      font-size: 14px;
+      box-shadow: 0 3px 14px rgba(255, 106, 0, 0.35);
+    }
+    .btn-expand .icon {
+      font-size: 12px;
+    }
+    .article-card.expanded .btn-expand {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      min-height: 42px;
+      font-size: 16px;
     }
 
     .article-body {
@@ -907,14 +921,6 @@
       right: 36px;
     }
 
-    .fab-folder {
-      width: 64px;
-      height: 64px;
-      font-size: 26px;
-      bottom: 104px;
-      right: 36px;
-    }
-
     .modal-box {
       padding: 36px 40px !important;
     }
@@ -927,20 +933,17 @@
   /* ===== SAFE AREA ===== */
   @supports (padding: max(0px)) {
     .fab-article { bottom: max(14px, env(safe-area-inset-bottom)); right: max(12px, env(safe-area-inset-right)); }
-    .fab-folder { bottom: max(72px, env(safe-area-inset-bottom) + 58px); right: max(12px, env(safe-area-inset-right)); }
   }
 
   @media (min-width: 768px) {
     @supports (padding: max(0px)) {
       .fab-article { bottom: max(28px, env(safe-area-inset-bottom)); right: max(28px, env(safe-area-inset-right)); }
-      .fab-folder { bottom: max(96px, env(safe-area-inset-bottom) + 68px); right: max(28px, env(safe-area-inset-right)); }
     }
   }
 
   @media (min-width: 1200px) {
     @supports (padding: max(0px)) {
       .fab-article { bottom: max(32px, env(safe-area-inset-bottom)); right: max(36px, env(safe-area-inset-right)); }
-      .fab-folder { bottom: max(104px, env(safe-area-inset-bottom) + 72px); right: max(36px, env(safe-area-inset-right)); }
     }
   }
 
@@ -959,7 +962,7 @@
     <div class="header">
       <div class="header-left">
         <img src="logo.png" alt="Логотип" class="header-logo" />
-        <h1>Гайды для кладовщика</h1>
+        <h1>Гайды для Кладовщика</h1>
       </div>
       <div class="header-actions">
         <div class="dropdown" id="roleDropdown">
@@ -991,7 +994,6 @@
 
 <!-- ===== ПЛАВАЮЩИЕ КНОПКИ ===== -->
 <button class="fab-article hidden" id="addArticleBtn" aria-label="Добавить статью">+</button>
-<button class="fab-folder hidden" id="addFolderBtn" aria-label="Создать папку">📁</button>
 
 <!-- ===== МОДАЛКА СТАТЬИ ===== -->
 <div class="modal-overlay" id="editModal">
@@ -1066,7 +1068,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore, collection, query, where, getDocs, addDoc,
-  updateDoc, deleteDoc, doc, orderBy, serverTimestamp
+  updateDoc, deleteDoc, doc, orderBy, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL, POSITION_PAGES } from "./firebase-config.js";
 
@@ -1088,7 +1090,6 @@ let currentFolderId = null;
 const container = document.getElementById('mainContent');
 const searchInput = document.getElementById('searchInput');
 const addBtn = document.getElementById('addArticleBtn');
-const addFolderBtn = document.getElementById('addFolderBtn');
 
 const dropdownBtn = document.getElementById('dropdownBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
@@ -1180,11 +1181,36 @@ async function loadArticles() {
     const q = query(collection(db, "articles"), where("role", "==", ROLE), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
     allArticles = [];
-    snap.forEach(d => allArticles.push({ id: d.id, ...d.data() }));
+    snap.forEach(d => {
+      const data = d.data();
+      allArticles.push({ 
+        id: d.id, 
+        ...data,
+        views: data.views || 0
+      });
+    });
     return allArticles;
   } catch (e) {
     console.error("Ошибка загрузки статей:", e);
     return [];
+  }
+}
+
+// ============================================================
+// УВЕЛИЧЕНИЕ СЧЕТЧИКА ПРОСМОТРОВ
+// ============================================================
+async function incrementViews(articleId) {
+  try {
+    const articleRef = doc(db, 'articles', articleId);
+    await updateDoc(articleRef, {
+      views: increment(1)
+    });
+    const article = allArticles.find(a => a.id === articleId);
+    if (article) {
+      article.views = (article.views || 0) + 1;
+    }
+  } catch (e) {
+    console.error("Ошибка обновления просмотров:", e);
   }
 }
 
@@ -1222,7 +1248,6 @@ function render() {
         <div class="empty">
           <div class="icon">📂</div>
           <p>${searchQuery ? 'Папки не найдены' : 'Пока нет папок'}</p>
-          ${isAdmin ? '<p style="font-size:14px;">Нажмите "📁" чтобы создать первую</p>' : ''}
         </div>
       `;
       return;
@@ -1236,11 +1261,6 @@ function render() {
           <div class="folder-icon">📁</div>
           <div class="folder-name">${folder.name}</div>
           <div class="folder-count">${count} ${declension(count, 'статья', 'статьи', 'статей')}</div>
-          ${isAdmin ? `
-            <div class="folder-actions">
-              <button class="btn-sm delete-folder" data-id="${folder.id}" style="border-color:#DC3545; color:#DC3545;">🗑️</button>
-            </div>
-          ` : ''}
         </div>
       `;
     });
@@ -1248,29 +1268,9 @@ function render() {
     container.innerHTML = html;
 
     document.querySelectorAll('.folder-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        if (e.target.closest('.delete-folder')) return;
+      card.addEventListener('click', () => {
         const folderId = card.dataset.folderId;
         openFolder(folderId);
-      });
-    });
-
-    document.querySelectorAll('.delete-folder').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        const id = btn.dataset.id;
-        if (confirm(`Удалить папку "${allFolders.find(f => f.id === id)?.name}" и все статьи в ней?`)) {
-          try {
-            const articlesToDelete = allArticles.filter(a => a.folderId === id);
-            for (const a of articlesToDelete) {
-              await deleteDoc(doc(db, 'articles', a.id));
-            }
-            await deleteDoc(doc(db, 'folders', id));
-            await refreshData();
-          } catch (e) {
-            alert('Ошибка удаления папки');
-          }
-        }
       });
     });
 
@@ -1288,6 +1288,8 @@ function render() {
     }
 
     let articles = allArticles.filter(a => a.folderId === currentFolderId);
+    
+    // ПОИСК — фильтруем статьи по запросу
     articles = searchArticles(searchQuery, articles);
 
     let html = `
@@ -1303,7 +1305,6 @@ function render() {
         <div class="empty">
           <div class="icon">📄</div>
           <p>${searchQuery ? 'Статьи не найдены' : 'В этой папке пока нет статей'}</p>
-          ${isAdmin ? '<p style="font-size:14px;">Нажмите ➕ чтобы создать первую</p>' : ''}
         </div>
       `;
       container.innerHTML = html;
@@ -1320,19 +1321,21 @@ function render() {
 
     html += `<div class="articles-grid">`;
     articles.forEach(a => {
+      const views = a.views || 0;
       html += `
         <div class="article-card" data-id="${a.id}">
           <div class="article-head">
             <h3>${a.title || 'Без названия'}</h3>
-            <div class="article-actions">
-              <button class="btn-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
-              <button class="btn-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
-            </div>
           </div>
           ${a.description ? `<div class="article-desc">${a.description}</div>` : ''}
           <div class="article-meta">
             <span>📅 ${formatDate(a.createdAt)}</span>
             ${a.authorEmail ? `<span>✉️ ${a.authorEmail}</span>` : ''}
+            <span class="article-stats">
+              <span class="views-icon">👁️</span>
+              <span class="views-count">${views}</span>
+              <span>${declension(views, 'просмотр', 'просмотра', 'просмотров')}</span>
+            </span>
           </div>
           <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
           <button class="btn-expand" data-id="${a.id}" aria-label="Развернуть статью">
@@ -1352,31 +1355,28 @@ function render() {
     });
 
     document.querySelectorAll('.btn-expand').forEach(b => {
-      b.addEventListener('click', (e) => {
+      b.addEventListener('click', async (e) => {
         e.stopPropagation();
         const id = b.dataset.id;
+        const card = b.closest('.article-card');
         const body = document.getElementById(`body-${id}`);
         const icon = b.querySelector('.icon');
+        const wasClosed = !body.classList.contains('open');
+        
         if (body) {
           body.classList.toggle('open');
           icon.classList.toggle('open');
+          card.classList.toggle('expanded');
+          
+          if (wasClosed) {
+            await incrementViews(id);
+            const statsSpan = card.querySelector('.article-stats .views-count');
+            if (statsSpan) {
+              const currentViews = parseInt(statsSpan.textContent) || 0;
+              statsSpan.textContent = currentViews + 1;
+            }
+          }
         }
-      });
-    });
-
-    document.querySelectorAll('.edit').forEach(b => {
-      b.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const a = allArticles.find(x => x.id === b.dataset.id);
-        if (a) openEdit(a);
-      });
-    });
-
-    document.querySelectorAll('.delete').forEach(b => {
-      b.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const a = allArticles.find(x => x.id === b.dataset.id);
-        if (a) openDelete(a);
       });
     });
   }
@@ -1509,6 +1509,7 @@ editForm.addEventListener('submit', async (e) => {
         role: ROLE,
         authorUid: currentUser?.uid,
         authorEmail: currentUser?.email,
+        views: 0,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });
@@ -1535,64 +1536,20 @@ confirmDelete.addEventListener('click', async () => {
 });
 
 // ============================================================
-// МОДАЛКА ПАПКИ
-// ============================================================
-addFolderBtn.addEventListener('click', () => {
-  folderName.value = '';
-  folderModal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-});
-
-cancelFolderBtn.addEventListener('click', () => {
-  folderModal.classList.remove('active');
-  document.body.style.overflow = '';
-});
-
-folderModal.addEventListener('click', (e) => {
-  if (e.target === folderModal) {
-    folderModal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-});
-
-folderForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = folderName.value.trim();
-  if (!name) { alert('Введите название папки'); return; }
-
-  try {
-    await addDoc(collection(db, 'folders'), {
-      name,
-      role: ROLE,
-      createdBy: currentUser?.email,
-      createdAt: serverTimestamp()
-    });
-    folderModal.classList.remove('active');
-    document.body.style.overflow = '';
-    await refreshData();
-  } catch (e) {
-    alert('Ошибка создания папки');
-  }
-});
-
-// ============================================================
 // FAB
 // ============================================================
 addBtn.addEventListener('click', () => openEdit(null));
 
 function updateFab() {
+  // Только админ может создавать статьи на странице кладовщика
   if (isAdmin) {
     addBtn.classList.remove('hidden');
-    addFolderBtn.classList.remove('hidden');
     setTimeout(() => {
       addBtn.classList.add('show');
-      addFolderBtn.classList.add('show');
     }, 100);
   } else {
     addBtn.classList.add('hidden');
-    addFolderBtn.classList.add('hidden');
     addBtn.classList.remove('show');
-    addFolderBtn.classList.remove('show');
   }
 }
 
