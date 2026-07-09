@@ -230,6 +230,11 @@
     color: var(--ink-muted);
     margin-top: 4px !important;
   }
+  .folder-card .folder-actions {
+    margin-top: 10px !important;
+    display: flex;
+    gap: 6px;
+  }
 
   /* ===== СТАТЬИ ===== */
   .articles-grid {
@@ -266,6 +271,33 @@
     flex: 1;
     padding-right: 8px;
   }
+
+  .article-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  
+  .btn-sm {
+    padding: 4px 10px !important;
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  .btn-sm:hover { background: var(--bg); }
+  .btn-sm.edit:hover { border-color: var(--role-color); color: var(--role-color); background: var(--role-color-light); }
+  .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
+  .btn-sm.hidden { display: none; }
 
   .article-desc {
     color: var(--ink-soft);
@@ -545,7 +577,8 @@
   .empty p { font-size: 16px; margin-top: 6px !important; }
 
   /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
-  .fab-article {
+  .fab-article,
+  .fab-folder {
     position: fixed;
     width: 56px;
     height: 56px;
@@ -565,23 +598,29 @@
     box-shadow: 0 4px 16px rgba(255, 106, 0, 0.35);
     background: linear-gradient(135deg, #FF6A00 0%, #E85D00 100%);
     border: 2px solid rgba(255, 255, 255, 0.15);
-    bottom: 20px;
-    right: 16px;
   }
 
-  .fab-article:hover {
+  .fab-article:hover,
+  .fab-folder:hover {
     transform: scale(1.08);
     box-shadow: 0 8px 32px rgba(255, 106, 0, 0.5);
     background: linear-gradient(135deg, #FF8C42 0%, #FF6A00 100%);
     border-color: rgba(255, 255, 255, 0.3);
   }
 
-  .fab-article:active {
+  .fab-article:active,
+  .fab-folder:active {
     transform: scale(0.92);
   }
 
-  .fab-article.hidden { display: none; }
-  .fab-article.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .fab-article { bottom: 20px; right: 16px; }
+  .fab-folder { bottom: 84px; right: 16px; font-size: 22px; }
+
+  .fab-article.hidden,
+  .fab-folder.hidden { display: none; }
+
+  .fab-article.show,
+  .fab-folder.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
   @keyframes fabIn {
     from { opacity: 0; transform: scale(0.6) translateY(30px); }
@@ -750,6 +789,13 @@
       bottom: 14px;
       right: 12px;
     }
+    .fab-folder {
+      width: 50px;
+      height: 50px;
+      font-size: 18px;
+      bottom: 72px;
+      right: 12px;
+    }
     .modal-box { padding: 18px 14px !important; }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
     .folder-card { min-height: 100px; padding: 14px 12px !important; }
@@ -795,6 +841,13 @@
       height: 60px;
       font-size: 30px;
       bottom: 28px;
+      right: 28px;
+    }
+    .fab-folder {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      bottom: 96px;
       right: 28px;
     }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
@@ -854,6 +907,12 @@
 
     .article-head h3 {
       font-size: 1.3rem;
+    }
+
+    .btn-sm {
+      font-size: 14px;
+      padding: 6px 14px !important;
+      min-height: 38px;
     }
 
     .folders-grid {
@@ -920,6 +979,13 @@
       bottom: 32px;
       right: 36px;
     }
+    .fab-folder {
+      width: 64px;
+      height: 64px;
+      font-size: 26px;
+      bottom: 104px;
+      right: 36px;
+    }
 
     .modal-box {
       padding: 36px 40px !important;
@@ -933,17 +999,20 @@
   /* ===== SAFE AREA ===== */
   @supports (padding: max(0px)) {
     .fab-article { bottom: max(14px, env(safe-area-inset-bottom)); right: max(12px, env(safe-area-inset-right)); }
+    .fab-folder { bottom: max(72px, env(safe-area-inset-bottom) + 58px); right: max(12px, env(safe-area-inset-right)); }
   }
 
   @media (min-width: 768px) {
     @supports (padding: max(0px)) {
       .fab-article { bottom: max(28px, env(safe-area-inset-bottom)); right: max(28px, env(safe-area-inset-right)); }
+      .fab-folder { bottom: max(96px, env(safe-area-inset-bottom) + 68px); right: max(28px, env(safe-area-inset-right)); }
     }
   }
 
   @media (min-width: 1200px) {
     @supports (padding: max(0px)) {
       .fab-article { bottom: max(32px, env(safe-area-inset-bottom)); right: max(36px, env(safe-area-inset-right)); }
+      .fab-folder { bottom: max(104px, env(safe-area-inset-bottom) + 72px); right: max(36px, env(safe-area-inset-right)); }
     }
   }
 
@@ -994,6 +1063,7 @@
 
 <!-- ===== ПЛАВАЮЩИЕ КНОПКИ ===== -->
 <button class="fab-article hidden" id="addArticleBtn" aria-label="Добавить статью">+</button>
+<button class="fab-folder hidden" id="addFolderBtn" aria-label="Создать папку">📁</button>
 
 <!-- ===== МОДАЛКА СТАТЬИ ===== -->
 <div class="modal-overlay" id="editModal">
@@ -1090,6 +1160,7 @@ let currentFolderId = null;
 const container = document.getElementById('mainContent');
 const searchInput = document.getElementById('searchInput');
 const addBtn = document.getElementById('addArticleBtn');
+const addFolderBtn = document.getElementById('addFolderBtn');
 
 const dropdownBtn = document.getElementById('dropdownBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
@@ -1248,6 +1319,7 @@ function render() {
         <div class="empty">
           <div class="icon">📂</div>
           <p>${searchQuery ? 'Папки не найдены' : 'Пока нет папок'}</p>
+          ${isAdmin ? '<p style="font-size:14px;">Нажмите "📁" чтобы создать первую</p>' : ''}
         </div>
       `;
       return;
@@ -1261,6 +1333,11 @@ function render() {
           <div class="folder-icon">📁</div>
           <div class="folder-name">${folder.name}</div>
           <div class="folder-count">${count} ${declension(count, 'статья', 'статьи', 'статей')}</div>
+          ${isAdmin ? `
+            <div class="folder-actions">
+              <button class="btn-sm delete-folder" data-id="${folder.id}" style="border-color:#DC3545; color:#DC3545;">🗑️</button>
+            </div>
+          ` : ''}
         </div>
       `;
     });
@@ -1268,9 +1345,29 @@ function render() {
     container.innerHTML = html;
 
     document.querySelectorAll('.folder-card').forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.delete-folder')) return;
         const folderId = card.dataset.folderId;
         openFolder(folderId);
+      });
+    });
+
+    document.querySelectorAll('.delete-folder').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        if (confirm(`Удалить папку "${allFolders.find(f => f.id === id)?.name}" и все статьи в ней?`)) {
+          try {
+            const articlesToDelete = allArticles.filter(a => a.folderId === id);
+            for (const a of articlesToDelete) {
+              await deleteDoc(doc(db, 'articles', a.id));
+            }
+            await deleteDoc(doc(db, 'folders', id));
+            await refreshData();
+          } catch (e) {
+            alert('Ошибка удаления папки');
+          }
+        }
       });
     });
 
@@ -1305,6 +1402,7 @@ function render() {
         <div class="empty">
           <div class="icon">📄</div>
           <p>${searchQuery ? 'Статьи не найдены' : 'В этой папке пока нет статей'}</p>
+          ${isAdmin ? '<p style="font-size:14px;">Нажмите ➕ чтобы создать первую</p>' : ''}
         </div>
       `;
       container.innerHTML = html;
@@ -1326,6 +1424,10 @@ function render() {
         <div class="article-card" data-id="${a.id}">
           <div class="article-head">
             <h3>${a.title || 'Без названия'}</h3>
+            <div class="article-actions">
+              <button class="btn-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
+              <button class="btn-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
+            </div>
           </div>
           ${a.description ? `<div class="article-desc">${a.description}</div>` : ''}
           <div class="article-meta">
@@ -1377,6 +1479,22 @@ function render() {
             }
           }
         }
+      });
+    });
+
+    document.querySelectorAll('.edit').forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const a = allArticles.find(x => x.id === b.dataset.id);
+        if (a) openEdit(a);
+      });
+    });
+
+    document.querySelectorAll('.delete').forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const a = allArticles.find(x => x.id === b.dataset.id);
+        if (a) openDelete(a);
       });
     });
   }
@@ -1536,20 +1654,64 @@ confirmDelete.addEventListener('click', async () => {
 });
 
 // ============================================================
+// МОДАЛКА ПАПКИ
+// ============================================================
+addFolderBtn.addEventListener('click', () => {
+  folderName.value = '';
+  folderModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+});
+
+cancelFolderBtn.addEventListener('click', () => {
+  folderModal.classList.remove('active');
+  document.body.style.overflow = '';
+});
+
+folderModal.addEventListener('click', (e) => {
+  if (e.target === folderModal) {
+    folderModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+folderForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = folderName.value.trim();
+  if (!name) { alert('Введите название папки'); return; }
+
+  try {
+    await addDoc(collection(db, 'folders'), {
+      name,
+      role: ROLE,
+      createdBy: currentUser?.email,
+      createdAt: serverTimestamp()
+    });
+    folderModal.classList.remove('active');
+    document.body.style.overflow = '';
+    await refreshData();
+  } catch (e) {
+    alert('Ошибка создания папки');
+  }
+});
+
+// ============================================================
 // FAB
 // ============================================================
 addBtn.addEventListener('click', () => openEdit(null));
 
 function updateFab() {
-  // Только админ может создавать статьи на странице кладовщика
   if (isAdmin) {
     addBtn.classList.remove('hidden');
+    addFolderBtn.classList.remove('hidden');
     setTimeout(() => {
       addBtn.classList.add('show');
+      addFolderBtn.classList.add('show');
     }, 100);
   } else {
     addBtn.classList.add('hidden');
+    addFolderBtn.classList.add('hidden');
     addBtn.classList.remove('show');
+    addFolderBtn.classList.remove('show');
   }
 }
 
