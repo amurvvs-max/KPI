@@ -10,6 +10,13 @@
 <script type="module" src="session-tracker.js"></script>
 
 <style>
+  /* ============================================================
+     БАЗОВЫЙ РАЗМЕР — ФИКСИРОВАННЫЙ 100%
+     ============================================================ */
+  html {
+    font-size: 16px;
+  }
+
   :root {
     --bg: #F5F7FA;
     --surface: #FFFFFF;
@@ -36,12 +43,20 @@
 
   * { -webkit-tap-highlight-color: transparent; margin: 0 !important; padding: 0 !important; box-sizing: border-box; }
   html, body {
-    min-height: 100vh; min-height: 100dvh; background: var(--bg);
-    font-family: var(--font-body); color: var(--ink);
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
+    font-family: var(--font-body);
+    color: var(--ink);
     margin: 0 !important; padding: 0 !important;
-    width: 100% !important; max-width: 100% !important; overflow-x: hidden; font-size: 16px;
+    width: 100% !important; max-width: 100% !important;
+    overflow-x: hidden;
+    font-size: 16px;
   }
 
+  /* ============================================================
+     ОСТАЛЬНЫЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ)
+     ============================================================ */
   .page-wrap { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
   .card {
     width: 100% !important; max-width: 100% !important;
@@ -79,7 +94,7 @@
 
   .header h1 {
     font-family: var(--font-display);
-    font-size: clamp(1rem, 4.5vw, 1.2rem);
+    font-size: 1.1rem;
     font-weight: 600;
     margin: 0 !important;
     color: var(--ink);
@@ -95,7 +110,7 @@
     flex-shrink: 0;
   }
 
-  /* ===== ВЫПАДАЮЩИЙ СПИСОК РОЛЕЙ ===== */
+  /* ===== ВЫПАДАЮЩИЙ СПИСОК ===== */
   .dropdown { position: relative; display: inline-block; }
   .dropdown-btn {
     display: inline-flex;
@@ -141,8 +156,10 @@
   .search-wrap input {
     width: 100%; padding: 12px 16px !important;
     border-radius: 8px; border: 1.5px solid var(--line);
-    font-size: 16px; font-family: var(--font-body);
-    background: var(--bg); color: var(--ink);
+    font-size: 16px;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink);
     transition: all 0.2s ease;
   }
   .search-wrap input:focus { outline: none; border-color: var(--role-color); background: var(--surface); box-shadow: 0 0 0 4px var(--orange-glow); }
@@ -150,7 +167,7 @@
   /* ===== КОНТЕНТ ===== */
   .content { padding: 10px 14px 80px !important; }
 
-  /* ===== НАВИГАЦИЯ В ПАПКЕ ===== */
+  /* ===== НАВИГАЦИЯ ===== */
   .folder-nav {
     display: flex;
     align-items: center;
@@ -159,16 +176,10 @@
     flex-wrap: wrap;
   }
   .folder-nav .back-btn {
-    background: none;
-    border: none;
-    color: var(--role-color);
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    font-family: var(--font-body);
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    background: none; border: none;
+    color: var(--role-color); font-weight: 600; font-size: 14px;
+    cursor: pointer; font-family: var(--font-body);
+    display: flex; align-items: center; gap: 4px;
   }
   .folder-nav .back-btn:hover { color: var(--role-color-deep); }
   .folder-nav .folder-title {
@@ -230,7 +241,7 @@
     gap: 6px;
   }
 
-  /* ===== СТАТЬИ ВНУТРИ ПАПКИ ===== */
+  /* ===== СТАТЬИ ===== */
   .articles-grid {
     display: grid;
     gap: 12px;
@@ -257,7 +268,7 @@
   .article-head h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1rem, 3.5vw, 1.15rem);
+    font-size: 1.1rem;
     margin: 0 !important;
     color: var(--ink);
     word-break: break-word;
@@ -287,7 +298,7 @@
 
   .article-desc {
     color: var(--ink-soft);
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    font-size: 0.95rem;
     margin: 4px 0 8px !important;
     line-height: 1.5;
   }
@@ -485,7 +496,7 @@
     line-height: 1.6 !important;
   }
 
-  /* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
+  /* ===== ПУСТОЕ ===== */
   .empty {
     text-align: center;
     padding: 40px 12px !important;
@@ -495,8 +506,7 @@
   .empty p { font-size: 16px; margin-top: 6px !important; }
 
   /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
-  .fab-article,
-  .fab-folder {
+  .fab-article, .fab-folder {
     position: fixed;
     width: 56px;
     height: 56px;
@@ -516,29 +526,15 @@
     touch-action: manipulation;
   }
 
-  .fab-article {
-    bottom: 20px;
-    right: 16px;
-    background: var(--role-color);
-  }
+  .fab-article { bottom: 20px; right: 16px; background: var(--role-color); }
   .fab-article:hover { background: var(--role-color-deep); transform: scale(1.06); }
 
-  .fab-folder {
-    bottom: 84px;
-    right: 16px;
-    background: var(--role-color);
-    font-size: 24px;
-  }
+  .fab-folder { bottom: 84px; right: 16px; background: var(--role-color); font-size: 24px; }
   .fab-folder:hover { background: var(--role-color-deep); transform: scale(1.06); }
 
-  .fab-article:active,
-  .fab-folder:active { transform: scale(0.92); }
-
-  .fab-article.hidden,
-  .fab-folder.hidden { display: none; }
-
-  .fab-article.show,
-  .fab-folder.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .fab-article:active, .fab-folder:active { transform: scale(0.92); }
+  .fab-article.hidden, .fab-folder.hidden { display: none; }
+  .fab-article.show, .fab-folder.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
   @keyframes fabIn {
     from { opacity: 0; transform: scale(0.6) translateY(30px); }
@@ -664,12 +660,14 @@
   .modal-box-small .field { margin-bottom: 12px !important; }
 
   /* ============================================================
-     АДАПТИВНОСТЬ — ТЕЛЕФОН
+     АДАПТИВНОСТЬ
      ============================================================ */
+
+  /* ТЕЛЕФОН */
   @media (max-width: 767px) {
     .header { padding: 10px 12px !important; }
     .header-logo { height: 30px; }
-    .header h1 { font-size: clamp(0.9rem, 4vw, 1rem); }
+    .header h1 { font-size: 0.95rem; }
     .dropdown-btn { font-size: 12px; padding: 6px 10px !important; min-height: 34px; }
     .search-wrap { padding: 8px 12px 0 !important; }
     .search-wrap input { padding: 10px 14px !important; font-size: 15px; }
@@ -689,9 +687,7 @@
     .folder-card .folder-name { font-size: 0.9rem; }
   }
 
-  /* ============================================================
-     АДАПТИВНОСТЬ — ПЛАНШЕТ
-     ============================================================ */
+  /* ПЛАНШЕТ */
   @media (min-width: 768px) and (max-width: 1199px) {
     .page-wrap { max-width: var(--max-width) !important; margin: 0 auto !important; padding: 16px 0 !important; }
     .card { border-radius: 14px !important; box-shadow: var(--shadow) !important; border: 1px solid var(--line) !important; }
@@ -707,14 +703,8 @@
     .folder-card { min-height: 140px; }
   }
 
-  /* ============================================================
-     АДАПТИВНОСТЬ — ПК (1200px+)
-     ============================================================ */
+  /* ПК — ФИКСИРОВАННЫЙ МАСШТАБ 100% */
   @media (min-width: 1200px) {
-    :root {
-      --max-width: 1100px;
-    }
-
     .page-wrap {
       max-width: var(--max-width) !important;
       margin: 0 auto !important;
@@ -837,9 +827,7 @@
     }
   }
 
-  /* ============================================================
-     SAFE AREA
-     ============================================================ */
+  /* ===== SAFE AREA ===== */
   @supports (padding: max(0px)) {
     .fab-article { bottom: max(14px, env(safe-area-inset-bottom)); right: max(12px, env(safe-area-inset-right)); }
     .fab-folder { bottom: max(72px, env(safe-area-inset-bottom) + 58px); right: max(12px, env(safe-area-inset-right)); }
