@@ -10,7 +10,6 @@
 <script type="module" src="session-tracker.js"></script>
 
 <style>
-  /* ===== ВСЕ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ ===== */
   :root {
     --bg: #F5F7FA;
     --surface: #FFFFFF;
@@ -29,7 +28,7 @@
     --font-display: "Unbounded", sans-serif;
     --font-body: "Inter", sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --max-width: 800px;
+    --max-width: 1100px;
     --role-color: #FF6A00;
     --role-color-deep: #E85D00;
     --role-color-light: #FFF0E6;
@@ -51,6 +50,7 @@
     margin: 0 !important; padding: 0 !important;
   }
 
+  /* ===== ШАПКА ===== */
   .header {
     padding: 12px 14px !important;
     background: var(--surface);
@@ -61,18 +61,58 @@
     gap: 10px;
     flex-wrap: nowrap;
   }
-  .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 1; min-width: 0; }
-  .header-logo { height: 36px; width: auto; flex-shrink: 0; object-fit: contain; }
-  .header h1 { font-family: var(--font-display); font-size: clamp(1rem, 4.5vw, 1.2rem); font-weight: 600; margin: 0 !important; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .header-logo {
+    height: 36px;
+    width: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 4.5vw, 1.2rem);
+    font-weight: 600;
+    margin: 0 !important;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  /* ===== ВЫПАДАЮЩИЙ СПИСОК РОЛЕЙ ===== */
   .dropdown { position: relative; display: inline-block; }
   .dropdown-btn {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 8px 12px !important; border: 1.5px solid var(--line); border-radius: 8px;
-    background: var(--bg); color: var(--ink-soft);
-    font-family: var(--font-body); font-weight: 600; font-size: 14px;
-    cursor: pointer; transition: all 0.2s ease; min-height: 40px; white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px !important;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 40px;
+    white-space: nowrap;
   }
   .dropdown-btn:hover { background: var(--line); }
   .dropdown-btn .arrow { font-size: 10px; transition: transform 0.2s ease; }
@@ -96,6 +136,7 @@
   .dropdown-menu a .check { margin-left: auto; color: var(--role-color); font-weight: 700; }
   .dropdown-menu a.active { background: var(--role-color-light); color: var(--role-color-deep); }
 
+  /* ===== ПОИСК ===== */
   .search-wrap { padding: 10px 14px 0 !important; }
   .search-wrap input {
     width: 100%; padding: 12px 16px !important;
@@ -106,8 +147,10 @@
   }
   .search-wrap input:focus { outline: none; border-color: var(--role-color); background: var(--surface); box-shadow: 0 0 0 4px var(--orange-glow); }
 
+  /* ===== КОНТЕНТ ===== */
   .content { padding: 10px 14px 80px !important; }
 
+  /* ===== НАВИГАЦИЯ В ПАПКЕ ===== */
   .folder-nav {
     display: flex;
     align-items: center;
@@ -116,18 +159,28 @@
     flex-wrap: wrap;
   }
   .folder-nav .back-btn {
-    background: none; border: none;
-    color: var(--role-color); font-weight: 600; font-size: 14px;
-    cursor: pointer; font-family: var(--font-body);
-    display: flex; align-items: center; gap: 4px;
+    background: none;
+    border: none;
+    color: var(--role-color);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
   .folder-nav .back-btn:hover { color: var(--role-color-deep); }
   .folder-nav .folder-title {
     font-family: var(--font-display);
-    font-size: 1.1rem; font-weight: 600; color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
   }
   .folder-nav .article-count {
-    font-size: 13px; color: var(--ink-muted); margin-left: auto !important;
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-left: auto !important;
   }
 
   /* ===== ПЛИТКИ ПАПОК ===== */
@@ -136,6 +189,7 @@
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 14px;
   }
+
   .folder-card {
     background: var(--surface);
     border: 1.5px solid var(--line);
@@ -156,22 +210,32 @@
     box-shadow: 0 8px 24px rgba(255,106,0,0.10);
   }
   .folder-card:active { transform: scale(0.96); }
+
   .folder-card .folder-icon { font-size: 2.8rem; margin-bottom: 8px !important; }
   .folder-card .folder-name {
     font-family: var(--font-display);
-    font-weight: 600; font-size: 1rem; color: var(--ink);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
     word-break: break-word;
   }
   .folder-card .folder-count {
-    font-size: 12px; color: var(--ink-muted); margin-top: 4px !important;
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px !important;
   }
-  .folder-card .folder-actions { margin-top: 10px !important; display: flex; gap: 6px; }
+  .folder-card .folder-actions {
+    margin-top: 10px !important;
+    display: flex;
+    gap: 6px;
+  }
 
-  /* ===== СТАТЬИ (список) ===== */
+  /* ===== СТАТЬИ ВНУТРИ ПАПКИ ===== */
   .articles-grid {
     display: grid;
     gap: 12px;
   }
+
   .article-card {
     background: var(--surface);
     border: 1.5px solid var(--line);
@@ -182,6 +246,7 @@
   }
   .article-card:hover { border-color: var(--role-color); box-shadow: 0 4px 16px rgba(255,106,0,0.08); }
   .article-card:active { transform: scale(0.98); }
+
   .article-head {
     display: flex;
     align-items: flex-start;
@@ -198,6 +263,7 @@
     word-break: break-word;
     flex: 1;
   }
+
   .article-actions { display: flex; gap: 6px; flex-shrink: 0; }
   .btn-sm {
     padding: 4px 10px !important;
@@ -211,12 +277,14 @@
     transition: all 0.2s ease;
     font-family: var(--font-body);
     min-height: 32px;
-    display: flex; align-items: center;
+    display: flex;
+    align-items: center;
   }
   .btn-sm:hover { background: var(--bg); }
   .btn-sm.edit:hover { border-color: var(--role-color); color: var(--role-color); background: var(--role-color-light); }
   .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
   .btn-sm.hidden { display: none; }
+
   .article-desc {
     color: var(--ink-soft);
     font-size: clamp(0.9rem, 2.5vw, 1rem);
@@ -224,10 +292,14 @@
     line-height: 1.5;
   }
   .article-meta {
-    display: flex; flex-wrap: wrap; gap: 10px;
-    font-size: 13px; color: var(--ink-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-muted);
   }
   .article-meta span { display: flex; align-items: center; gap: 4px; }
+
   .btn-expand {
     background: none; border: none;
     color: var(--role-color); font-weight: 600; font-size: 14px;
@@ -240,14 +312,17 @@
 
   /* ===== ТЕЛО СТАТЬИ ===== */
   .article-body {
-    margin-top: 14px !important; padding-top: 14px !important;
+    margin-top: 14px !important;
+    padding-top: 14px !important;
     border-top: 1px solid var(--line);
     display: none;
-    font-size: 15px !important; line-height: 1.8 !important;
+    font-size: 15px !important;
+    line-height: 1.8 !important;
     color: var(--ink-soft);
   }
   .article-body.open { display: block; animation: fade 0.25s ease; }
   @keyframes fade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
   .article-body > * { margin-bottom: 14px !important; }
   .article-body > *:last-child { margin-bottom: 0 !important; }
   .article-body h1, .article-body h2, .article-body h3, .article-body h4 {
@@ -262,99 +337,152 @@
   .article-body h2 { font-size: 1.25rem !important; }
   .article-body h3 { font-size: 1.1rem !important; }
   .article-body h4 { font-size: 1rem !important; }
+
   .article-body p {
-    margin: 0 0 12px 0 !important; padding: 0 !important;
-    line-height: 1.8 !important; font-size: 15px !important;
+    margin: 0 0 12px 0 !important;
+    padding: 0 !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
     color: var(--ink-soft);
   }
+
   .article-body ul, .article-body ol {
-    margin: 0 0 14px 0 !important; padding: 0 0 0 22px !important;
+    margin: 0 0 14px 0 !important;
+    padding: 0 0 0 22px !important;
     list-style: disc !important;
   }
   .article-body ul li, .article-body ol li {
-    margin-bottom: 10px !important; padding-left: 0 !important;
-    line-height: 1.8 !important; font-size: 15px !important;
+    margin-bottom: 10px !important;
+    padding-left: 0 !important;
+    line-height: 1.8 !important;
+    font-size: 15px !important;
     color: var(--ink-soft);
   }
   .article-body ul li::before { display: none !important; }
   .article-body ul li b, .article-body ul li strong, .article-body ol li b, .article-body ol li strong {
-    color: var(--ink) !important; font-weight: 600 !important;
+    color: var(--ink) !important;
+    font-weight: 600 !important;
   }
-  .article-body hr { border: none !important; border-top: 2px solid var(--line) !important; margin: 18px 0 !important; padding: 0 !important; }
+  .article-body hr {
+    border: none !important;
+    border-top: 2px solid var(--line) !important;
+    margin: 18px 0 !important;
+    padding: 0 !important;
+  }
+
   .article-body .script, .article-body .script-block {
     background: var(--role-color-light) !important;
-    padding: 14px 18px !important; border-radius: 10px !important;
-    margin: 14px 0 !important; border-left: 4px solid var(--role-color) !important;
-    color: var(--ink) !important; font-size: 15px !important; line-height: 1.7 !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border-left: 4px solid var(--role-color) !important;
+    color: var(--ink) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
   }
   .article-body .script i, .article-body .script-block i { color: var(--ink-soft) !important; font-style: italic !important; }
+
   .article-body .danger, .article-body .forbidden {
     background: #FDEDEB !important;
-    padding: 14px 18px !important; border-radius: 10px !important;
-    margin: 14px 0 !important; border-left: 4px solid var(--red) !important;
-    color: var(--ink-soft) !important; font-size: 15px !important; line-height: 1.8 !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border-left: 4px solid var(--red) !important;
+    color: var(--ink-soft) !important;
+    font-size: 15px !important;
+    line-height: 1.8 !important;
   }
   .article-body .danger .lbl, .article-body .forbidden .lbl { font-weight: 700 !important; color: var(--red) !important; }
+
   .article-body .note, .article-body .important {
     background: #F0F7FF !important;
-    padding: 14px 18px !important; border-radius: 10px !important;
-    margin: 14px 0 !important; border: 1px solid #E0EDF5 !important;
-    color: var(--ink-soft) !important; font-size: 15px !important; line-height: 1.7 !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    margin: 14px 0 !important;
+    border: 1px solid #E0EDF5 !important;
+    color: var(--ink-soft) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
   }
   .article-body .note b, .article-body .important b { color: var(--ink) !important; }
+
   .article-body .table-wrap {
-    overflow-x: auto !important; -webkit-overflow-scrolling: touch !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     margin: 14px 0 !important;
   }
   .article-body table {
-    width: 100% !important; border-collapse: collapse !important;
-    font-size: 14px !important; min-width: 280px !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 14px !important;
+    min-width: 280px !important;
   }
   .article-body table th {
     border-bottom: 2px solid var(--role-color) !important;
-    padding: 10px 10px !important; text-align: left !important;
-    color: var(--role-color-deep) !important; font-weight: 700 !important;
+    padding: 10px 10px !important;
+    text-align: left !important;
+    color: var(--role-color-deep) !important;
+    font-weight: 700 !important;
     background: #FAFAFB !important;
   }
   .article-body table td {
     border-bottom: 1px solid var(--line) !important;
-    padding: 10px 10px !important; vertical-align: top !important;
-    color: var(--ink-soft) !important; line-height: 1.6 !important;
+    padding: 10px 10px !important;
+    vertical-align: top !important;
+    color: var(--ink-soft) !important;
+    line-height: 1.6 !important;
   }
   .article-body table tr:hover td { background: #FAFAFB !important; }
+
   .article-body .badge-kpi {
     display: inline-block !important;
-    background: var(--role-color) !important; color: #fff !important;
-    padding: 6px 20px !important; border-radius: 30px !important;
-    font-size: 12px !important; font-weight: 700 !important;
-    margin: 0 0 12px 0 !important; letter-spacing: 0.5px !important;
+    background: var(--role-color) !important;
+    color: #fff !important;
+    padding: 6px 20px !important;
+    border-radius: 30px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin: 0 0 12px 0 !important;
+    letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
   }
+
   .article-body .footer-note {
     margin: 16px 0 0 0 !important;
     padding: 16px 20px !important;
     background: var(--role-color-light) !important;
-    border-radius: 10px !important; border: 2px solid var(--role-color) !important;
-    text-align: center !important; font-weight: 700 !important;
-    color: var(--role-color-deep) !important; font-size: 16px !important;
+    border-radius: 10px !important;
+    border: 2px solid var(--role-color) !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    color: var(--role-color-deep) !important;
+    font-size: 16px !important;
     line-height: 1.6 !important;
   }
+
   .article-body .flex-grid {
-    display: flex !important; flex-direction: column !important;
-    gap: 12px !important; margin: 14px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 14px 0 !important;
   }
   .article-body .flex-grid .item {
     background: var(--bg) !important;
-    padding: 14px 16px !important; border-radius: 10px !important;
+    padding: 14px 16px !important;
+    border-radius: 10px !important;
     border: 1px solid var(--line) !important;
   }
   .article-body .flex-grid .item .ttl {
-    font-weight: 700 !important; color: var(--role-color-deep) !important;
-    margin-bottom: 4px !important; font-size: 15px !important;
+    font-weight: 700 !important;
+    color: var(--role-color-deep) !important;
+    margin-bottom: 4px !important;
+    font-size: 15px !important;
   }
   .article-body .flex-grid .item p {
-    margin: 0 !important; font-size: 14px !important;
-    color: var(--ink-soft) !important; line-height: 1.6 !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+    color: var(--ink-soft) !important;
+    line-height: 1.6 !important;
   }
 
   /* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
@@ -367,27 +495,51 @@
   .empty p { font-size: 16px; margin-top: 6px !important; }
 
   /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
-  .fab-article, .fab-folder {
+  .fab-article,
+  .fab-folder {
     position: fixed;
-    width: 56px; height: 56px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    border: none; color: #fff;
+    border: none;
+    color: #fff;
     cursor: pointer;
     box-shadow: var(--shadow-fab);
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 100;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
-    font-size: 30px; font-weight: 300;
+    font-size: 30px;
+    font-weight: 300;
     touch-action: manipulation;
   }
-  .fab-article { bottom: 20px; right: 16px; background: var(--role-color); }
+
+  .fab-article {
+    bottom: 20px;
+    right: 16px;
+    background: var(--role-color);
+  }
   .fab-article:hover { background: var(--role-color-deep); transform: scale(1.06); }
-  .fab-folder { bottom: 84px; right: 16px; background: var(--role-color); font-size: 24px; }
+
+  .fab-folder {
+    bottom: 84px;
+    right: 16px;
+    background: var(--role-color);
+    font-size: 24px;
+  }
   .fab-folder:hover { background: var(--role-color-deep); transform: scale(1.06); }
-  .fab-article:active, .fab-folder:active { transform: scale(0.92); }
-  .fab-article.hidden, .fab-folder.hidden { display: none; }
-  .fab-article.show, .fab-folder.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+  .fab-article:active,
+  .fab-folder:active { transform: scale(0.92); }
+
+  .fab-article.hidden,
+  .fab-folder.hidden { display: none; }
+
+  .fab-article.show,
+  .fab-folder.show { animation: fabIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
   @keyframes fabIn {
     from { opacity: 0; transform: scale(0.6) translateY(30px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
@@ -395,47 +547,92 @@
 
   /* ===== МОДАЛКИ ===== */
   .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
-    display: none; align-items: center; justify-content: center;
-    z-index: 1000; padding: 16px !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px !important;
   }
   .modal-overlay.active { display: flex; }
+
   .modal-box {
     background: var(--surface);
-    border-radius: 14px; padding: 24px 20px !important;
-    max-width: 680px; width: 100%; max-height: 92vh;
+    border-radius: 14px;
+    padding: 24px 20px !important;
+    max-width: 680px;
+    width: 100%;
+    max-height: 92vh;
     overflow-y: auto;
     box-shadow: 0 12px 48px rgba(0,0,0,0.15);
     border: 1px solid var(--line);
     animation: modalIn 0.3s ease;
   }
   @keyframes modalIn { from { opacity: 0; transform: scale(0.96) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-  .modal-box h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0 0 4px !important; color: var(--ink); }
-  .modal-box .sub { color: var(--ink-soft); font-size: 14px; margin: 0 0 14px !important; }
-  .modal-box .field { margin-bottom: 12px !important; }
-  .modal-box .field label { display: block; font-size: 14px; font-weight: 600; color: var(--ink-soft); margin-bottom: 4px !important; }
-  .modal-box .field input, .modal-box .field textarea, .modal-box .field select {
-    width: 100%; padding: 12px 14px !important;
-    border-radius: 8px; border: 1.5px solid var(--line);
-    font-size: 16px; font-family: var(--font-body);
-    background: var(--bg); transition: all 0.2s ease;
+
+  .modal-box h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px !important;
     color: var(--ink);
   }
-  .modal-box .field textarea { min-height: 100px; resize: vertical; font-family: var(--font-mono); font-size: 14px; }
-  .modal-box .field input:focus, .modal-box .field textarea:focus, .modal-box .field select:focus {
-    outline: none; border-color: var(--role-color);
-    background: var(--surface); box-shadow: 0 0 0 4px var(--orange-glow);
+  .modal-box .sub {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin: 0 0 14px !important;
   }
+  .modal-box .field { margin-bottom: 12px !important; }
+  .modal-box .field label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 4px !important;
+  }
+  .modal-box .field input, .modal-box .field textarea, .modal-box .field select {
+    width: 100%;
+    padding: 12px 14px !important;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    font-size: 16px;
+    font-family: var(--font-body);
+    background: var(--bg);
+    transition: all 0.2s ease;
+    color: var(--ink);
+  }
+  .modal-box .field textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .modal-box .field input:focus, .modal-box .field textarea:focus, .modal-box .field select:focus {
+    outline: none;
+    border-color: var(--role-color);
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--orange-glow);
+  }
+
   .modal-actions {
-    display: flex; flex-direction: column; gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin-top: 14px !important;
   }
   .modal-actions .btn {
-    width: 100%; padding: 12px !important; font-size: 16px;
-    border: none; border-radius: 8px;
-    font-family: var(--font-body); font-weight: 600;
-    cursor: pointer; transition: all 0.2s ease;
+    width: 100%;
+    padding: 12px !important;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
   .modal-actions .btn-primary { background: var(--role-color); color: #fff; }
   .modal-actions .btn-primary:hover { background: var(--role-color-deep); }
@@ -443,23 +640,33 @@
   .modal-actions .btn-secondary:hover { background: var(--line); }
   .modal-actions .btn-danger { background: var(--red); color: #fff; }
   .modal-actions .btn-danger:hover { background: #c0392b; }
+
   .hint {
-    font-size: 12px; color: var(--ink-muted);
+    font-size: 12px;
+    color: var(--ink-muted);
     margin-top: 4px !important;
-    background: var(--bg); padding: 6px 10px !important;
-    border-radius: 6px; border: 1px solid var(--line);
-  }
-  .hint code {
-    background: var(--surface); padding: 2px 6px !important;
-    border-radius: 4px; font-size: 11px;
-    color: var(--role-color-deep); font-family: var(--font-mono);
+    background: var(--bg);
+    padding: 6px 10px !important;
+    border-radius: 6px;
     border: 1px solid var(--line);
   }
+  .hint code {
+    background: var(--surface);
+    padding: 2px 6px !important;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--role-color-deep);
+    font-family: var(--font-mono);
+    border: 1px solid var(--line);
+  }
+
   .modal-box-small { max-width: 420px !important; }
   .modal-box-small .field { margin-bottom: 12px !important; }
 
-  /* ===== АДАПТИВНОСТЬ ===== */
-  @media (max-width: 480px) {
+  /* ============================================================
+     АДАПТИВНОСТЬ — ТЕЛЕФОН
+     ============================================================ */
+  @media (max-width: 767px) {
     .header { padding: 10px 12px !important; }
     .header-logo { height: 30px; }
     .header h1 { font-size: clamp(0.9rem, 4vw, 1rem); }
@@ -481,18 +688,11 @@
     .folder-card .folder-icon { font-size: 2.2rem; }
     .folder-card .folder-name { font-size: 0.9rem; }
   }
-  @media (min-width: 481px) and (max-width: 767px) {
-    .header { padding: 12px 14px !important; }
-    .header-logo { height: 34px; }
-    .header h1 { font-size: 1rem; }
-    .dropdown-btn { font-size: 13px; padding: 6px 12px !important; min-height: 36px; }
-    .search-wrap { padding: 10px 14px 0 !important; }
-    .content { padding: 10px 14px 70px !important; }
-    .folders-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-    .fab-article { width: 52px; height: 52px; font-size: 28px; bottom: 16px; right: 14px; }
-    .fab-folder { width: 52px; height: 52px; font-size: 22px; bottom: 76px; right: 14px; }
-  }
-  @media (min-width: 768px) {
+
+  /* ============================================================
+     АДАПТИВНОСТЬ — ПЛАНШЕТ
+     ============================================================ */
+  @media (min-width: 768px) and (max-width: 1199px) {
     .page-wrap { max-width: var(--max-width) !important; margin: 0 auto !important; padding: 16px 0 !important; }
     .card { border-radius: 14px !important; box-shadow: var(--shadow) !important; border: 1px solid var(--line) !important; }
     .header { padding: 14px 20px !important; }
@@ -506,34 +706,159 @@
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
     .folder-card { min-height: 140px; }
   }
+
+  /* ============================================================
+     АДАПТИВНОСТЬ — ПК (1200px+)
+     ============================================================ */
   @media (min-width: 1200px) {
-    :root { --max-width: 900px; }
-    .header { padding: 18px 28px !important; }
-    .header-logo { height: 42px; }
-    .header h1 { font-size: 1.2rem; }
-    .content { padding: 18px 28px 80px !important; }
-    .search-wrap { padding: 18px 28px 0 !important; }
-    .article-card { padding: 20px 24px !important; }
-    .article-body .flex-grid { flex-direction: row !important; }
-    .article-body .flex-grid .item { flex: 1 !important; }
-    .modal-actions { flex-direction: row !important; }
-    .modal-actions .btn { flex: 1 !important; }
-    .modal-box { padding: 32px 36px !important; }
-    .fab-article { bottom: 32px; right: 32px; }
-    .fab-folder { bottom: 100px; right: 32px; }
-    .folders-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-    .folder-card { min-height: 160px; }
+    :root {
+      --max-width: 1100px;
+    }
+
+    .page-wrap {
+      max-width: var(--max-width) !important;
+      margin: 0 auto !important;
+      padding: 24px 0 !important;
+    }
+
+    .card {
+      border-radius: 16px !important;
+      box-shadow: var(--shadow) !important;
+      border: 1px solid var(--line) !important;
+    }
+
+    .header {
+      padding: 22px 36px !important;
+    }
+
+    .header-logo {
+      height: 48px;
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+    }
+
+    .dropdown-btn {
+      font-size: 16px;
+      padding: 10px 16px !important;
+      min-height: 46px;
+    }
+
+    .search-wrap {
+      padding: 18px 36px 0 !important;
+    }
+
+    .search-wrap input {
+      padding: 16px 22px !important;
+      font-size: 18px;
+      border-radius: 10px;
+    }
+
+    .content {
+      padding: 20px 36px 80px !important;
+    }
+
+    .article-card {
+      padding: 24px 28px !important;
+      border-radius: 12px;
+    }
+
+    .article-head h3 {
+      font-size: 1.3rem;
+    }
+
+    .btn-sm {
+      font-size: 14px;
+      padding: 6px 14px !important;
+      min-height: 38px;
+    }
+
+    .folders-grid {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+      gap: 20px !important;
+    }
+
+    .folder-card {
+      min-height: 160px !important;
+      padding: 24px 20px !important;
+      border-radius: 14px;
+    }
+
+    .folder-card .folder-icon {
+      font-size: 3.2rem;
+    }
+
+    .folder-card .folder-name {
+      font-size: 1.1rem;
+    }
+
+    .folder-card .folder-count {
+      font-size: 14px;
+    }
+
+    .article-body {
+      font-size: 17px !important;
+      line-height: 1.9 !important;
+    }
+
+    .article-body h1 { font-size: 1.6rem !important; }
+    .article-body h2 { font-size: 1.4rem !important; }
+    .article-body h3 { font-size: 1.2rem !important; }
+
+    .article-body p,
+    .article-body ul li,
+    .article-body ol li {
+      font-size: 17px !important;
+    }
+
+    .fab-article {
+      width: 64px;
+      height: 64px;
+      font-size: 34px;
+      bottom: 32px;
+      right: 36px;
+    }
+
+    .fab-folder {
+      width: 64px;
+      height: 64px;
+      font-size: 28px;
+      bottom: 104px;
+      right: 36px;
+    }
+
+    .modal-box {
+      padding: 36px 40px !important;
+    }
+
+    .modal-box h2 {
+      font-size: 24px;
+    }
   }
+
+  /* ============================================================
+     SAFE AREA
+     ============================================================ */
   @supports (padding: max(0px)) {
     .fab-article { bottom: max(14px, env(safe-area-inset-bottom)); right: max(12px, env(safe-area-inset-right)); }
     .fab-folder { bottom: max(72px, env(safe-area-inset-bottom) + 58px); right: max(12px, env(safe-area-inset-right)); }
   }
+
   @media (min-width: 768px) {
     @supports (padding: max(0px)) {
       .fab-article { bottom: max(28px, env(safe-area-inset-bottom)); right: max(28px, env(safe-area-inset-right)); }
       .fab-folder { bottom: max(96px, env(safe-area-inset-bottom) + 68px); right: max(28px, env(safe-area-inset-right)); }
     }
   }
+
+  @media (min-width: 1200px) {
+    @supports (padding: max(0px)) {
+      .fab-article { bottom: max(32px, env(safe-area-inset-bottom)); right: max(36px, env(safe-area-inset-right)); }
+      .fab-folder { bottom: max(104px, env(safe-area-inset-bottom) + 72px); right: max(36px, env(safe-area-inset-right)); }
+    }
+  }
+
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
@@ -649,7 +974,7 @@
 </div>
 
 <!-- ============================================================
-     СКРИПТ — ГЛАВНОЕ ИЗМЕНЕНИЕ (ПОИСК ПО СТАТЬЯМ)
+     СКРИПТ
      ============================================================ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -779,7 +1104,7 @@ async function loadArticles() {
 }
 
 // ============================================================
-// ⭐ ПОИСК ПО СТАТЬЯМ (ГЛАВНОЕ ИЗМЕНЕНИЕ)
+// ПОИСК ПО СТАТЬЯМ
 // ============================================================
 function searchArticles(query, articles) {
   if (!query) return articles;
@@ -791,108 +1116,27 @@ function searchArticles(query, articles) {
   );
 }
 
+function searchFolders(query, folders) {
+  if (!query) return folders;
+  const q = query.toLowerCase().trim();
+  return folders.filter(f => (f.name || '').toLowerCase().includes(q));
+}
+
 // ============================================================
-// ОТОБРАЖЕНИЕ — ПОИСК ВЫВОДИТ СТАТЬИ, А НЕ ПАПКИ
+// ОТОБРАЖЕНИЕ
 // ============================================================
 function render() {
-  const searchQuery = searchInput.value.trim();
+  const searchQuery = searchInput.value;
 
-  // ==========================================================
-  // РЕЖИМ: ПОИСК — ПОКАЗЫВАЕМ СТАТЬИ
-  // ==========================================================
-  if (searchQuery) {
-    const foundArticles = searchArticles(searchQuery, allArticles);
-
-    if (!foundArticles.length) {
-      container.innerHTML = `
-        <div class="empty">
-          <div class="icon">🔍</div>
-          <p>По запросу "<b>${searchQuery}</b>" ничего не найдено</p>
-          <p style="font-size:14px; margin-top:4px;">Попробуйте изменить запрос</p>
-        </div>
-      `;
-      return;
-    }
-
-    // Показываем найденные статьи
-    let html = `
-      <div style="padding: 4px 0 8px 0; font-size:14px; color:var(--ink-muted);">
-        Найдено: ${foundArticles.length} ${declension(foundArticles.length, 'статья', 'статьи', 'статей')}
-      </div>
-      <div class="articles-grid">
-    `;
-
-    foundArticles.forEach(a => {
-      const folderName = allFolders.find(f => f.id === a.folderId)?.name || 'Без папки';
-      html += `
-        <div class="article-card" data-id="${a.id}">
-          <div class="article-head">
-            <h3>${a.title || 'Без названия'}</h3>
-            <div class="article-actions">
-              <button class="btn-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
-              <button class="btn-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
-            </div>
-          </div>
-          ${a.description ? `<div class="article-desc">${a.description}</div>` : ''}
-          <div class="article-meta">
-            <span>📅 ${formatDate(a.createdAt)}</span>
-            <span>📂 ${folderName}</span>
-            ${a.authorEmail ? `<span>✉️ ${a.authorEmail}</span>` : ''}
-          </div>
-          <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
-          <button class="btn-expand" data-id="${a.id}">📖 Читать полностью</button>
-        </div>
-      `;
-    });
-
-    html += `</div>`;
-    container.innerHTML = html;
-
-    // Обработчики для кнопок "Читать полностью"
-    document.querySelectorAll('.btn-expand').forEach(b => {
-      b.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const id = b.dataset.id;
-        const body = document.getElementById(`body-${id}`);
-        if (body) {
-          body.classList.toggle('open');
-          b.textContent = body.classList.contains('open') ? '📕 Свернуть' : '📖 Читать полностью';
-        }
-      });
-    });
-
-    // Редактирование
-    document.querySelectorAll('.edit').forEach(b => {
-      b.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const a = allArticles.find(x => x.id === b.dataset.id);
-        if (a) openEdit(a);
-      });
-    });
-
-    // Удаление
-    document.querySelectorAll('.delete').forEach(b => {
-      b.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const a = allArticles.find(x => x.id === b.dataset.id);
-        if (a) openDelete(a);
-      });
-    });
-
-    return;
-  }
-
-  // ==========================================================
-  // РЕЖИМ: СПИСОК ПАПОК (КОГДА ПОИСК ПУСТ)
-  // ==========================================================
+  // ----- Режим: список папок -----
   if (currentView === 'folders') {
-    let filteredFolders = allFolders;
+    let filteredFolders = searchFolders(searchQuery, allFolders);
 
     if (!filteredFolders.length) {
       container.innerHTML = `
         <div class="empty">
           <div class="icon">📂</div>
-          <p>Пока нет папок</p>
+          <p>${searchQuery ? 'Папки не найдены' : 'Пока нет папок'}</p>
           ${isAdmin ? '<p style="font-size:14px;">Нажмите "📁" чтобы создать первую</p>' : ''}
         </div>
       `;
@@ -948,9 +1192,7 @@ function render() {
     return;
   }
 
-  // ==========================================================
-  // РЕЖИМ: ВНУТРИ ПАПКИ
-  // ==========================================================
+  // ----- Режим: внутри папки -----
   if (currentView.startsWith('folder-')) {
     const folder = allFolders.find(f => f.id === currentFolderId);
     if (!folder) {
@@ -961,6 +1203,7 @@ function render() {
     }
 
     let articles = allArticles.filter(a => a.folderId === currentFolderId);
+    articles = searchArticles(searchQuery, articles);
 
     let html = `
       <div class="folder-nav">
@@ -974,17 +1217,19 @@ function render() {
       html += `
         <div class="empty">
           <div class="icon">📄</div>
-          <p>В этой папке пока нет статей</p>
+          <p>${searchQuery ? 'Статьи не найдены' : 'В этой папке пока нет статей'}</p>
           ${isAdmin ? '<p style="font-size:14px;">Нажмите ➕ чтобы создать первую</p>' : ''}
         </div>
       `;
       container.innerHTML = html;
+
       document.getElementById('backToFolders')?.addEventListener('click', () => {
         currentView = 'folders';
         currentFolderId = null;
         searchInput.value = '';
         render();
       });
+
       return;
     }
 
