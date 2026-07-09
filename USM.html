@@ -189,52 +189,100 @@
     margin-left: auto !important;
   }
 
-  /* ===== ПЛИТКИ ПАПОК ===== */
-  .folders-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 14px;
-  }
-
-  .folder-card {
-    background: var(--surface);
-    border: 1.5px solid var(--line);
-    border-radius: 12px;
-    padding: 20px 16px !important;
-    cursor: pointer;
-    transition: all 0.25s ease;
+  /* ===== ПЛИТКИ ПАПОК (по умолчанию - список для десктопа) ===== */
+  .folders-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    min-height: 120px;
-    justify-content: center;
+    gap: 8px;
   }
-  .folder-card:hover {
-    border-color: var(--role-color);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(255,106,0,0.10);
-  }
-  .folder-card:active { transform: scale(0.96); }
 
-  .folder-card .folder-icon { font-size: 2.8rem; margin-bottom: 8px !important; }
-  .folder-card .folder-name {
+  .folder-item {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 18px !important;
+    cursor: grab;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+  }
+  .folder-item:hover {
+    border-color: var(--role-color);
+    box-shadow: 0 2px 12px rgba(255,106,0,0.08);
+  }
+  .folder-item:active {
+    cursor: grabbing;
+  }
+  .folder-item.dragging {
+    opacity: 0.4;
+    border-color: var(--role-color);
+    box-shadow: 0 8px 24px rgba(255,106,0,0.15);
+  }
+  .folder-item.drag-over {
+    border-color: var(--role-color);
+    background: var(--role-color-light);
+    transform: scale(1.01);
+    border-width: 2px;
+  }
+  .folder-item .drag-handle {
+    color: var(--ink-muted);
+    font-size: 18px;
+    cursor: grab;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .folder-item:hover .drag-handle {
+    opacity: 1;
+  }
+  .folder-item .folder-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .folder-item .folder-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .folder-item .folder-name {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1rem;
     color: var(--ink);
-    word-break: break-word;
   }
-  .folder-card .folder-count {
-    font-size: 12px;
+  .folder-item .folder-count {
+    font-size: 13px;
     color: var(--ink-muted);
-    margin-top: 4px !important;
   }
-  .folder-card .folder-actions {
-    margin-top: 10px !important;
+  .folder-item .folder-actions {
     display: flex;
     gap: 6px;
+    flex-shrink: 0;
+    margin-left: auto !important;
   }
+
+  .btn-sm {
+    padding: 4px 10px !important;
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  .btn-sm:hover { background: var(--bg); }
+  .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
+  .btn-sm.hidden { display: none; }
 
   /* ===== СТАТЬИ ===== */
   .articles-grid {
@@ -279,25 +327,8 @@
     flex-shrink: 0;
   }
   
-  .btn-sm {
-    padding: 4px 10px !important;
-    border: 1.5px solid var(--line);
-    border-radius: 6px;
-    background: transparent;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--font-body);
-    min-height: 32px;
-    display: flex;
-    align-items: center;
-  }
-  .btn-sm:hover { background: var(--bg); }
   .btn-sm.edit:hover { border-color: var(--role-color); color: var(--role-color); background: var(--role-color-light); }
   .btn-sm.delete:hover { border-color: var(--red); color: var(--red); background: #FDEDEB; }
-  .btn-sm.hidden { display: none; }
 
   .article-desc {
     color: var(--ink-soft);
@@ -749,7 +780,7 @@
      АДАПТИВНОСТЬ
      ============================================================ */
 
-  /* ТЕЛЕФОН */
+  /* МОБИЛЬНАЯ ВЕРСИЯ — АККУРАТНЫЙ СПИСОК */
   @media (max-width: 767px) {
     .header { padding: 10px 12px !important; }
     .header-logo { height: 30px; }
@@ -758,12 +789,88 @@
     .search-wrap { padding: 8px 12px 0 !important; }
     .search-wrap input { padding: 10px 14px !important; font-size: 15px; }
     .content { padding: 8px 12px 70px !important; }
+    
+    /* Папки — аккуратный список */
+    .folders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .folder-item {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      padding: 12px 14px !important;
+      cursor: pointer;
+      gap: 12px;
+      min-height: auto;
+      justify-content: flex-start;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+    }
+
+    .folder-item .drag-handle {
+      display: none !important;
+    }
+
+    .folder-item .folder-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    .folder-item .folder-info {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      width: auto;
+      flex-wrap: wrap;
+    }
+
+    .folder-item .folder-name {
+      font-size: 0.95rem;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    .folder-item .folder-count {
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .folder-item .folder-actions {
+      margin: 0 !important;
+      width: auto;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+
+    .folder-item .btn-sm.delete-folder {
+      font-size: 12px;
+      padding: 4px 10px !important;
+      min-height: 28px;
+    }
+
+    .folder-item:active {
+      transform: scale(0.98);
+    }
+
+    .folder-item:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Статьи на мобилке */
     .article-card { padding: 12px 12px !important; }
     .article-body { font-size: 14px !important; line-height: 1.7 !important; }
     .article-body p, .article-body ul li, .article-body ol li { font-size: 14px !important; }
     .article-body h1 { font-size: 1.2rem !important; }
     .article-body h2 { font-size: 1.1rem !important; }
     .article-body h3 { font-size: 1rem !important; }
+    
     .btn-expand {
       width: 30px;
       height: 30px;
@@ -772,9 +879,7 @@
       font-size: 12px;
       box-shadow: 0 2px 10px rgba(255, 106, 0, 0.25);
     }
-    .btn-expand .icon {
-      font-size: 10px;
-    }
+    .btn-expand .icon { font-size: 10px; }
     .article-card.expanded .btn-expand {
       width: 36px;
       height: 36px;
@@ -782,6 +887,7 @@
       min-height: 36px;
       font-size: 14px;
     }
+    
     .fab-article {
       width: 50px;
       height: 50px;
@@ -797,19 +903,11 @@
       right: 12px;
     }
     .modal-box { padding: 18px 14px !important; }
-    .folders-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-    .folder-card { min-height: 100px; padding: 14px 12px !important; }
-    .folder-card .folder-icon { font-size: 2.2rem; }
-    .folder-card .folder-name { font-size: 0.9rem; }
-    .article-stats {
-      font-size: 11px;
-    }
-    .article-stats .views-icon {
-      font-size: 11px;
-    }
+    .article-stats { font-size: 11px; }
+    .article-stats .views-icon { font-size: 11px; }
   }
 
-  /* ПЛАНШЕТ */
+  /* ПЛАНШЕТ — ТОЖЕ АККУРАТНЫЙ СПИСОК */
   @media (min-width: 768px) and (max-width: 1199px) {
     .page-wrap { max-width: var(--max-width) !important; margin: 0 auto !important; padding: 16px 0 !important; }
     .card { border-radius: 14px !important; box-shadow: var(--shadow) !important; border: 1px solid var(--line) !important; }
@@ -818,6 +916,54 @@
     .header h1 { font-size: 1.1rem; }
     .content { padding: 14px 20px 80px !important; }
     .search-wrap { padding: 14px 20px 0 !important; }
+    
+    /* Папки — аккуратный список */
+    .folders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .folder-item {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      padding: 14px 18px !important;
+      cursor: pointer;
+      gap: 14px;
+      min-height: auto;
+      justify-content: flex-start;
+      border-radius: 12px;
+    }
+
+    .folder-item .drag-handle {
+      display: none !important;
+    }
+
+    .folder-item .folder-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .folder-item .folder-info {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      flex-wrap: wrap;
+    }
+
+    .folder-item .folder-name {
+      font-size: 1rem;
+    }
+
+    .folder-item .folder-actions {
+      margin: 0 !important;
+      width: auto;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+
     .article-card { padding: 16px 20px !important; }
     .btn-expand {
       width: 32px;
@@ -826,9 +972,7 @@
       min-height: 32px;
       font-size: 13px;
     }
-    .btn-expand .icon {
-      font-size: 11px;
-    }
+    .btn-expand .icon { font-size: 11px; }
     .article-card.expanded .btn-expand {
       width: 38px;
       height: 38px;
@@ -850,8 +994,6 @@
       bottom: 96px;
       right: 28px;
     }
-    .folders-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
-    .folder-card { min-height: 140px; }
   }
 
   /* ПК */
@@ -900,6 +1042,21 @@
       padding: 20px 36px 80px !important;
     }
 
+    /* Папки — список с перетаскиванием */
+    .folders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .folder-item {
+      padding: 18px 24px !important;
+      border-radius: 12px;
+      cursor: grab;
+    }
+    .folder-item .folder-icon { font-size: 2rem; }
+    .folder-item .folder-name { font-size: 1.1rem; }
+
     .article-card {
       padding: 24px 28px !important;
       border-radius: 12px;
@@ -913,29 +1070,6 @@
       font-size: 14px;
       padding: 6px 14px !important;
       min-height: 38px;
-    }
-
-    .folders-grid {
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-      gap: 20px !important;
-    }
-
-    .folder-card {
-      min-height: 160px !important;
-      padding: 24px 20px !important;
-      border-radius: 14px;
-    }
-
-    .folder-card .folder-icon {
-      font-size: 3.2rem;
-    }
-
-    .folder-card .folder-name {
-      font-size: 1.1rem;
-    }
-
-    .folder-card .folder-count {
-      font-size: 14px;
     }
 
     .btn-expand {
@@ -1153,6 +1287,7 @@ let allArticles = [];
 let allFolders = [];
 let editingId = null;
 let deletingId = null;
+let folderOrder = [];
 
 let currentView = 'folders';
 let currentFolderId = null;
@@ -1218,15 +1353,35 @@ dropdownMenu.querySelectorAll('a').forEach(item => {
 // ============================================================
 async function loadFolders() {
   try {
-    const q = query(collection(db, "folders"), where("role", "==", ROLE), orderBy("name", "asc"));
+    const q = query(collection(db, "folders"), where("role", "==", ROLE));
     const snap = await getDocs(q);
     allFolders = [];
     snap.forEach(d => allFolders.push({ id: d.id, ...d.data() }));
+    
+    const savedOrder = localStorage.getItem('folderOrder_usm');
+    if (savedOrder) {
+      try {
+        const order = JSON.parse(savedOrder);
+        const validOrder = order.filter(id => allFolders.some(f => f.id === id));
+        const existingIds = new Set(validOrder);
+        const newFolders = allFolders.filter(f => !existingIds.has(f.id));
+        folderOrder = [...validOrder, ...newFolders.map(f => f.id)];
+      } catch {
+        folderOrder = allFolders.map(f => f.id);
+      }
+    } else {
+      folderOrder = allFolders.map(f => f.id);
+    }
+    
     return allFolders;
   } catch (e) {
     console.error("Ошибка загрузки папок:", e);
     return [];
   }
+}
+
+function saveFolderOrder() {
+  localStorage.setItem('folderOrder_usm', JSON.stringify(folderOrder));
 }
 
 // ============================================================
@@ -1313,6 +1468,18 @@ function render() {
   // ----- Режим: список папок -----
   if (currentView === 'folders') {
     let filteredFolders = searchFolders(searchQuery, allFolders);
+    
+    if (searchQuery) {
+      filteredFolders.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      filteredFolders.sort((a, b) => {
+        const indexA = folderOrder.indexOf(a.id);
+        const indexB = folderOrder.indexOf(b.id);
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+        return indexA - indexB;
+      });
+    }
 
     if (!filteredFolders.length) {
       container.innerHTML = `
@@ -1325,14 +1492,17 @@ function render() {
       return;
     }
 
-    let html = `<div class="folders-grid">`;
-    filteredFolders.forEach(folder => {
+    let html = `<div class="folders-list" id="foldersList">`;
+    filteredFolders.forEach((folder, index) => {
       const count = allArticles.filter(a => a.folderId === folder.id).length;
       html += `
-        <div class="folder-card" data-folder-id="${folder.id}">
-          <div class="folder-icon">📁</div>
-          <div class="folder-name">${folder.name}</div>
-          <div class="folder-count">${count} ${declension(count, 'статья', 'статьи', 'статей')}</div>
+        <div class="folder-item" data-folder-id="${folder.id}" data-index="${index}" draggable="${isAdmin}">
+          ${isAdmin ? `<span class="drag-handle">⠿</span>` : ''}
+          <span class="folder-icon">📁</span>
+          <div class="folder-info">
+            <span class="folder-name">${folder.name}</span>
+            <span class="folder-count">${count} ${declension(count, 'статья', 'статьи', 'статей')}</span>
+          </div>
           ${isAdmin ? `
             <div class="folder-actions">
               <button class="btn-sm delete-folder" data-id="${folder.id}" style="border-color:#DC3545; color:#DC3545;">🗑️</button>
@@ -1344,10 +1514,11 @@ function render() {
     html += `</div>`;
     container.innerHTML = html;
 
-    document.querySelectorAll('.folder-card').forEach(card => {
-      card.addEventListener('click', (e) => {
+    document.querySelectorAll('.folder-item').forEach(item => {
+      item.addEventListener('click', (e) => {
         if (e.target.closest('.delete-folder')) return;
-        const folderId = card.dataset.folderId;
+        if (e.target.closest('.drag-handle')) return;
+        const folderId = item.dataset.folderId;
         openFolder(folderId);
       });
     });
@@ -1363,6 +1534,8 @@ function render() {
               await deleteDoc(doc(db, 'articles', a.id));
             }
             await deleteDoc(doc(db, 'folders', id));
+            folderOrder = folderOrder.filter(fId => fId !== id);
+            saveFolderOrder();
             await refreshData();
           } catch (e) {
             alert('Ошибка удаления папки');
@@ -1370,6 +1543,10 @@ function render() {
         }
       });
     });
+
+    if (isAdmin) {
+      setupDragAndDrop();
+    }
 
     return;
   }
@@ -1385,8 +1562,6 @@ function render() {
     }
 
     let articles = allArticles.filter(a => a.folderId === currentFolderId);
-    
-    // ПОИСК — фильтруем статьи по запросу
     articles = searchArticles(searchQuery, articles);
 
     let html = `
@@ -1498,6 +1673,62 @@ function render() {
       });
     });
   }
+}
+
+// ============================================================
+// DRAG & DROP ДЛЯ ПАПОК
+// ============================================================
+function setupDragAndDrop() {
+  const items = document.querySelectorAll('.folder-item');
+  let draggedItem = null;
+
+  items.forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      draggedItem = item;
+      item.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', item.dataset.folderId);
+    });
+
+    item.addEventListener('dragend', (e) => {
+      item.classList.remove('dragging');
+      document.querySelectorAll('.folder-item').forEach(el => el.classList.remove('drag-over'));
+    });
+
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (draggedItem && draggedItem !== item) {
+        document.querySelectorAll('.folder-item').forEach(el => el.classList.remove('drag-over'));
+        item.classList.add('drag-over');
+      }
+    });
+
+    item.addEventListener('dragleave', (e) => {
+      item.classList.remove('drag-over');
+    });
+
+    item.addEventListener('drop', (e) => {
+      e.preventDefault();
+      item.classList.remove('drag-over');
+      
+      if (!draggedItem || draggedItem === item) return;
+      
+      const fromId = draggedItem.dataset.folderId;
+      const toId = item.dataset.folderId;
+      
+      const fromIndex = folderOrder.indexOf(fromId);
+      const toIndex = folderOrder.indexOf(toId);
+      
+      if (fromIndex === -1 || toIndex === -1) return;
+      
+      folderOrder.splice(fromIndex, 1);
+      folderOrder.splice(toIndex, 0, fromId);
+      
+      saveFolderOrder();
+      render();
+    });
+  });
 }
 
 // ============================================================
@@ -1680,12 +1911,14 @@ folderForm.addEventListener('submit', async (e) => {
   if (!name) { alert('Введите название папки'); return; }
 
   try {
-    await addDoc(collection(db, 'folders'), {
+    const docRef = await addDoc(collection(db, 'folders'), {
       name,
       role: ROLE,
       createdBy: currentUser?.email,
       createdAt: serverTimestamp()
     });
+    folderOrder.push(docRef.id);
+    saveFolderOrder();
     folderModal.classList.remove('active');
     document.body.style.overflow = '';
     await refreshData();
