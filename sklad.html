@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>KPI Guide — УСМ</title>
+<title>KPI Guide — Кладовщик</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -959,18 +959,18 @@
     <div class="header">
       <div class="header-left">
         <img src="logo.png" alt="Логотип" class="header-logo" />
-        <h1>Гайды для УСМ</h1>
+        <h1>Гайды для кладовщика</h1>
       </div>
       <div class="header-actions">
         <div class="dropdown" id="roleDropdown">
           <button class="dropdown-btn" id="dropdownBtn">
-            ⚡ УСМ <span class="arrow">▼</span>
+            📦 Кладовщик <span class="arrow">▼</span>
           </button>
           <div class="dropdown-menu" id="dropdownMenu">
-            <a href="#" data-role="usm" class="active">
-              ⚡ УСМ <span class="check">✓</span>
+            <a href="#" data-role="usm">⚡ УСМ</a>
+            <a href="#" data-role="sklad" class="active">
+              📦 Кладовщик <span class="check">✓</span>
             </a>
-            <a href="#" data-role="sklad">📦 Кладовщик</a>
           </div>
         </div>
       </div>
@@ -1074,7 +1074,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const ROLE = 'usm';
+const ROLE = 'sklad';
 let currentUser = null;
 let isAdmin = false;
 let allArticles = [];
