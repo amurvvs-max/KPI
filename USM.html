@@ -43,9 +43,7 @@
 
   * { -webkit-tap-highlight-color: transparent; margin: 0 !important; padding: 0 !important; box-sizing: border-box; }
   html, body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: var(--bg);
+    min-height: 100vh; min-height: 100dvh; background: var(--bg);
     font-family: var(--font-body);
     color: var(--ink);
     margin: 0 !important; padding: 0 !important;
@@ -54,9 +52,6 @@
     font-size: 16px;
   }
 
-  /* ============================================================
-     ОСТАЛЬНЫЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ)
-     ============================================================ */
   .page-wrap { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
   .card {
     width: 100% !important; max-width: 100% !important;
@@ -311,15 +306,31 @@
   }
   .article-meta span { display: flex; align-items: center; gap: 4px; }
 
+  /* ===== КНОПКА РАЗВОРАЧИВАНИЯ (ИСПРАВЛЕННАЯ) ===== */
   .btn-expand {
-    background: none; border: none;
-    color: var(--role-color); font-weight: 600; font-size: 14px;
-    cursor: pointer; padding: 12px 4px 2px !important;
-    width: 100%; text-align: left;
+    background: none;
+    border: none;
+    color: var(--role-color);
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 14px 16px 8px !important;
+    width: 100%;
+    text-align: left;
     font-family: var(--font-body);
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin-top: 4px;
   }
-  .btn-expand:hover { color: var(--role-color-deep); }
+
+  .btn-expand:hover {
+    background: var(--role-color-light);
+    color: var(--role-color-deep);
+  }
+
+  .btn-expand:active {
+    transform: scale(0.98);
+  }
 
   /* ===== ТЕЛО СТАТЬИ ===== */
   .article-body {
@@ -678,6 +689,10 @@
     .article-body h1 { font-size: 1.2rem !important; }
     .article-body h2 { font-size: 1.1rem !important; }
     .article-body h3 { font-size: 1rem !important; }
+    .btn-expand {
+      font-size: 14px;
+      padding: 10px 4px 6px !important;
+    }
     .fab-article { width: 50px; height: 50px; font-size: 26px; bottom: 14px; right: 12px; }
     .fab-folder { width: 50px; height: 50px; font-size: 20px; bottom: 72px; right: 12px; }
     .modal-box { padding: 18px 14px !important; }
@@ -697,13 +712,17 @@
     .content { padding: 14px 20px 80px !important; }
     .search-wrap { padding: 14px 20px 0 !important; }
     .article-card { padding: 16px 20px !important; }
+    .btn-expand {
+      font-size: 15px;
+      padding: 12px 8px 8px !important;
+    }
     .fab-article { width: 60px; height: 60px; font-size: 32px; bottom: 28px; right: 28px; }
     .fab-folder { width: 60px; height: 60px; font-size: 26px; bottom: 96px; right: 28px; }
     .folders-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
     .folder-card { min-height: 140px; }
   }
 
-  /* ПК — ФИКСИРОВАННЫЙ МАСШТАБ 100% */
+  /* ПК */
   @media (min-width: 1200px) {
     .page-wrap {
       max-width: var(--max-width) !important;
@@ -785,6 +804,19 @@
 
     .folder-card .folder-count {
       font-size: 14px;
+    }
+
+    /* ===== КНОПКА РАЗВОРАЧИВАНИЯ НА ПК (УВЕЛИЧЕННАЯ) ===== */
+    .btn-expand {
+      font-size: 18px;
+      padding: 18px 20px 10px !important;
+      border-radius: 10px;
+    }
+
+    .btn-expand:hover {
+      background: var(--role-color-light);
+      color: var(--role-color-deep);
+      padding-left: 28px !important;
     }
 
     .article-body {
