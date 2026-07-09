@@ -255,9 +255,9 @@
 
   .article-head {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 12px;
     margin-bottom: 4px !important;
   }
   .article-head h3 {
@@ -270,7 +270,13 @@
     flex: 1;
   }
 
-  .article-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .article-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  
   .btn-sm {
     padding: 4px 10px !important;
     border: 1.5px solid var(--line);
@@ -306,30 +312,26 @@
   }
   .article-meta span { display: flex; align-items: center; gap: 4px; }
 
-  /* ===== КРУГЛАЯ КНОПКА РАЗВОРАЧИВАНИЯ (УМЕНЬШЕННАЯ) ===== */
+  /* ===== КРУГЛАЯ КНОПКА РАЗВОРАЧИВАНИЯ (СПРАВА) ===== */
   .btn-expand {
+    flex-shrink: 0;
     background: linear-gradient(135deg, #FF6A00 0%, #E85D00 100%);
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     color: #fff;
-    font-weight: 400;
-    font-size: 14px;
     cursor: pointer;
-    padding: 0 !important;
     width: 34px;
     height: 34px;
     min-width: 34px;
     min-height: 34px;
-    text-align: center;
-    font-family: var(--font-body);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    margin: 10px auto 0;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 0 3px 12px rgba(255, 106, 0, 0.3);
     line-height: 1;
-    flex-shrink: 0;
+    margin: 0 !important;
   }
 
   .btn-expand:hover {
@@ -350,10 +352,6 @@
 
   .btn-expand .icon.open {
     transform: rotate(180deg);
-  }
-
-  .article-card .btn-expand {
-    margin-top: 10px;
   }
 
   /* ===== ТЕЛО СТАТЬИ ===== */
@@ -1337,6 +1335,9 @@ function render() {
             <div class="article-actions">
               <button class="btn-sm edit ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">✏️</button>
               <button class="btn-sm delete ${isAdmin ? '' : 'hidden'}" data-id="${a.id}">🗑️</button>
+              <button class="btn-expand" data-id="${a.id}" aria-label="Развернуть статью">
+                <span class="icon">▼</span>
+              </button>
             </div>
           </div>
           ${a.description ? `<div class="article-desc">${a.description}</div>` : ''}
@@ -1345,9 +1346,6 @@ function render() {
             ${a.authorEmail ? `<span>✉️ ${a.authorEmail}</span>` : ''}
           </div>
           <div class="article-body" id="body-${a.id}">${a.content || '<p>Содержание не добавлено</p>'}</div>
-          <button class="btn-expand" data-id="${a.id}" aria-label="Развернуть статью">
-            <span class="icon">▼</span>
-          </button>
         </div>
       `;
     });
